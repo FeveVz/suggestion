@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proforma de Servicios Audiovisual — SUGGESTION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0A0E1A;
+  color: #E2E8F0;
+  line-height: 1.6;
+  padding: 24px 16px;
+  min-height: 100vh;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5 {
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1.2;
+}
+
+/* ===== GRADIENT HELPERS ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-bg {
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+}
+.gradient-border-top {
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(90deg, #00C0FF, #FF8D00);
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 40px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.logo-square {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #fff;
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  flex-shrink: 0;
+}
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.brand-subtitle {
+  font-size: 13px;
+  color: #94A3B8;
+  margin-top: 2px;
+}
+.header-right {
+  text-align: right;
+}
+.header-right .doc-type {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.header-right .doc-service {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin-top: 4px;
+}
+.header-right .doc-date {
+  font-size: 13px;
+  color: #64748B;
+  margin-top: 4px;
+}
+
+/* ===== INTRO ===== */
+.intro {
+  text-align: center;
+  padding: 48px 24px;
+  margin-bottom: 48px;
+}
+.intro h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.intro p {
+  font-size: 16px;
+  color: #94A3B8;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ===== PLANS GRID ===== */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.plan-card {
+  background: #111827;
+  border-radius: 20px;
+  padding: 36px 28px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.plan-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Popular card */
+.plan-card.popular {
+  border: 2px solid #FF8D00;
+  box-shadow: 0 0 40px rgba(255,141,0,0.10);
+}
+.plan-card.popular .gradient-line-top {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(90deg, #00C0FF, #FF8D00);
+}
+
+/* Badge */
+.plan-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.badge-green {
+  background: rgba(34,197,94,0.15);
+  color: #22C55E;
+}
+.badge-orange {
+  background: rgba(255,141,0,0.15);
+  color: #FF8D00;
+}
+.badge-gradient {
+  background: linear-gradient(135deg, rgba(0,192,255,0.15), rgba(255,141,0,0.15));
+  color: #F1F5F9;
+}
+
+/* Plan icon */
+.plan-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+/* Plan name */
+.plan-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+/* Plan tagline */
+.plan-tagline {
+  font-size: 14px;
+  color: #94A3B8;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Price */
+.plan-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.plan-price .currency {
+  font-size: 22px;
+  vertical-align: super;
+  margin-right: 2px;
+}
+.plan-price.blue { color: #00C0FF; }
+.plan-price.orange { color: #FF8D00; }
+.plan-price.gradient {
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.plan-period {
+  font-size: 13px;
+  color: #64748B;
+  margin-bottom: 24px;
+}
+
+/* Divider */
+.plan-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 24px;
+}
+
+/* Features */
+.plan-features {
+  list-style: none;
+  flex: 1;
+}
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #CBD5E1;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.plan-features li .check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-top: 2px;
+}
+.check-blue {
+  background: rgba(0,192,255,0.15);
+  color: #00C0FF;
+}
+.check-orange {
+  background: rgba(255,141,0,0.15);
+  color: #FF8D00;
+}
+.check-gradient {
+  background: linear-gradient(135deg, rgba(0,192,255,0.2), rgba(255,141,0,0.2));
+  color: #F1F5F9;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.table-section {
+  margin-bottom: 56px;
+}
+.table-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #111827;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.comparison-table thead th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 18px 16px;
+  text-align: center;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.comparison-table thead th:first-child {
+  text-align: left;
+  color: #94A3B8;
+}
+.comparison-table thead th:nth-child(2) {
+  color: #00C0FF;
+}
+.comparison-table thead th:nth-child(3) {
+  color: #FF8D00;
+}
+.comparison-table thead th:nth-child(4) {
+  background: linear-gradient(135deg, rgba(0,192,255,0.08), rgba(255,141,0,0.08));
+}
+.comparison-table thead th:nth-child(4) span {
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.comparison-table tbody td {
+  padding: 14px 16px;
+  font-size: 14px;
+  text-align: center;
+  color: #CBD5E1;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.comparison-table tbody td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: #E2E8F0;
+}
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.comparison-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+.cell-no {
+  color: #475569;
+  font-weight: 500;
+}
+.cell-yes {
+  color: #22C55E;
+  font-weight: 600;
+}
+.cell-highlight-blue {
+  color: #00C0FF;
+  font-weight: 500;
+}
+.cell-highlight-orange {
+  color: #FF8D00;
+  font-weight: 500;
+}
+.cell-highlight-gradient {
+  font-weight: 600;
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer .footer-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00C0FF, #FF8D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+.footer .footer-subtitle {
+  font-size: 14px;
+  color: #64748B;
+  margin-bottom: 20px;
+}
+.footer .footer-note {
+  font-size: 12px;
+  color: #475569;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .plan-card { padding: 32px 24px; }
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .header-left { flex-direction: column; }
+  .header-right { text-align: center; }
+  .intro h1 { font-size: 26px; }
+  .intro p { font-size: 15px; }
+  .plan-price { font-size: 36px; }
+  .comparison-table {
+    font-size: 13px;
+  }
+  .comparison-table thead th,
+  .comparison-table tbody td {
+    padding: 12px 8px;
+  }
+}
+@media (max-width: 480px) {
+  body { padding: 12px 8px; }
+  .intro { padding: 32px 12px; }
+  .plan-card { padding: 28px 20px; }
+  .plan-price { font-size: 32px; }
+  .comparison-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body {
+    background: #fff;
+    color: #1E293B;
+    padding: 0;
+  }
+  .container { max-width: 100%; }
+  .plan-card {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  .plan-card:hover { transform: none; }
+  .plan-card.popular {
+    border: 2px solid #FF8D00;
+    box-shadow: none;
+  }
+  .comparison-table {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+  }
+  .comparison-table thead th {
+    background: #F8FAFC;
+    color: #1E293B;
+  }
+  .comparison-table thead th:nth-child(2) { color: #0284C7; }
+  .comparison-table thead th:nth-child(3) { color: #EA580C; }
+  .comparison-table thead th:nth-child(4) span {
+    color: #1E293B;
+    -webkit-text-fill-color: #1E293B;
+  }
+  .comparison-table tbody td {
+    color: #334155;
+    border-bottom-color: #E2E8F0;
+  }
+  .comparison-table tbody td:first-child { color: #1E293B; }
+  .cell-no { color: #94A3B8; }
+  .cell-yes { color: #16A34A; }
+  .cell-highlight-blue { color: #0284C7; }
+  .cell-highlight-orange { color: #EA580C; }
+  .cell-highlight-gradient {
+    color: #1E293B;
+    -webkit-text-fill-color: #1E293B;
+  }
+  .header { border-bottom-color: #E2E8F0; }
+  .brand-subtitle { color: #64748B; }
+  .header-right .doc-type { color: #64748B; }
+  .header-right .doc-service { color: #1E293B; }
+  .header-right .doc-date { color: #94A3B8; }
+  .intro p { color: #64748B; }
+  .plan-tagline { color: #64748B; }
+  .plan-period { color: #94A3B8; }
+  .plan-features li { color: #334155; }
+  .plan-name { color: #94A3B8; }
+  .badge-green { background: #DCFCE7; color: #16A34A; }
+  .badge-orange { background: #FFF7ED; color: #EA580C; }
+  .badge-gradient { background: #F0F9FF; color: #1E293B; }
+  .check-blue { background: #E0F2FE; color: #0284C7; }
+  .check-orange { background: #FFF7ED; color: #EA580C; }
+  .check-gradient { background: #F0F9FF; color: #1E293B; }
+  .plan-divider { background: #E2E8F0; }
+  .footer { border-top-color: #E2E8F0; }
+  .footer .footer-subtitle { color: #64748B; }
+  .footer .footer-note { color: #94A3B8; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-square">S</div>
+      <div>
+        <div class="brand-name">SUGGESTION</div>
+        <div class="brand-subtitle">Agencia de Marketing Digital y Publicidad</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="doc-type">Proforma de Servicios</div>
+      <div class="doc-service">Servicio Audiovisual</div>
+      <div class="doc-date">Abril 2026</div>
+    </div>
+  </header>
+
+  <!-- ===== INTRO ===== -->
+  <section class="intro">
+    <h1 class="gradient-text">Producción Audiovisual Profesional</h1>
+    <p>Soluciones completas de producción de contenido audiovisual para potenciar la comunicación de tu marca. Desde piezas básicas para redes sociales hasta producciones de alta calidad con post-producción avanzada.</p>
+  </section>
+
+  <!-- ===== PRICING PLANS ===== -->
+  <div class="plans-grid">
+
+    <!-- PLAN 1 — BÁSICO -->
+    <div class="plan-card">
+      <span class="plan-badge badge-green">IDEAL PARA INICIAR</span>
+      <div class="plan-icon">🎬</div>
+      <div class="plan-name">Básico</div>
+      <div class="plan-tagline">Contenido esencial para redes sociales</div>
+      <div class="plan-price blue"><span class="currency">S/</span>400</div>
+      <div class="plan-period">/ proyecto</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check check-blue">✓</span>1 día de grabación (4 horas máx.)</li>
+        <li><span class="check check-blue">✓</span>Hasta 3 piezas audiovisuales editadas</li>
+        <li><span class="check check-blue">✓</span>Edición estándar con cortes básicos</li>
+        <li><span class="check check-blue">✓</span>Subtítulos simples incluidos</li>
+        <li><span class="check check-blue">✓</span>Adaptación para formato vertical (Stories/Reels)</li>
+        <li><span class="check check-blue">✓</span>Color correction básico</li>
+        <li><span class="check check-blue">✓</span>Entrega en 5 días hábiles</li>
+        <li><span class="check check-blue">✓</span>1 revisión incluida</li>
+      </ul>
+    </div>
+
+    <!-- PLAN 2 — ESTÁNDAR -->
+    <div class="plan-card popular">
+      <div class="gradient-line-top"></div>
+      <span class="plan-badge badge-orange">MÁS POPULAR</span>
+      <div class="plan-icon">🎥</div>
+      <div class="plan-name">Estándar</div>
+      <div class="plan-tagline">Producción profesional con mayor alcance</div>
+      <div class="plan-price orange"><span class="currency">S/</span>700</div>
+      <div class="plan-period">/ proyecto</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check check-orange">✓</span>1 a 2 días de grabación (6 horas/día)</li>
+        <li><span class="check check-orange">✓</span>Hasta 6 piezas audiovisuales editadas</li>
+        <li><span class="check check-orange">✓</span>Edición profesional con ritmo narrativo</li>
+        <li><span class="check check-orange">✓</span>Subtítulos estilizados y animados</li>
+        <li><span class="check check-orange">✓</span>Adaptación multiplataforma (Feed, Reels, TikTok, Stories)</li>
+        <li><span class="check check-orange">✓</span>Color correction profesional</li>
+        <li><span class="check check-orange">✓</span>Audio profesional (mejora de sonido y música libre de derechos)</li>
+        <li><span class="check check-orange">✓</span>2 revisiones incluidas</li>
+        <li><span class="check check-orange">✓</span>Entrega en 5 días hábiles</li>
+        <li><span class="check check-orange">✓</span>Archivos optimizados para cada red social</li>
+      </ul>
+    </div>
+
+    <!-- PLAN 3 — PREMIUM -->
+    <div class="plan-card">
+      <span class="plan-badge badge-gradient">MÁXIMA CALIDAD</span>
+      <div class="plan-icon">🎞️</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-tagline">Producción cinematográfica de alto impacto</div>
+      <div class="plan-price gradient"><span class="currency" style="background:linear-gradient(135deg,#00C0FF,#FF8D00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">S/</span>1,000</div>
+      <div class="plan-period">/ proyecto</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check check-gradient">✓</span>2 a 3 días de grabación (8 horas/día)</li>
+        <li><span class="check check-gradient">✓</span>Hasta 10 piezas audiovisuales editadas</li>
+        <li><span class="check check-gradient">✓</span>Edición avanzada cinematográfica</li>
+        <li><span class="check check-gradient">✓</span>Motion graphics y animaciones incluidas</li>
+        <li><span class="check check-gradient">✓</span>Subtítulos premium con tipografía de marca</li>
+        <li><span class="check check-gradient">✓</span>Adaptación total multiplataforma y multi-formato</li>
+        <li><span class="check check-gradient">✓</span>Color grading cinematográfico profesional</li>
+        <li><span class="check check-gradient">✓</span>Audio profesional (locución off, música licenciada, SFX)</li>
+        <li><span class="check check-gradient">✓</span>Drone (si aplica y disponible)</li>
+        <li><span class="check check-gradient">✓</span>Guión y planificación creativa previa</li>
+        <li><span class="check check-gradient">✓</span>Revisiones ilimitadas hasta aprobación</li>
+        <li><span class="check check-gradient">✓</span>Entrega prioritaria en 3 días hábiles</li>
+        <li><span class="check check-gradient">✓</span>Soporte post-entrega (ajustes menores 7 días)</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ===== COMPARISON TABLE ===== -->
+  <section class="table-section">
+    <h2 class="gradient-text">Tabla Comparativa</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Característica</th>
+          <th>Básico<br><span style="font-weight:400;font-size:12px;">S/400</span></th>
+          <th>Estándar<br><span style="font-weight:400;font-size:12px;">S/700</span></th>
+          <th><span>Premium</span><br><span style="font-weight:400;font-size:12px;opacity:0.7;">S/1,000</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Días de grabación</td>
+          <td>1 día (4h)</td>
+          <td class="cell-highlight-orange">1-2 días (6h/día)</td>
+          <td class="cell-highlight-gradient">2-3 días (8h/día)</td>
+        </tr>
+        <tr>
+          <td>Piezas editadas</td>
+          <td class="cell-highlight-blue">3</td>
+          <td class="cell-highlight-orange">6</td>
+          <td class="cell-highlight-gradient">10</td>
+        </tr>
+        <tr>
+          <td>Tipo de edición</td>
+          <td>Estándar</td>
+          <td class="cell-highlight-orange">Profesional</td>
+          <td class="cell-highlight-gradient">Cinematográfica</td>
+        </tr>
+        <tr>
+          <td>Motion Graphics</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Sí</td>
+        </tr>
+        <tr>
+          <td>Color Grading</td>
+          <td>Básico</td>
+          <td class="cell-highlight-orange">Profesional</td>
+          <td class="cell-highlight-gradient">Cinematográfico</td>
+        </tr>
+        <tr>
+          <td>Audio profesional</td>
+          <td class="cell-no">No</td>
+          <td class="cell-highlight-orange">Música + sonido</td>
+          <td class="cell-highlight-gradient">Locución + música + SFX</td>
+        </tr>
+        <tr>
+          <td>Drone</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Sí</td>
+        </tr>
+        <tr>
+          <td>Guión y planificación</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Sí</td>
+        </tr>
+        <tr>
+          <td>Revisiones</td>
+          <td class="cell-highlight-blue">1</td>
+          <td class="cell-highlight-orange">2</td>
+          <td class="cell-highlight-gradient">Ilimitadas</td>
+        </tr>
+        <tr>
+          <td>Tiempo de entrega</td>
+          <td>5 días</td>
+          <td>5 días</td>
+          <td class="cell-highlight-gradient">3 días</td>
+        </tr>
+        <tr>
+          <td>Soporte post-entrega</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">7 días</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-brand">SUGGESTION</div>
+    <div class="footer-subtitle">Agencia de Marketing Digital y Publicidad</div>
+    <div class="footer-note">Precios expresados en soles peruanos (S/). Validez de la proforma: 30 días.</div>
+  </footer>
+
+</div>
+</body>
+</html>
