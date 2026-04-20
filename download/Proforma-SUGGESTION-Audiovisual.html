@@ -4,708 +4,758 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proforma de Servicios Audiovisual — SUGGESTION</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: #0A0E1A;
-  color: #E2E8F0;
-  line-height: 1.6;
-  padding: 24px 16px;
-  min-height: 100vh;
-}
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
 
-/* ===== TYPOGRAPHY ===== */
-h1, h2, h3, h4, h5 {
-  font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.2;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-/* ===== GRADIENT HELPERS ===== */
-.gradient-text {
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.gradient-bg {
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-}
-.gradient-border-top {
-  height: 4px;
-  border-radius: 20px 20px 0 0;
-  background: linear-gradient(90deg, #00C0FF, #FF8D00);
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ===== HEADER ===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 40px;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.logo-square {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  color: #fff;
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  flex-shrink: 0;
-}
-.brand-name {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.brand-subtitle {
-  font-size: 13px;
-  color: #94A3B8;
-  margin-top: 2px;
-}
-.header-right {
-  text-align: right;
-}
-.header-right .doc-type {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #94A3B8;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-.header-right .doc-service {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #F1F5F9;
-  margin-top: 4px;
-}
-.header-right .doc-date {
-  font-size: 13px;
-  color: #64748B;
-  margin-top: 4px;
-}
-
-/* ===== INTRO ===== */
-.intro {
-  text-align: center;
-  padding: 48px 24px;
-  margin-bottom: 48px;
-}
-.intro h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-.intro p {
-  font-size: 16px;
-  color: #94A3B8;
-  max-width: 640px;
-  margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* ===== PLANS GRID ===== */
-.plans-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 56px;
-}
-.plan-card {
-  background: #111827;
-  border-radius: 20px;
-  padding: 36px 28px;
-  position: relative;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
-}
-.plan-card:hover {
-  transform: translateY(-4px);
-}
-
-/* Popular card */
-.plan-card.popular {
-  border: 2px solid #FF8D00;
-  box-shadow: 0 0 40px rgba(255,141,0,0.10);
-}
-.plan-card.popular .gradient-line-top {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  height: 4px;
-  border-radius: 20px 20px 0 0;
-  background: linear-gradient(90deg, #00C0FF, #FF8D00);
-}
-
-/* Badge */
-.plan-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 5px 12px;
-  border-radius: 8px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  width: fit-content;
-}
-.badge-green {
-  background: rgba(34,197,94,0.15);
-  color: #22C55E;
-}
-.badge-orange {
-  background: rgba(255,141,0,0.15);
-  color: #FF8D00;
-}
-.badge-gradient {
-  background: linear-gradient(135deg, rgba(0,192,255,0.15), rgba(255,141,0,0.15));
-  color: #F1F5F9;
-}
-
-/* Plan icon */
-.plan-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
-}
-
-/* Plan name */
-.plan-name {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748B;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 6px;
-}
-
-/* Plan tagline */
-.plan-tagline {
-  font-size: 14px;
-  color: #94A3B8;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-/* Price */
-.plan-price {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.plan-price .currency {
-  font-size: 22px;
-  vertical-align: super;
-  margin-right: 2px;
-}
-.plan-price.blue { color: #00C0FF; }
-.plan-price.orange { color: #FF8D00; }
-.plan-price.gradient {
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.plan-period {
-  font-size: 13px;
-  color: #64748B;
-  margin-bottom: 24px;
-}
-
-/* Divider */
-.plan-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.06);
-  margin-bottom: 24px;
-}
-
-/* Features */
-.plan-features {
-  list-style: none;
-  flex: 1;
-}
-.plan-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-  color: #CBD5E1;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-.plan-features li .check {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  margin-top: 2px;
-}
-.check-blue {
-  background: rgba(0,192,255,0.15);
-  color: #00C0FF;
-}
-.check-orange {
-  background: rgba(255,141,0,0.15);
-  color: #FF8D00;
-}
-.check-gradient {
-  background: linear-gradient(135deg, rgba(0,192,255,0.2), rgba(255,141,0,0.2));
-  color: #F1F5F9;
-}
-
-/* ===== COMPARISON TABLE ===== */
-.table-section {
-  margin-bottom: 56px;
-}
-.table-section h2 {
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 28px;
-}
-.comparison-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #111827;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.comparison-table thead th {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 18px 16px;
-  text-align: center;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.comparison-table thead th:first-child {
-  text-align: left;
-  color: #94A3B8;
-}
-.comparison-table thead th:nth-child(2) {
-  color: #00C0FF;
-}
-.comparison-table thead th:nth-child(3) {
-  color: #FF8D00;
-}
-.comparison-table thead th:nth-child(4) {
-  background: linear-gradient(135deg, rgba(0,192,255,0.08), rgba(255,141,0,0.08));
-}
-.comparison-table thead th:nth-child(4) span {
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.comparison-table tbody td {
-  padding: 14px 16px;
-  font-size: 14px;
-  text-align: center;
-  color: #CBD5E1;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.comparison-table tbody td:first-child {
-  text-align: left;
-  font-weight: 500;
-  color: #E2E8F0;
-}
-.comparison-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.comparison-table tbody tr:hover {
-  background: rgba(255,255,255,0.02);
-}
-.cell-no {
-  color: #475569;
-  font-weight: 500;
-}
-.cell-yes {
-  color: #22C55E;
-  font-weight: 600;
-}
-.cell-highlight-blue {
-  color: #00C0FF;
-  font-weight: 500;
-}
-.cell-highlight-orange {
-  color: #FF8D00;
-  font-weight: 500;
-}
-.cell-highlight-gradient {
-  font-weight: 600;
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  text-align: center;
-  padding: 40px 24px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.footer .footer-brand {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #00C0FF, #FF8D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 6px;
-}
-.footer .footer-subtitle {
-  font-size: 14px;
-  color: #64748B;
-  margin-bottom: 20px;
-}
-.footer .footer-note {
-  font-size: 12px;
-  color: #475569;
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .plans-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .plan-card { padding: 32px 24px; }
-  .header {
-    flex-direction: column;
-    text-align: center;
-  }
-  .header-left { flex-direction: column; }
-  .header-right { text-align: center; }
-  .intro h1 { font-size: 26px; }
-  .intro p { font-size: 15px; }
-  .plan-price { font-size: 36px; }
-  .comparison-table {
-    font-size: 13px;
-  }
-  .comparison-table thead th,
-  .comparison-table tbody td {
-    padding: 12px 8px;
-  }
-}
-@media (max-width: 480px) {
-  body { padding: 12px 8px; }
-  .intro { padding: 32px 12px; }
-  .plan-card { padding: 28px 20px; }
-  .plan-price { font-size: 32px; }
-  .comparison-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-}
-
-/* ===== PRINT ===== */
-@media print {
   body {
-    background: #fff;
-    color: #1E293B;
-    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #FFFFFF;
+    color: #696969;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .container { max-width: 100%; }
-  .plan-card {
-    background: #fff;
-    border: 1px solid #E2E8F0;
-    box-shadow: none;
-    break-inside: avoid;
+
+  .container { max-width: 1024px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .header { position: relative; overflow: hidden; padding: 48px 0 64px; }
+  .header::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 288px; height: 288px; border-radius: 50%;
+    background: #00C0FF; opacity: 0.1;
   }
-  .plan-card:hover { transform: none; }
-  .plan-card.popular {
-    border: 2px solid #FF8D00;
-    box-shadow: none;
+  .header::after {
+    content: ''; position: absolute; bottom: -40px; left: -40px;
+    width: 192px; height: 192px; border-radius: 50%;
+    background: #FF8D00; opacity: 0.1;
   }
-  .comparison-table {
-    background: #fff;
-    border: 1px solid #E2E8F0;
+  .header-inner { position: relative; z-index: 1; }
+  .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+  .logo-row img { height: 36px; width: auto; }
+  .logo-square {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px;
+    color: #fff; background: linear-gradient(135deg, #00C0FF, #FF8D00);
   }
-  .comparison-table thead th {
-    background: #F8FAFC;
-    color: #1E293B;
+  .logo-subtitle {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #696969;
   }
-  .comparison-table thead th:nth-child(2) { color: #0284C7; }
-  .comparison-table thead th:nth-child(3) { color: #EA580C; }
-  .comparison-table thead th:nth-child(4) span {
-    color: #1E293B;
-    -webkit-text-fill-color: #1E293B;
+  .tag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .tag-bar { height: 4px; width: 32px; border-radius: 4px; background: #FF8D00; }
+  .tag-text {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: #FF8D00;
   }
-  .comparison-table tbody td {
-    color: #334155;
-    border-bottom-color: #E2E8F0;
+  .hero-title {
+    font-size: 40px; font-weight: 900; line-height: 1.15;
+    color: #000000; margin-bottom: 16px;
   }
-  .comparison-table tbody td:first-child { color: #1E293B; }
-  .cell-no { color: #94A3B8; }
-  .cell-yes { color: #16A34A; }
-  .cell-highlight-blue { color: #0284C7; }
-  .cell-highlight-orange { color: #EA580C; }
-  .cell-highlight-gradient {
-    color: #1E293B;
-    -webkit-text-fill-color: #1E293B;
+  .hero-desc { font-size: 15px; line-height: 1.7; color: #696969; max-width: 512px; }
+  .hero-desc strong { color: #000000; }
+
+  .hero-meta {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 4px; text-align: right; margin-top: 24px;
   }
-  .header { border-bottom-color: #E2E8F0; }
-  .brand-subtitle { color: #64748B; }
-  .header-right .doc-type { color: #64748B; }
-  .header-right .doc-service { color: #1E293B; }
-  .header-right .doc-date { color: #94A3B8; }
-  .intro p { color: #64748B; }
-  .plan-tagline { color: #64748B; }
-  .plan-period { color: #94A3B8; }
-  .plan-features li { color: #334155; }
-  .plan-name { color: #94A3B8; }
-  .badge-green { background: #DCFCE7; color: #16A34A; }
-  .badge-orange { background: #FFF7ED; color: #EA580C; }
-  .badge-gradient { background: #F0F9FF; color: #1E293B; }
-  .check-blue { background: #E0F2FE; color: #0284C7; }
-  .check-orange { background: #FFF7ED; color: #EA580C; }
-  .check-gradient { background: #F0F9FF; color: #1E293B; }
-  .plan-divider { background: #E2E8F0; }
-  .footer { border-top-color: #E2E8F0; }
-  .footer .footer-subtitle { color: #64748B; }
-  .footer .footer-note { color: #94A3B8; }
-}
+  .meta-label {
+    font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 600;
+    color: #696969;
+  }
+  .meta-code { font-size: 24px; font-weight: 900; color: #000000; }
+  .meta-date { font-size: 12px; color: #696969; }
+
+  @media (min-width: 1024px) {
+    .hero-grid { display: flex; justify-content: space-between; align-items: flex-end; }
+    .hero-meta { margin-top: 0; }
+    .hero-title { font-size: 48px; }
+  }
+
+  /* Client Bar */
+  .client-bar {
+    border-top: 1px solid #D4D4D4;
+    border-bottom: 1px solid #D4D4D4;
+    background: #FAFAFA; padding: 32px 0;
+  }
+  .client-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 640px) { .client-grid { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  .client-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 8px; display: block;
+  }
+  .client-name { font-size: 24px; font-weight: 900; color: #000000; }
+  .client-sub { font-size: 13px; margin-top: 4px; color: #696969; }
+
+  /* Sections */
+  .section { padding: 48px 0; }
+  .section-header { margin-bottom: 40px; }
+  .section-tag {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    display: block; margin-bottom: 8px;
+  }
+  .section-title { font-size: 28px; font-weight: 900; color: #000000; }
+  .section-desc { font-size: 14px; margin-top: 8px; max-width: 640px; line-height: 1.6; }
+
+  /* Service Cards */
+  .services-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 768px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+  .service-card {
+    background: #FFFFFF; border: none; border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); padding: 24px;
+  }
+  .service-card.blue { border-top: 4px solid #00C0FF; }
+  .service-card.orange { border-top: 4px solid #FF8D00; }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 20px;
+  }
+  .service-icon.blue { background: #00C0FF15; color: #00C0FF; }
+  .service-icon.orange { background: #FF8D0015; color: #FF8D00; }
+  .service-title { font-size: 16px; font-weight: 700; color: #000000; margin-bottom: 8px; }
+  .service-desc { font-size: 12px; line-height: 1.6; color: #696969; margin-bottom: 16px; }
+  .service-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .service-list li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: #696969;
+  }
+  .check { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
+  .check.blue { color: #00C0FF; }
+  .check.orange { color: #FF8D00; }
+
+  /* Methodology */
+  .methodology {
+    background: #000000; color: #FFFFFF; padding: 64px 0;
+  }
+  .methodology .section-title { color: #FFFFFF; }
+  .methodology .section-desc { color: #999; }
+  .method-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+  @media (min-width: 640px) { .method-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .method-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+  .method-step {}
+  .method-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .method-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .method-label {
+    font-size: 10px; font-family: monospace;
+    letter-spacing: 0.15em; color: #696969;
+  }
+  .method-title { font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
+  .method-desc { font-size: 12px; line-height: 1.6; color: #999; }
+
+  /* Pricing */
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 820px; margin: 0 auto; }
+  @media (min-width: 768px) { .pricing-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .pricing-card {
+    background: #FFFFFF; border: 2px solid #D4D4D4;
+    border-radius: 12px; padding: 32px; position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .pricing-badge {
+    position: absolute; top: 0; right: 0; padding: 6px 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 0 12px 0 8px;
+  }
+  .pricing-badge.recommended {
+    color: #FF8D00; border: 1px solid #FF8D0040;
+    background: #FF8D0008;
+  }
+  .pricing-badge.premium {
+    color: #00C0FF; border: 1px solid #00C0FF40;
+    background: #00C0FF08;
+  }
+  .pricing-type-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .pricing-type-icon { font-size: 18px; }
+  .pricing-type-label { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
+  .pricing-type-label.blue { color: #00C0FF; }
+  .pricing-type-label.orange { color: #FF8D00; }
+  .pricing-name { font-size: 16px; font-weight: 700; color: #000000; margin-bottom: 4px; }
+  .pricing-desc { font-size: 12px; line-height: 1.6; color: #696969; margin-bottom: 20px; }
+  .pricing-price { font-size: 48px; font-weight: 900; color: #000000; display: inline-block; }
+  .pricing-price .currency { font-size: 24px; vertical-align: super; margin-right: 2px; }
+  .pricing-period { font-size: 14px; color: #696969; margin-left: 4px; }
+  .pricing-separator { height: 1px; background: #D4D4D4; margin: 20px 0; }
+  .pricing-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .pricing-list li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: #696969;
+  }
+
+  /* Table */
+  .table-section {
+    border-top: 1px solid #D4D4D4;
+    border-bottom: 1px solid #D4D4D4;
+    background: #FAFAFA; padding: 48px 0;
+  }
+  .table-wrapper {
+    border: 1px solid #D4D4D4;
+    border-radius: 12px; overflow: hidden;
+  }
+  .table-row {
+    display: grid; grid-template-columns: 40px 1fr 1fr 100px;
+    gap: 8px; padding: 12px 24px; align-items: center;
+    font-size: 12px;
+  }
+  .table-header {
+    background: #000000; color: white;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 12px 24px;
+  }
+  .table-row.bordered { border-bottom: 1px solid #D4D4D4; }
+  .table-row .item { color: #696969; }
+  .table-row .package { font-weight: 600; font-size: 13px; color: #000000; }
+  .table-row .value { font-weight: 700; text-align: right; }
+  .table-row .desc { text-align: center; }
+  .table-row.total-row .label { font-weight: 700; font-size: 13px; }
+  .table-row.total-row .total { font-size: 18px; font-weight: 900; text-align: right; }
+  .table-sub { padding-left: 16px; }
+
+  .savings-note {
+    margin-top: 24px; padding: 12px 16px; border-radius: 8px;
+    font-size: 12px; color: #696969;
+    background: #00C0FF08;
+    border-left: 3px solid #00C0FF;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .savings-note strong { color: #000000; }
+  .savings-note .highlight { color: #00C0FF; }
+
+  /* Timeline */
+  .timeline-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 896px; }
+  @media (min-width: 640px) { .timeline-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+  .timeline-card {
+    padding: 20px; border-radius: 12px; border: 1px solid;
+  }
+  .timeline-phase {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display: block; margin-bottom: 4px;
+  }
+  .timeline-title { font-size: 15px; font-weight: 700; color: #000000; margin-bottom: 8px; }
+  .timeline-desc { font-size: 12px; line-height: 1.6; color: #696969; }
+
+  .note-box {
+    margin-top: 24px; padding: 12px 16px; border-radius: 8px;
+    font-size: 12px; color: #696969;
+    background: #FF8D0008;
+    border-left: 3px solid #FF8D00;
+    display: flex; align-items: flex-start; gap: 8px;
+    max-width: 896px;
+  }
+  .note-box strong { color: #000000; }
+
+  /* Terms */
+  .terms-section {
+    border-top: 1px solid #D4D4D4;
+    background: #FAFAFA; padding: 48px 0;
+  }
+  .terms-list { max-width: 720px; display: flex; flex-direction: column; gap: 8px; }
+  .term-item {
+    background: #FFFFFF;
+    border: 1px solid #D4D4D4;
+    border-radius: 8px; overflow: hidden;
+  }
+  .term-question {
+    padding: 12px 16px; font-size: 13px; font-weight: 600;
+    color: #000000; cursor: default;
+  }
+  .term-answer {
+    padding: 0 16px 16px; font-size: 12px;
+    line-height: 1.7; color: #696969;
+  }
+
+  /* CTA */
+  .cta-section { padding: 48px 0; }
+  .cta-box {
+    background: #000000; border-radius: 16px;
+    padding: 48px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-box::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: #00C0FF; opacity: 0.1;
+  }
+  .cta-box::after {
+    content: ''; position: absolute; bottom: -32px; left: -32px;
+    width: 128px; height: 128px; border-radius: 50%;
+    background: #FF8D00; opacity: 0.1;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-dots { display: flex; justify-content: center; gap: 4px; margin-bottom: 16px; }
+  .cta-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .cta-title { font-size: 28px; font-weight: 900; color: white; margin-bottom: 12px; }
+  .cta-desc { font-size: 14px; color: #999; max-width: 448px; margin: 0 auto 32px; }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #D4D4D4; padding: 32px 0;
+  }
+  .footer-inner {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px;
+  }
+  @media (min-width: 640px) {
+    .footer-inner { flex-direction: row; justify-content: space-between; }
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-brand-text {
+    font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #696969;
+  }
+  .footer-meta { display: flex; align-items: center; gap: 16px; }
+  .footer-code { font-size: 10px; color: #D4D4D4; }
+  .footer-dots { display: flex; gap: 4px; }
+  .footer-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  /* Print styles */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .header::before, .header::after, .cta-box::before, .cta-box::after { display: none; }
+  }
+
 </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- ===== HEADER ===== -->
-  <header class="header">
-    <div class="header-left">
+<!-- HEADER -->
+<div class="header">
+  <div class="container header-inner">
+    <div class="logo-row">
       <div class="logo-square">S</div>
+      <div class="logo-subtitle">SUGGESTION — Agencia de Marketing &amp; Publicidad</div>
+    </div>
+    <div class="hero-grid">
       <div>
-        <div class="brand-name">SUGGESTION</div>
-        <div class="brand-subtitle">Agencia de Marketing Digital y Publicidad</div>
+        <div class="tag-row">
+          <div class="tag-bar"></div>
+          <div class="tag-text">Proforma de Servicios</div>
+        </div>
+        <h1 class="hero-title">Producci&oacute;n Audiovisual Profesional</h1>
+        <p class="hero-desc">Soluciones completas de producci&oacute;n de contenido audiovisual para potenciar la comunicaci&oacute;n de tu marca. Desde piezas b&aacute;sicas para redes sociales hasta <strong>producciones de alta calidad</strong> con post-producci&oacute;n avanzada.</p>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-label">C&oacute;digo</span>
+        <span class="meta-code">AV-2026</span>
+        <span class="meta-date">Abril 2026 &middot; Validez: 30 d&iacute;as</span>
       </div>
     </div>
-    <div class="header-right">
-      <div class="doc-type">Proforma de Servicios</div>
-      <div class="doc-service">Servicio Audiovisual</div>
-      <div class="doc-date">Abril 2026</div>
-    </div>
-  </header>
-
-  <!-- ===== INTRO ===== -->
-  <section class="intro">
-    <h1 class="gradient-text">Producción Audiovisual Profesional</h1>
-    <p>Soluciones completas de producción de contenido audiovisual para potenciar la comunicación de tu marca. Desde piezas básicas para redes sociales hasta producciones de alta calidad con post-producción avanzada.</p>
-  </section>
-
-  <!-- ===== PRICING PLANS ===== -->
-  <div class="plans-grid">
-
-    <!-- PLAN 1 — BÁSICO -->
-    <div class="plan-card">
-      <span class="plan-badge badge-green">IDEAL PARA INICIAR</span>
-      <div class="plan-icon">🎬</div>
-      <div class="plan-name">Básico</div>
-      <div class="plan-tagline">Contenido esencial para redes sociales</div>
-      <div class="plan-price blue"><span class="currency">S/</span>400</div>
-      <div class="plan-period">/ proyecto</div>
-      <div class="plan-divider"></div>
-      <ul class="plan-features">
-        <li><span class="check check-blue">✓</span>1 día de grabación (4 horas máx.)</li>
-        <li><span class="check check-blue">✓</span>Hasta 3 piezas audiovisuales editadas</li>
-        <li><span class="check check-blue">✓</span>Edición estándar con cortes básicos</li>
-        <li><span class="check check-blue">✓</span>Subtítulos simples incluidos</li>
-        <li><span class="check check-blue">✓</span>Adaptación para formato vertical (Stories/Reels)</li>
-        <li><span class="check check-blue">✓</span>Color correction básico</li>
-        <li><span class="check check-blue">✓</span>Entrega en 5 días hábiles</li>
-        <li><span class="check check-blue">✓</span>1 revisión incluida</li>
-      </ul>
-    </div>
-
-    <!-- PLAN 2 — ESTÁNDAR -->
-    <div class="plan-card popular">
-      <div class="gradient-line-top"></div>
-      <span class="plan-badge badge-orange">MÁS POPULAR</span>
-      <div class="plan-icon">🎥</div>
-      <div class="plan-name">Estándar</div>
-      <div class="plan-tagline">Producción profesional con mayor alcance</div>
-      <div class="plan-price orange"><span class="currency">S/</span>700</div>
-      <div class="plan-period">/ proyecto</div>
-      <div class="plan-divider"></div>
-      <ul class="plan-features">
-        <li><span class="check check-orange">✓</span>1 a 2 días de grabación (6 horas/día)</li>
-        <li><span class="check check-orange">✓</span>Hasta 6 piezas audiovisuales editadas</li>
-        <li><span class="check check-orange">✓</span>Edición profesional con ritmo narrativo</li>
-        <li><span class="check check-orange">✓</span>Subtítulos estilizados y animados</li>
-        <li><span class="check check-orange">✓</span>Adaptación multiplataforma (Feed, Reels, TikTok, Stories)</li>
-        <li><span class="check check-orange">✓</span>Color correction profesional</li>
-        <li><span class="check check-orange">✓</span>Audio profesional (mejora de sonido y música libre de derechos)</li>
-        <li><span class="check check-orange">✓</span>2 revisiones incluidas</li>
-        <li><span class="check check-orange">✓</span>Entrega en 5 días hábiles</li>
-        <li><span class="check check-orange">✓</span>Archivos optimizados para cada red social</li>
-      </ul>
-    </div>
-
-    <!-- PLAN 3 — PREMIUM -->
-    <div class="plan-card">
-      <span class="plan-badge badge-gradient">MÁXIMA CALIDAD</span>
-      <div class="plan-icon">🎞️</div>
-      <div class="plan-name">Premium</div>
-      <div class="plan-tagline">Producción cinematográfica de alto impacto</div>
-      <div class="plan-price gradient"><span class="currency" style="background:linear-gradient(135deg,#00C0FF,#FF8D00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">S/</span>1,000</div>
-      <div class="plan-period">/ proyecto</div>
-      <div class="plan-divider"></div>
-      <ul class="plan-features">
-        <li><span class="check check-gradient">✓</span>2 a 3 días de grabación (8 horas/día)</li>
-        <li><span class="check check-gradient">✓</span>Hasta 10 piezas audiovisuales editadas</li>
-        <li><span class="check check-gradient">✓</span>Edición avanzada cinematográfica</li>
-        <li><span class="check check-gradient">✓</span>Motion graphics y animaciones incluidas</li>
-        <li><span class="check check-gradient">✓</span>Subtítulos premium con tipografía de marca</li>
-        <li><span class="check check-gradient">✓</span>Adaptación total multiplataforma y multi-formato</li>
-        <li><span class="check check-gradient">✓</span>Color grading cinematográfico profesional</li>
-        <li><span class="check check-gradient">✓</span>Audio profesional (locución off, música licenciada, SFX)</li>
-        <li><span class="check check-gradient">✓</span>Drone (si aplica y disponible)</li>
-        <li><span class="check check-gradient">✓</span>Guión y planificación creativa previa</li>
-        <li><span class="check check-gradient">✓</span>Revisiones ilimitadas hasta aprobación</li>
-        <li><span class="check check-gradient">✓</span>Entrega prioritaria en 3 días hábiles</li>
-        <li><span class="check check-gradient">✓</span>Soporte post-entrega (ajustes menores 7 días)</li>
-      </ul>
-    </div>
-
   </div>
-
-  <!-- ===== COMPARISON TABLE ===== -->
-  <section class="table-section">
-    <h2 class="gradient-text">Tabla Comparativa</h2>
-    <table class="comparison-table">
-      <thead>
-        <tr>
-          <th>Característica</th>
-          <th>Básico<br><span style="font-weight:400;font-size:12px;">S/400</span></th>
-          <th>Estándar<br><span style="font-weight:400;font-size:12px;">S/700</span></th>
-          <th><span>Premium</span><br><span style="font-weight:400;font-size:12px;opacity:0.7;">S/1,000</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Días de grabación</td>
-          <td>1 día (4h)</td>
-          <td class="cell-highlight-orange">1-2 días (6h/día)</td>
-          <td class="cell-highlight-gradient">2-3 días (8h/día)</td>
-        </tr>
-        <tr>
-          <td>Piezas editadas</td>
-          <td class="cell-highlight-blue">3</td>
-          <td class="cell-highlight-orange">6</td>
-          <td class="cell-highlight-gradient">10</td>
-        </tr>
-        <tr>
-          <td>Tipo de edición</td>
-          <td>Estándar</td>
-          <td class="cell-highlight-orange">Profesional</td>
-          <td class="cell-highlight-gradient">Cinematográfica</td>
-        </tr>
-        <tr>
-          <td>Motion Graphics</td>
-          <td class="cell-no">No</td>
-          <td class="cell-no">No</td>
-          <td class="cell-yes">Sí</td>
-        </tr>
-        <tr>
-          <td>Color Grading</td>
-          <td>Básico</td>
-          <td class="cell-highlight-orange">Profesional</td>
-          <td class="cell-highlight-gradient">Cinematográfico</td>
-        </tr>
-        <tr>
-          <td>Audio profesional</td>
-          <td class="cell-no">No</td>
-          <td class="cell-highlight-orange">Música + sonido</td>
-          <td class="cell-highlight-gradient">Locución + música + SFX</td>
-        </tr>
-        <tr>
-          <td>Drone</td>
-          <td class="cell-no">No</td>
-          <td class="cell-no">No</td>
-          <td class="cell-yes">Sí</td>
-        </tr>
-        <tr>
-          <td>Guión y planificación</td>
-          <td class="cell-no">No</td>
-          <td class="cell-no">No</td>
-          <td class="cell-yes">Sí</td>
-        </tr>
-        <tr>
-          <td>Revisiones</td>
-          <td class="cell-highlight-blue">1</td>
-          <td class="cell-highlight-orange">2</td>
-          <td class="cell-highlight-gradient">Ilimitadas</td>
-        </tr>
-        <tr>
-          <td>Tiempo de entrega</td>
-          <td>5 días</td>
-          <td>5 días</td>
-          <td class="cell-highlight-gradient">3 días</td>
-        </tr>
-        <tr>
-          <td>Soporte post-entrega</td>
-          <td class="cell-no">No</td>
-          <td class="cell-no">No</td>
-          <td class="cell-yes">7 días</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer-brand">SUGGESTION</div>
-    <div class="footer-subtitle">Agencia de Marketing Digital y Publicidad</div>
-    <div class="footer-note">Precios expresados en soles peruanos (S/). Validez de la proforma: 30 días.</div>
-  </footer>
-
 </div>
+
+<!-- CLIENT BAR -->
+<div class="client-bar">
+  <div class="container">
+    <div class="client-grid">
+      <div>
+        <span class="client-label" style="color:#00C0FF">Servicio</span>
+        <div class="client-name">Producci&oacute;n Audiovisual</div>
+        <div class="client-sub">Contenido profesional para marcas</div>
+      </div>
+      <div>
+        <span class="client-label" style="color:#FF8D00">Agencia</span>
+        <div class="client-name">SUGGESTION</div>
+        <div class="client-sub">Agencia de Marketing &amp; Publicidad</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:#00C0FF">Qu&eacute; incluye</span>
+      <h2 class="section-title">Servicios de Producci&oacute;n Audiovisual</h2>
+      <p class="section-desc">Cada plan est&aacute; dise&ntilde;ado para cubrir distintas necesidades de producci&oacute;n, desde contenido esencial para redes sociales hasta producciones cinematogr&aacute;ficas de alto impacto.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card blue">
+        <div class="service-icon blue">&#127916;</div>
+        <div class="service-title">Grabaci&oacute;n Profesional</div>
+        <div class="service-desc">Sesiones de grabaci&oacute;n con equipo profesional, iluminaci&oacute;n y direcci&oacute;n de c&aacute;mara seg&uacute;n el plan seleccionado.</div>
+        <ul class="service-list">
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>C&aacute;mara profesional 4K</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Iluminaci&oacute;n profesional</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Director de c&aacute;mara</li>
+        </ul>
+      </div>
+
+      <div class="service-card orange">
+        <div class="service-icon orange">&#127909;</div>
+        <div class="service-title">Edici&oacute;n y Post-Producci&oacute;n</div>
+        <div class="service-desc">Edici&oacute;n profesional con ritmo narrativo, color grading, subt&iacute;tulos y motion graphics seg&uacute;n el nivel del plan.</div>
+        <ul class="service-list">
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Edici&oacute;n narrativa</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Color grading</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Motion graphics</li>
+        </ul>
+      </div>
+
+      <div class="service-card blue">
+        <div class="service-icon blue">&#127925;</div>
+        <div class="service-title">Audio Profesional</div>
+        <div class="service-desc">Captaci&oacute;n y mezcla de audio, m&uacute;sica libre de derechos o licenciada, locuci&oacute;n y efectos de sonido.</div>
+        <ul class="service-list">
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Mezcla de sonido</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>M&uacute;sica de fondo</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Efectos de sonido (SFX)</li>
+        </ul>
+      </div>
+
+      <div class="service-card orange">
+        <div class="service-icon orange">&#128242;</div>
+        <div class="service-title">Adaptaci&oacute;n Multiplataforma</div>
+        <div class="service-desc">Optimizaci&oacute;n de cada pieza para todos los formatos: Feed, Reels, TikTok, Stories, YouTube y m&aacute;s.</div>
+        <ul class="service-list">
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Formato vertical y horizontal</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>C&oacute;digos de plataforma</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Archivos optimizados</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="methodology">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:#FF8D00">Proceso</span>
+      <h2 class="section-title">Nuestra Metodolog&iacute;a</h2>
+      <p class="section-desc">Cada proyecto audiovisual sigue un proceso estructurado para garantizar resultados profesionales.</p>
+    </div>
+    <div class="method-grid">
+      <div class="method-step">
+        <div class="method-header">
+          <div class="method-icon" style="background:#00C0FF25;color:#00C0FF">&#128202;</div>
+          <div>
+            <div class="method-label">FASE 01</div>
+            <div class="method-title">Briefing</div>
+          </div>
+        </div>
+        <div class="method-desc">Entendemos los objetivos, p&uacute;blico objetivo y mensaje clave del proyecto audiovisual.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-header">
+          <div class="method-icon" style="background:#FF8D0025;color:#FF8D00">&#128203;</div>
+          <div>
+            <div class="method-label">FASE 02</div>
+            <div class="method-title">Pre-Producci&oacute;n</div>
+          </div>
+        </div>
+        <div class="method-desc">Gui&oacute;n, storyboard, planificaci&oacute;n log&iacute;stica, scouting de locaciones y coordinaci&oacute;n de equipos.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-header">
+          <div class="method-icon" style="background:rgba(255,255,255,0.1);color:white">&#10024;</div>
+          <div>
+            <div class="method-label">FASE 03</div>
+            <div class="method-title">Producci&oacute;n</div>
+          </div>
+        </div>
+        <div class="method-desc">Grabaci&oacute;n profesional con equipo de &uacute;ltima generaci&oacute;n, direcci&oacute;n de c&aacute;mara y captura de audio.</div>
+      </div>
+      <div class="method-step">
+        <div class="method-header">
+          <div class="method-icon" style="background:#00C0FF15;color:#00C0FF">&#128200;</div>
+          <div>
+            <div class="method-label">FASE 04</div>
+            <div class="method-title">Post-Producci&oacute;n</div>
+          </div>
+        </div>
+        <div class="method-desc">Edici&oacute;n, color grading, audio, motion graphics y entrega final con revisiones incluidas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <div class="container">
+    <div class="section-header" style="text-align:center;">
+      <span class="section-tag" style="color:#FF8D00">Planes</span>
+      <h2 class="section-title" style="max-width:480px;margin:0 auto 8px;">Elige tu Plan de Producci&oacute;n</h2>
+      <p class="section-desc" style="margin:0 auto;max-width:560px;text-align:center;">Tres opciones dise&ntilde;adas para diferentes niveles de producci&oacute;n. Todos incluyen equipo profesional y entrega optimizada.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- PLAN 1 — BÁSICO -->
+      <div class="pricing-card">
+        <div class="pricing-type-row">
+          <span class="pricing-type-icon">&#127916;</span>
+          <span class="pricing-type-label blue">B&Aacute;SICO</span>
+        </div>
+        <div class="pricing-name">Contenido Esencial</div>
+        <div class="pricing-desc">Ideal para iniciar con presencia audiovisual en redes sociales.</div>
+        <div>
+          <span class="pricing-price"><span class="currency">S/</span>400</span>
+          <span class="pricing-period">/ proyecto</span>
+        </div>
+        <div class="pricing-separator"></div>
+        <ul class="pricing-list">
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>1 d&iacute;a de grabaci&oacute;n (4h m&aacute;x.)</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Hasta 3 piezas audiovisuales editadas</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Edici&oacute;n est&aacute;ndar con cortes b&aacute;sicos</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Subt&iacute;tulos simples incluidos</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Adaptaci&oacute;n formato vertical</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Color correction b&aacute;sico</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Entrega en 5 d&iacute;as h&aacute;biles</li>
+          <li><svg class="check blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>1 revisi&oacute;n incluida</li>
+        </ul>
+      </div>
+
+      <!-- PLAN 2 — ESTÁNDAR -->
+      <div class="pricing-card" style="border:2px solid #FF8D00;">
+        <div class="pricing-badge recommended">M&aacute;s Popular</div>
+        <div class="pricing-type-row">
+          <span class="pricing-type-icon">&#127909;</span>
+          <span class="pricing-type-label orange">EST&Aacute;NDAR</span>
+        </div>
+        <div class="pricing-name">Producci&oacute;n Profesional</div>
+        <div class="pricing-desc">Mayor alcance con edici&oacute;n profesional y adaptaci&oacute;n multiplataforma.</div>
+        <div>
+          <span class="pricing-price" style="color:#FF8D00"><span class="currency">S/</span>700</span>
+          <span class="pricing-period">/ proyecto</span>
+        </div>
+        <div class="pricing-separator"></div>
+        <ul class="pricing-list">
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>1-2 d&iacute;as de grabaci&oacute;n (6h/d&iacute;a)</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Hasta 6 piezas audiovisuales editadas</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Edici&oacute;n profesional con ritmo narrativo</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Subt&iacute;tulos estilizados y animados</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Adaptaci&oacute;n multiplataforma completa</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Color correction profesional</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Audio profesional (m&uacute;sica + sonido)</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>2 revisiones incluidas</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Entrega en 5 d&iacute;as h&aacute;biles</li>
+          <li><svg class="check orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Archivos optimizados por red</li>
+        </ul>
+      </div>
+
+      <!-- PLAN 3 — PREMIUM -->
+      <div class="pricing-card">
+        <div class="pricing-badge premium">Premium</div>
+        <div class="pricing-type-row">
+          <span class="pricing-type-icon">&#127916;</span>
+          <span class="pricing-type-label" style="color:#000">PREMIUM</span>
+        </div>
+        <div class="pricing-name">Alto Impacto Cinematogr&aacute;fico</div>
+        <div class="pricing-desc">Producci&oacute;n cinematogr&aacute;fica con motion graphics, drone y soporte completo.</div>
+        <div>
+          <span class="pricing-price"><span class="currency">S/</span>1,000</span>
+          <span class="pricing-period">/ proyecto</span>
+        </div>
+        <div class="pricing-separator"></div>
+        <ul class="pricing-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>2-3 d&iacute;as de grabaci&oacute;n (8h/d&iacute;a)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Hasta 10 piezas audiovisuales editadas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Edici&oacute;n cinematogr&aacute;fica avanzada</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Motion graphics y animaciones</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Subt&iacute;tulos premium con tipograf&iacute;a de marca</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Adaptaci&oacute;n total multiplataforma</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Color grading cinematogr&aacute;fico</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Audio completo (locuci&oacute;n + m&uacute;sica + SFX)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Drone incluido</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Gui&oacute;n y planificaci&oacute;n creativa</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Revisiones ilimitadas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"><path d="M5 13l4 4L19 7"/></svg>Entrega prioritaria en 3 d&iacute;as</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="table-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:#00C0FF">Comparativa</span>
+      <h2 class="section-title">Resumen de Planes</h2>
+      <p class="section-desc">Compara las caracter&iacute;sticas de cada plan para elegir la opci&oacute;n que mejor se adapte a tus necesidades.</p>
+    </div>
+    <div class="table-wrapper">
+
+      <div class="table-row table-header">
+        <div>#</div>
+        <div>Caracter&iacute;stica</div>
+        <div>Detalle</div>
+        <div style="text-align:right">Precio</div>
+      </div>
+
+      <div class="table-row bordered" style="background:white">
+        <div class="item" style="font-family:monospace;font-size:10px">01</div>
+        <div class="package">Plan B&aacute;sico</div>
+        <div class="desc"><span style="font-weight:700;color:#00C0FF">1 d&iacute;a grab. + 3 piezas + Edici&oacute;n est&aacute;ndar</span></div>
+        <div class="value" style="color:#00C0FF">S/400</div>
+      </div>
+      <div class="table-row bordered table-sub" style="background:#FAFAFA">
+        <div></div>
+        <div class="item">1 d&iacute;a (4h) &middot; 3 piezas &middot; Edici&oacute;n est&aacute;ndar &middot; Subt&iacute;tulos simples &middot; 1 revisi&oacute;n &middot; Entrega 5 d&iacute;as</div>
+      </div>
+
+      <div class="table-row bordered" style="background:white">
+        <div class="item" style="font-family:monospace;font-size:10px">02</div>
+        <div class="package">Plan Est&aacute;ndar</div>
+        <div class="desc"><span style="font-weight:700;color:#FF8D00">1-2 d&iacute;as grab. + 6 piezas + Edici&oacute;n profesional</span></div>
+        <div class="value" style="color:#FF8D00">S/700</div>
+      </div>
+      <div class="table-row bordered table-sub" style="background:#FAFAFA">
+        <div></div>
+        <div class="item">1-2 d&iacute;as (6h/d&iacute;a) &middot; 6 piezas &middot; Edici&oacute;n profesional &middot; Subt&iacute;tulos animados &middot; Audio &middot; 2 revisiones &middot; Entrega 5 d&iacute;as</div>
+      </div>
+
+      <div class="table-row bordered" style="background:white">
+        <div class="item" style="font-family:monospace;font-size:10px">03</div>
+        <div class="package">Plan Premium</div>
+        <div class="desc"><span style="font-weight:700;color:#000">2-3 d&iacute;as grab. + 10 piezas + Edici&oacute;n cinematogr&aacute;fica</span></div>
+        <div class="value" style="color:#000">S/1,000</div>
+      </div>
+      <div class="table-row bordered table-sub" style="background:#FAFAFA">
+        <div></div>
+        <div class="item">2-3 d&iacute;as (8h/d&iacute;a) &middot; 10 piezas &middot; Edici&oacute;n cinematogr&aacute;fica &middot; Motion graphics &middot; Drone &middot; Gui&oacute;n &middot; Revisiones ilimitadas &middot; Entrega 3 d&iacute;as</div>
+      </div>
+
+    </div>
+
+    <div class="savings-note">
+      <div>
+        <strong>Nota:</strong> Todos los planes incluyen <span class="highlight">c&aacute;mara 4K</span>, iluminaci&oacute;n profesional y adaptaci&oacute;n para redes sociales. Los precios est&aacute;n expresados en soles peruanos (S/).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:#00C0FF">Cronograma</span>
+      <h2 class="section-title">Tiempos de Entrega Estimados</h2>
+      <p class="section-desc">El proceso completo var&iacute;a seg&uacute;n el plan seleccionado. Estos son los tiempos promedio desde la aprobaci&oacute;n del briefing.</p>
+    </div>
+    <div class="timeline-grid">
+      <div class="timeline-card" style="border-color:#00C0FF20;background:#00C0FF04">
+        <span class="timeline-phase" style="color:#00C0FF">Semana 1</span>
+        <div class="timeline-title">Briefing y Pre-Producci&oacute;n</div>
+        <div class="timeline-desc">Reuni&oacute;n inicial, definici&oacute;n de objetivos, gui&oacute;n, storyboard y planificaci&oacute;n log&iacute;stica del proyecto.</div>
+      </div>
+      <div class="timeline-card" style="border-color:#FF8D0020;background:#FF8D0004">
+        <span class="timeline-phase" style="color:#FF8D00">Semana 2</span>
+        <div class="timeline-title">Grabaci&oacute;n</div>
+        <div class="timeline-desc">Sesiones de grabaci&oacute;n seg&uacute;n plan. B&aacute;sico: 1 d&iacute;a, Est&aacute;ndar: 1-2 d&iacute;as, Premium: 2-3 d&iacute;as.</div>
+      </div>
+      <div class="timeline-card" style="border-color:#00000020;background:#00000004">
+        <span class="timeline-phase" style="color:#000">Semana 2-3</span>
+        <div class="timeline-title">Post-Producci&oacute;n</div>
+        <div class="timeline-desc">Edici&oacute;n, color grading, audio, subt&iacute;tulos, motion graphics y revisiones del cliente.</div>
+      </div>
+      <div class="timeline-card" style="border-color:#00C0FF20;background:#00C0FF04">
+        <span class="timeline-phase" style="color:#00C0FF">Entrega</span>
+        <div class="timeline-title">Entrega Final</div>
+        <div class="timeline-desc">Entrega de archivos optimizados para cada plataforma. Premium incluye soporte post-entrega de 7 d&iacute;as.</div>
+      </div>
+    </div>
+    <div class="note-box">
+      <div>
+        <strong>Importante:</strong> Los tiempos pueden variar seg&uacute;n la complejidad del proyecto, disponibilidad de locaciones y condiciones clim&aacute;ticas para exteriores. Se coordinar&aacute; un cronograma espec&iacute;fico al inicio del proyecto.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div class="terms-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:#FF8D00">Condiciones</span>
+      <h2 class="section-title">T&eacute;rminos y Condiciones</h2>
+    </div>
+    <div class="terms-list">
+      <div class="term-item">
+        <div class="term-question">Forma de pago</div>
+        <div class="term-answer">El pago es por proyecto con el <strong>50% adelantado al momento de la confirmaci&oacute;n del servicio</strong> y el 50% restante al momento de la entrega final. Se acepta transferencia bancaria, Yape, Plin u otros m&eacute;todos de pago disponibles.</div>
+      </div>
+      <div class="term-item">
+        <div class="term-question">Revisiones</div>
+        <div class="term-answer">Cada plan incluye un n&uacute;mero determinado de revisiones (B&aacute;sico: 1, Est&aacute;ndar: 2, Premium: ilimitadas). Revisiones adicionales fuera del plan tienen un costo de S/80 por revisi&oacute;n.</div>
+      </div>
+      <div class="term-item">
+        <div class="term-question">Validez de la proforma</div>
+        <div class="term-answer">Esta proforma tiene una validez de 30 d&iacute;as a partir de la fecha de emisi&oacute;n. Precios y condiciones pueden variar despu&eacute;s de este per&iacute;odo.</div>
+      </div>
+      <div class="term-item">
+        <div class="term-question">Entregables</div>
+        <div class="term-answer">Las piezas audiovisuales se entregan en formatos digitales optimizados para cada plataforma (MP4, MOV). Se incluyen archivos en resoluci&oacute;n completa y versiones adaptadas para redes sociales.</div>
+      </div>
+      <div class="term-item">
+        <div class="term-question">Producci&oacute;n audiovisual</div>
+        <div class="term-answer">La producci&oacute;n requiere coordinaci&oacute;n previa para acceso a instalaciones y locaciones. Los tiempos de entrega pueden variar seg&uacute;n disponibilidad y condiciones clim&aacute;ticas para exteriores.</div>
+      </div>
+      <div class="term-item">
+        <div class="term-question">Propiedad intelectual</div>
+        <div class="term-answer">Todo el contenido creado (videos, gui&oacute;n, motion graphics) es propiedad del cliente una vez completado el pago del servicio correspondiente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-inner">
+        <div class="cta-dots">
+          <div class="cta-dot" style="background:#00C0FF"></div>
+          <div class="cta-dot" style="background:#FF8D00"></div>
+          <div class="cta-dot" style="background:white"></div>
+        </div>
+        <h3 class="cta-title">&iquest;Listo para producir contenido profesional?</h3>
+        <p class="cta-desc">Cont&aacute;ctanos para definir los detalles de tu proyecto audiovisual y comenzar a crear contenido que impulse tu marca.</p>
+        <div class="cta-dots">
+          <div class="cta-dot" style="background:#00C0FF"></div>
+          <div class="cta-dot" style="background:#FF8D00"></div>
+          <div class="cta-dot" style="background:white"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-square" style="width:24px;height:24px;font-size:12px;border-radius:6px">S</div>
+        <div class="footer-brand-text">Suggestion &mdash; Agencia de Marketing &amp; Publicidad</div>
+      </div>
+      <div class="footer-meta">
+        <div class="footer-code">AV-2026</div>
+        <div class="footer-dots">
+          <div class="footer-dot" style="background:#00C0FF"></div>
+          <div class="footer-dot" style="background:#FF8D00"></div>
+          <div class="footer-dot" style="background:#000000"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
