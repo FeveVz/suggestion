@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String
+  icon         String   // emoji
+  category     String   // "principal" or "complementario"
+  whatIncludes String?  // JSON array of {icon, title, description, items[]}
+  methodology  String?  // JSON array of {phase, title, description, iconBg, iconColor, iconEmoji}
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  plans        Plan[]
+  clients      ClientService[]
+}
+
+model Plan {
+  id            String   @id @default(cuid())
+  serviceId     String
+  name          String
+  price         Float
+  originalPrice Float?
+  period        String   // "/mes", "/proyecto", "(pago único)", "/evento", "por día"
+  description   String
+  features      String   // JSON array of strings
+  badge         String?  // "Más Popular", "Premium", null
+  isRecommended Boolean  @default(false)
+  order         Int      @default(0)
+  service       Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  activity  String   // rubro
+  startDate String   // fecha de inicio
+  location  String
+  phone     String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  services  ClientService[]
+}
+
+model ClientService {
+  id        String   @id @default(cuid())
+  clientId  String
+  serviceId String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, serviceId])
+}
