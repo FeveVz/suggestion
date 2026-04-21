@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LOGO_NEGRO_BASE64 } from '@/lib/logo-negro'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
