@@ -1,0 +1,2523 @@
+{
+  "suggestion-svc-marketing-digital": {
+    "filename": "suggestion-svc-marketing-digital",
+    "title_tag": "Marketing Digital que Transforma | Suggestion",
+    "meta_description": "Estrategias integrales de marketing digital que transforman tu presencia online en resultados medibles. SEO, publicidad, redes sociales y más.",
+    "service_label": "Marketing Digital",
+    "h1_title": "Marketing digital que transforma",
+    "hero_description": "Transformamos tu presencia digital en resultados medibles. Estrategias personalizadas que conectan con tu audiencia y generan crecimiento sostenible.",
+    "features": [
+      {
+        "name": "Análisis de Mercado",
+        "description": "Investigación profunda de tu industria, competencia y audiencia objetivo."
+      },
+      {
+        "name": "Estrategia Digital",
+        "description": "Plan detallado con objetivos SMART y roadmap de implementación."
+      },
+      {
+        "name": "SEO Técnico",
+        "description": "Optimización técnica para mejorar tu visibilidad en buscadores."
+      },
+      {
+        "name": "Publicidad Digital",
+        "description": "Campañas en Google Ads, Meta Ads y plataformas relevantes."
+      },
+      {
+        "name": "Marketing de Contenidos",
+        "description": "Creación de contenido que atrae, educa y convierte."
+      },
+      {
+        "name": "Email Marketing",
+        "description": "Estrategias de email que nutren leads y fidelizan clientes."
+      },
+      {
+        "name": "Analytics & Reporting",
+        "description": "Dashboards personalizados con métricas que importan."
+      },
+      {
+        "name": "Optimización Continua",
+        "description": "Mejora constante basada en datos y pruebas A/B."
+      },
+      {
+        "name": "Social Media",
+        "description": "Gestión profesional de tus redes sociales."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Resultados Medibles",
+        "description": "Cada estrategia tiene KPIs claros. Medimos, analizamos y optimizamos continuamente para maximizar tu ROI."
+      },
+      {
+        "name": "Estrategia Personalizada",
+        "description": "No hay dos negocios iguales. Creamos estrategias a medida basadas en tus objetivos y tu mercado."
+      },
+      {
+        "name": "Enfoque Integral",
+        "description": "Combinamos SEO, publicidad, contenido y redes sociales en una estrategia cohesiva que potencia resultados."
+      },
+      {
+        "name": "Equipo Experto",
+        "description": "Profesionales certificados en Google, Meta HubSpot y más. Conocimiento actualizado y aplicado."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Descubrimiento",
+        "description": "Analizamos tu negocio, competencia y mercado para identificar oportunidades."
+      },
+      {
+        "name": "Estrategia",
+        "description": "Diseñamos un plan personalizado con objetivos claros y medibles."
+      },
+      {
+        "name": "Ejecución",
+        "description": "Implementamos la estrategia con agilidad y comunicación transparente."
+      },
+      {
+        "name": "Optimización",
+        "description": "Medimos resultados y optimizamos continuamente para maximizar el ROI."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Estrategia básica",
+          "2 redes sociales",
+          "8 publicaciones/mes",
+          "Reporte mensual",
+          "Soporte por email"
+        ]
+      },
+      {
+        "name": "Pro",
+        "original_price": "S/4,170",
+        "discount": "-40%",
+        "current_price": "S/2,500",
+        "period": "/mes",
+        "includes": [
+          "Estrategia avanzada",
+          "4 redes sociales",
+          "15 publicaciones/mes",
+          "1 campaña publicitaria",
+          "Reporte quincenal",
+          "Soporte prioritario"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/6,430",
+        "discount": "-30%",
+        "current_price": "S/4,500",
+        "period": "/mes",
+        "includes": [
+          "Estrategia integral",
+          "Redes ilimitadas",
+          "Múltiples campañas",
+          "SEO avanzado",
+          "Reporte en tiempo real",
+          "Reunión semanal"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "250%",
+        "label": "Incremento promedio en tráfico"
+      },
+      {
+        "value": "3x",
+        "label": "ROI promedio"
+      },
+      {
+        "value": "150+",
+        "label": "Clientes satisfechos"
+      },
+      {
+        "value": "95%",
+        "label": "Tasa de retención"
+      }
+    ]
+  },
+  "suggestion-svc-marketing-redes-sociales": {
+    "filename": "suggestion-svc-marketing-redes-sociales",
+    "title_tag": "Redes Sociales que Conectan | Suggestion",
+    "meta_description": "Gestión profesional de redes sociales que conecta con tu audiencia. Community management, contenido estratégico y campañas que generan engagement.",
+    "service_label": "Redes Sociales",
+    "h1_title": "Redes sociales que conectan",
+    "hero_description": "Transformamos tu presencia en redes sociales en una comunidad activa y comprometida. Contenido estratégico que genera conversación y conversión.",
+    "features": [
+      {
+        "name": "Estrategia de Contenidos",
+        "description": "Calendario editorial mensual alineado con tus objetivos de negocio."
+      },
+      {
+        "name": "Creación de Contenido",
+        "description": "Diseño gráfico, fotografía y video profesional para tus redes."
+      },
+      {
+        "name": "Community Management",
+        "description": "Gestión diaria de comentarios, mensajes y menciones."
+      },
+      {
+        "name": "Reportes Mensuales",
+        "description": "Métricas de crecimiento, engagement y conversiones."
+      },
+      {
+        "name": "Campañas de Pauta",
+        "description": "Publicidad pagada en Meta, TikTok, LinkedIn y más."
+      },
+      {
+        "name": "Influencer Marketing",
+        "description": "Conexión con influencers relevantes para tu marca."
+      },
+      {
+        "name": "Social Listening",
+        "description": "Monitoreo de menciones y tendencias en tu industria."
+      },
+      {
+        "name": "Gestión de Crisis",
+        "description": "Protocolos y manejo profesional de situaciones complejas."
+      },
+      {
+        "name": "Stories & Reels",
+        "description": "Contenido efímero que humaniza tu marca."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Comunidad Activa",
+        "description": "Construimos comunidades comprometidas que interactúan, comparten y defienden tu marca."
+      },
+      {
+        "name": "Contenido Estratégico",
+        "description": "Cada post tiene un propósito. Planificamos contenido que educan, entretiene y convierte."
+      },
+      {
+        "name": "Engagement Real",
+        "description": "Generamos interacciones auténticas, no vanity metrics. Comentarios, shares y conversiones reales."
+      },
+      {
+        "name": "Respuesta Inmediata",
+        "description": "Community management activo que responde, modera y capitaliza oportunidades en tiempo real."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Auditoría",
+        "description": "Analizamos tu presencia actual, competencia y oportunidades."
+      },
+      {
+        "name": "Estrategia",
+        "description": "Definimos tono, contenido y canales según tu audiencia."
+      },
+      {
+        "name": "Creación",
+        "description": "Producimos contenido atractivo y relevante constantemente."
+      },
+      {
+        "name": "Optimización",
+        "description": "Medimos resultados y ajustamos para máximo impacto."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Plan Starter",
+        "original_price": "S/1,600",
+        "discount": "-50%",
+        "current_price": "S/800",
+        "period": "/mes",
+        "includes": [
+          "2 redes sociales",
+          "12 publicaciones/mes",
+          "Diseño gráfico básico",
+          "Calendario editorial",
+          "Reporte mensual",
+          "1 revisión de contenido"
+        ]
+      },
+      {
+        "name": "Plan Business",
+        "original_price": "S/2,500",
+        "discount": "-40%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "3 redes sociales",
+          "24 publicaciones/mes",
+          "Stories semanales (16/mes)",
+          "4 Reels/TikToks mensuales",
+          "Gestión de comunidad",
+          "Diseño profesional premium",
+          "Reporte quincenal",
+          "Respuesta a mensajes"
+        ]
+      },
+      {
+        "name": "Plan Premium",
+        "original_price": "S/4,000",
+        "discount": "-30%",
+        "current_price": "S/2,800",
+        "period": "/mes",
+        "includes": [
+          "4+ redes sociales",
+          "Publicaciones diarias",
+          "Stories diarios",
+          "8 Reels/TikToks mensuales",
+          "Gestión de comunidad 24/7",
+          "Diseño premium animado",
+          "Reporte semanal",
+          "Estrategia personalizada"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0K+",
+        "label": "Seguidores generados"
+      },
+      {
+        "value": "0%",
+        "label": "Engagement rate promedio"
+      },
+      {
+        "value": "0+",
+        "label": "Cuentas gestionadas"
+      }
+    ]
+  },
+  "suggestion-svc-publicidad-digital": {
+    "filename": "suggestion-svc-publicidad-digital",
+    "title_tag": "Publicidad Digital con ROI Medible | Suggestion",
+    "meta_description": "Campañas de publicidad digital en Google Ads, Meta Ads, TikTok Ads con ROI medible. Optimización continua para maximizar resultados.",
+    "service_label": "Publicidad Digital",
+    "h1_title": "Publicidad con ROI medible",
+    "hero_description": "Diseñamos y gestionamos campañas de publicidad digital que generan retorno. Cada peso invertido se optimiza para máximo rendimiento.",
+    "features": [
+      {
+        "name": "Google Ads",
+        "description": "Search, Display, Shopping, YouTube. Campañas que capturan intención."
+      },
+      {
+        "name": "Meta Ads",
+        "description": "Facebook e Instagram con segmentación avanzada y formatos múltiples."
+      },
+      {
+        "name": "TikTok Ads",
+        "description": "Alcanza audiencias jóvenes con contenido nativo que convierte."
+      },
+      {
+        "name": "LinkedIn Ads",
+        "description": "B2B de alto valor. Decision makers y profesionales."
+      },
+      {
+        "name": "Remarketing",
+        "description": "Recupera usuarios que visitaron tu sitio con anuncios personalizados."
+      },
+      {
+        "name": "A/B Testing",
+        "description": "Probamos creatividades, audiencias y ofertas constantemente."
+      },
+      {
+        "name": "Landing Pages",
+        "description": "Páginas de destino optimizadas para conversión."
+      },
+      {
+        "name": "Analytics Avanzado",
+        "description": "Configuración de conversiones, eventos y attribution."
+      },
+      {
+        "name": "Automatizaciones",
+        "description": "Reglas automáticas que optimizan 24/7."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "ROI Medible",
+        "description": "Cada conversión se rastrea. Sabes exactamente cuánto cuesta cada cliente y cuál es tu retorno."
+      },
+      {
+        "name": "Segmentación Precisa",
+        "description": "Llegamos a tu audiencia ideal con targeting avanzado por comportamientos, intereses y más."
+      },
+      {
+        "name": "Optimización Constante",
+        "description": "No configuramos y olvidamos. Optimizamos diariamente para mejorar resultados."
+      },
+      {
+        "name": "Reportes Transparentes",
+        "description": "Dashboards en tiempo real y reportes detallados. Tú decides qué métricas priorizar."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Estrategia",
+        "description": "Definimos objetivos, presupuesto y canales según tu negocio."
+      },
+      {
+        "name": "Setup",
+        "description": "Configuramos cuentas, píxeles, audiences y campañas."
+      },
+      {
+        "name": "Lanzamiento",
+        "description": "Activamos campañas con testing inicial de variables."
+      },
+      {
+        "name": "Escala",
+        "description": "Optimizamos y escalamos lo que funciona, eliminamos lo que no."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "original_price": "S/1,600",
+        "discount": "-50%",
+        "current_price": "S/800",
+        "period": "/mes",
+        "includes": [
+          "1 plataforma",
+          "3 grupos de anuncios",
+          "Reporte semanal",
+          "Optimización básica"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/2,500",
+        "discount": "-40%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "2 plataformas",
+          "Grupos ilimitados",
+          "Reporte en tiempo real",
+          "A/B testing",
+          "Landing page"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/4,290",
+        "discount": "-30%",
+        "current_price": "S/3,000",
+        "period": "/mes",
+        "includes": [
+          "Todas las plataformas",
+          "Campañas ilimitadas",
+          "Consultor dedicado",
+          "Funnel completo",
+          "Attribution modeling"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "4.5x",
+        "label": "ROAS promedio"
+      },
+      {
+        "value": "-40%",
+        "label": "Reducción en CPA"
+      },
+      {
+        "value": "10M+",
+        "label": "Inversión gestionada"
+      },
+      {
+        "value": "500+",
+        "label": "Campañas activas"
+      }
+    ]
+  },
+  "suggestion-svc-seo-posicionamiento": {
+    "filename": "suggestion-svc-seo-posicionamiento",
+    "title_tag": "SEO - Posicionamiento Web Orgánico | Suggestion",
+    "meta_description": "Posicionamiento SEO que te hace visible cuando tus clientes te buscan. SEO técnico, contenido y link building para primeros lugares.",
+    "service_label": "SEO",
+    "h1_title": "Posicionamiento que te hace visible",
+    "hero_description": "Posicionamos tu sitio web en los primeros resultados de Google. Tráfico orgánico de alta calidad que genera leads y ventas de forma sostenida.",
+    "features": [
+      {
+        "name": "Auditoría SEO",
+        "description": "Análisis completo de tu sitio: técnico, contenido y autoridad."
+      },
+      {
+        "name": "SEO Técnico",
+        "description": "Optimización de velocidad, estructura, schema, indexación."
+      },
+      {
+        "name": "Keyword Research",
+        "description": "Identificamos las búsquedas rentables de tu industria."
+      },
+      {
+        "name": "Contenido SEO",
+        "description": "Creación de contenido optimizado que posiciona y convierte."
+      },
+      {
+        "name": "Link Building",
+        "description": "Estrategia de backlinks de calidad para aumentar autoridad."
+      },
+      {
+        "name": "SEO Local",
+        "description": "Posicionamiento en mapas y búsquedas locales."
+      },
+      {
+        "name": "SEO para E-commerce",
+        "description": "Optimización de fichas de producto y categorías."
+      },
+      {
+        "name": "Reportes Mensuales",
+        "description": "Posiciones, tráfico orgánico, keywords y más."
+      },
+      {
+        "name": "Core Web Vitals",
+        "description": "Optimización de métricas de experiencia de usuario."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Tráfico Orgánico de Calidad",
+        "description": "Visitantes que buscan exactamente lo que ofreces. Intención de compra real."
+      },
+      {
+        "name": "Resultados Sostenibles",
+        "description": "A diferencia de la publicidad, el SEO genera resultados que persisten en el tiempo."
+      },
+      {
+        "name": "Contenido que Posiciona",
+        "description": "Estrategia de contenido SEO que atrae y convierte mientras sube posiciones."
+      },
+      {
+        "name": "Autoridad de Marca",
+        "description": "Los primeros resultados generan confianza. Ser primero es ser líder."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Auditoría",
+        "description": "Analizamos tu sitio, competencia y oportunidades de posicionamiento."
+      },
+      {
+        "name": "Estrategia",
+        "description": "Plan de palabras clave, contenido y optimización técnica."
+      },
+      {
+        "name": "Implementación",
+        "description": "Ejecutamos optimizaciones y creamos contenido SEO."
+      },
+      {
+        "name": "Escalamiento",
+        "description": "Medimos resultados y escalamos lo que funciona."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Básico",
+        "original_price": "S/2,400",
+        "discount": "-50%",
+        "current_price": "S/1,200",
+        "period": "/mes",
+        "includes": [
+          "Auditoría inicial",
+          "Optimización on-page",
+          "5 keywords objetivo",
+          "Reporte mensual",
+          "Soporte email"
+        ]
+      },
+      {
+        "name": "Profesional",
+        "original_price": "S/4,170",
+        "discount": "-40%",
+        "current_price": "S/2,500",
+        "period": "/mes",
+        "includes": [
+          "Todo lo anterior",
+          "SEO técnico avanzado",
+          "15 keywords",
+          "Contenido mensual",
+          "Link building básico"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/7,140",
+        "discount": "-30%",
+        "current_price": "S/5,000",
+        "period": "/mes",
+        "includes": [
+          "Estrategia completa",
+          "Sin límite keywords",
+          "Contenido ilimitado",
+          "Link building premium",
+          "Consultoría dedicada"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "300%",
+        "label": "Incremento tráfico orgánico"
+      },
+      {
+        "value": "1M+",
+        "label": "Keywords posicionadas"
+      },
+      {
+        "value": "95%",
+        "label": "Clientes en primera página"
+      }
+    ]
+  },
+  "suggestion-svc-branding-diseno": {
+    "filename": "suggestion-svc-branding-diseno",
+    "title_tag": "Branding y Diseño - Marcas que Dejan Huella | Suggestion",
+    "meta_description": "Creamos identidades visuales que dejan huella. Branding estratégico, diseño de marca, logotipos y manuales de identidad corporativa.",
+    "service_label": "Branding",
+    "h1_title": "Marcas que dejan huella",
+    "hero_description": "Diseñamos identidades visuales que conectan emocionalmente con tu audiencia. Tu marca no solo se ve bien, se recuerda.",
+    "features": [
+      {
+        "name": "Investigación de Marca",
+        "description": "Análisis de competencia, mercado y tendencias."
+      },
+      {
+        "name": "Estrategia de Marca",
+        "description": "Posicionamiento, arquitectura y personalidad de marca."
+      },
+      {
+        "name": "Naming",
+        "description": "Creación de nombres memorables y disponibles."
+      },
+      {
+        "name": "Diseño de Logotipo",
+        "description": "Concepto, bocetos, versiones y aplicaciones."
+      },
+      {
+        "name": "Sistema Visual",
+        "description": "Colores, tipografías, iconografía y patrones."
+      },
+      {
+        "name": "Manual de Marca",
+        "description": "Guía completa de aplicación y uso correcto."
+      },
+      {
+        "name": "Diseño de Papelería",
+        "description": "Tarjetas, sobres, carpetas y más."
+      },
+      {
+        "name": "Señalética",
+        "description": "Diseño de señales y espacios físicos."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Diferenciación Real",
+        "description": "Te destacamos de la competencia con una identidad única y memorable."
+      },
+      {
+        "name": "Conexión Emocional",
+        "description": "Diseñamos para generar sentimientos y recuerdos, no solo estética."
+      },
+      {
+        "name": "Consistencia Total",
+        "description": "Tu marca se ve igual en todos los puntos de contacto."
+      },
+      {
+        "name": "Valor a Largo Plazo",
+        "description": "Una marca fuerte es un activo que aprecia con el tiempo."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Descubrimiento",
+        "description": "Entendemos tu negocio, valores y audiencia objetivo."
+      },
+      {
+        "name": "Concepto",
+        "description": "Exploramos direcciones creativas y definimos el concepto."
+      },
+      {
+        "name": "Diseño",
+        "description": "Desarrollamos el sistema visual completo."
+      },
+      {
+        "name": "Entrega",
+        "description": "Archivos finales, manual y acompañamiento en lanzamiento."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Plantillas Corporativas",
+        "original_price": "S/3,600",
+        "discount": "-50%",
+        "current_price": "S/1,800",
+        "period": "(pago único)",
+        "includes": [
+          "Diagnóstico de marca actual",
+          "Definición de propuesta de valor",
+          "Concepto de marca (idea central)",
+          "Diseño de logotipo principal",
+          "Paleta de colores",
+          "Tipografías",
+          "Manual básico de marca",
+          "Entregables listos para uso digital",
+          "Todo lo del plan Starter",
+          "Naming (si aplica)",
+          "Construcción de identidad de marca",
+          "Territorio y personalidad de marca",
+          "Sistema visual completo",
+          "Aplicaciones: redes sociales, papelería, piezas base",
+          "Manual de marca intermedio",
+          "Lineamientos de comunicación",
+          "Todo lo del plan Business",
+          "Estrategia de marca completa",
+          "Definición de público y arquetipo",
+          "Storytelling de marca",
+          "Arquitectura de marca (si hay múltiples líneas)",
+          "Desarrollo de tono y voz",
+          "Aplicaciones avanzadas (campañas, branding comercial)",
+          "Manual de marca completo (brandbook profesional)",
+          "Acompañamiento estratégico"
+        ]
+      },
+      {
+        "name": "Starter",
+        "original_price": "S/3,600",
+        "discount": "-50%",
+        "current_price": "S/1,800",
+        "period": "(pago único)",
+        "includes": [
+          "Diagnóstico de marca actual",
+          "Definición de propuesta de valor",
+          "Concepto de marca (idea central)",
+          "Diseño de logotipo principal",
+          "Paleta de colores",
+          "Tipografías",
+          "Manual básico de marca",
+          "Entregables listos para uso digital"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/5,830",
+        "discount": "-40%",
+        "current_price": "S/3,500",
+        "period": "(pago único)",
+        "includes": [
+          "Todo lo del plan Starter",
+          "Naming (si aplica)",
+          "Construcción de identidad de marca",
+          "Territorio y personalidad de marca",
+          "Sistema visual completo",
+          "Aplicaciones: redes sociales, papelería, piezas base",
+          "Manual de marca intermedio",
+          "Lineamientos de comunicación"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/9,290",
+        "discount": "-30%",
+        "current_price": "S/6,500",
+        "period": "(pago único)",
+        "includes": [
+          "Todo lo del plan Business",
+          "Estrategia de marca completa",
+          "Definición de público y arquetipo",
+          "Storytelling de marca",
+          "Arquitectura de marca (si hay múltiples líneas)",
+          "Desarrollo de tono y voz",
+          "Aplicaciones avanzadas (campañas, branding comercial)",
+          "Manual de marca completo (brandbook profesional)",
+          "Acompañamiento estratégico"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "100+",
+        "label": "Marcas creadas"
+      },
+      {
+        "value": "95%",
+        "label": "Clientes satisfechos"
+      },
+      {
+        "value": "50+",
+        "label": "Rebrandings"
+      },
+      {
+        "value": "100%",
+        "label": "Originales"
+      }
+    ]
+  },
+  "suggestion-svc-desarrollo-web": {
+    "filename": "suggestion-svc-desarrollo-web",
+    "title_tag": "Desarrollo Web - Sitios que Convierten | Suggestion",
+    "meta_description": "Desarrollamos sitios web optimizados, rápidos y diseñados para convertir. Landing pages, e-commerce, sitios corporativos y aplicaciones web.",
+    "service_label": "Desarrollo Web",
+    "h1_title": "Sitios web que convierten",
+    "hero_description": "Desarrollamos sitios web que no solo se ven bien, sino que funcionan. Optimizados para SEO, velocidad y conversión.",
+    "features": [
+      {
+        "name": "Landing Pages",
+        "description": "Páginas de aterrizaje optimizadas para campañas y conversión."
+      },
+      {
+        "name": "Sitios Corporativos",
+        "description": "Websites institucionales que reflejan tu marca y generan confianza."
+      },
+      {
+        "name": "E-commerce",
+        "description": "Tiendas online optimizadas para venta y remarketing."
+      },
+      {
+        "name": "Aplicaciones Web",
+        "description": "Sistemas a medida: CRM, dashboards, portales de clientes."
+      },
+      {
+        "name": "CMS Personalizado",
+        "description": "Gestiona tu contenido fácilmente sin conocimientos técnicos."
+      },
+      {
+        "name": "PWA",
+        "description": "Progressive Web Apps que funcionan como apps nativas."
+      },
+      {
+        "name": "Integraciones",
+        "description": "Conexión con CRM, pagos, analytics, automatizaciones."
+      },
+      {
+        "name": "Mantenimiento",
+        "description": "Soporte, actualizaciones y mejoras continuas."
+      },
+      {
+        "name": "Hosting Optimizado",
+        "description": "Servidores configurados para máximo rendimiento."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Velocidad Óptima",
+        "description": "Sitios que cargan en menos de 3 segundos. El usuario no espera."
+      },
+      {
+        "name": "Mobile First",
+        "description": "Diseñados para móvil primero. La mayoría de tus usuarios están ahí."
+      },
+      {
+        "name": "SEO Ready",
+        "description": "Estructura técnica optimizada para buscadores desde el día uno."
+      },
+      {
+        "name": "Seguridad Garantizada",
+        "description": "SSL, backups, protección contra malware y actualizaciones."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Descubrimiento",
+        "description": "Definimos objetivos, funcionalidades y arquitectura del sitio."
+      },
+      {
+        "name": "Diseño UX/UI",
+        "description": "Wireframes, prototipos y diseño visual de toda la experiencia."
+      },
+      {
+        "name": "Desarrollo",
+        "description": "Programación con las mejores prácticas y tecnologías modernas."
+      },
+      {
+        "name": "Lanzamiento",
+        "description": "Testing, optimización y puesta en producción con soporte."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Sitios Corporativos",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Diseño responsive",
+          "Formulario de contacto",
+          "Optimización SEO básica",
+          "1 revisión incluida",
+          "Diseño personalizado",
+          "CMS incluido",
+          "SEO técnico",
+          "Formularios",
+          "Capacitación",
+          "Catálogo ilimitado",
+          "Pasarela de pagos",
+          "Gestión de inventario",
+          "SEO avanzado",
+          "Soporte 3 meses"
+        ]
+      },
+      {
+        "name": "Landing Page",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Diseño responsive",
+          "Formulario de contacto",
+          "Optimización SEO básica",
+          "1 revisión incluida"
+        ]
+      },
+      {
+        "name": "Web Corporativa",
+        "original_price": "S/6,670",
+        "discount": "-40%",
+        "current_price": "S/4,000",
+        "period": "/mes",
+        "includes": [
+          "Diseño personalizado",
+          "CMS incluido",
+          "SEO técnico",
+          "Formularios",
+          "Capacitación"
+        ]
+      },
+      {
+        "name": "E-commerce",
+        "original_price": "S/11,430",
+        "discount": "-30%",
+        "current_price": "S/8,000",
+        "period": "/mes",
+        "includes": [
+          "Catálogo ilimitado",
+          "Pasarela de pagos",
+          "Gestión de inventario",
+          "SEO avanzado",
+          "Soporte 3 meses"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "< 3s",
+        "label": "Tiempo de carga"
+      },
+      {
+        "value": "98.9%",
+        "label": "Uptime garantizado"
+      },
+      {
+        "value": "297+",
+        "label": "Sitios desarrollados"
+      },
+      {
+        "value": "99%",
+        "label": "Responsive"
+      }
+    ]
+  },
+  "suggestion-svc-consultoria-marketing": {
+    "filename": "suggestion-svc-consultoria-marketing",
+    "title_tag": "Consultoría de Marketing Digital | Suggestion",
+    "meta_description": "Consultoría estratégica de marketing digital. Análisis, planes de acción, auditorías y acompañamiento para potenciar tu estrategia.",
+    "service_label": "Consultoría",
+    "h1_title": "Consultoría estratégica",
+    "hero_description": "Asesoría personalizada de profesionales con experiencia real. Auditorías, planes de acción y acompañamiento para maximizar tu inversión en marketing.",
+    "features": [
+      {
+        "name": "Auditoría Digital Completa",
+        "description": "Análisis de canales, métricas, procesos y herramientas."
+      },
+      {
+        "name": "Auditoría de Competencia",
+        "description": "Análisis de estrategia digital de tus principales competidores."
+      },
+      {
+        "name": "Definición de Buyer Persona",
+        "description": "Perfiles detallados de tus clientes ideales."
+      },
+      {
+        "name": "Customer Journey Mapping",
+        "description": "Mapeo de puntos de contacto y optimización."
+      },
+      {
+        "name": "Análisis de Funnel",
+        "description": "Identificación de fugas y oportunidades de mejora."
+      },
+      {
+        "name": "Seleccionar Herramientas",
+        "description": "Recomendación de stack tecnológico óptimo."
+      },
+      {
+        "name": "Capacitación de Equipo",
+        "description": "Training en herramientas y mejores prácticas."
+      },
+      {
+        "name": "Sesiones de Seguimiento",
+        "description": "Reuniones periódicas para ajustar el rumbo."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Visión Objetiva",
+        "description": "Auditoría imparcial de tu situación actual con recomendaciones accionables."
+      },
+      {
+        "name": "Plan de Acción",
+        "description": "Roadmap detallado con prioridades, tiempos y recursos necesarios."
+      },
+      {
+        "name": "Experiencia Probada",
+        "description": "Consejo basado en casos de éxito reales, no teoría sin práctica."
+      },
+      {
+        "name": "Acompañamiento",
+        "description": "No solo decimos qué hacer, te acompañamos en la implementación."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Diagnóstico",
+        "description": "Entrevistas, auditoría y análisis de situación actual."
+      },
+      {
+        "name": "Análisis",
+        "description": "Identificación de oportunidades y áreas de mejora."
+      },
+      {
+        "name": "Propuesta",
+        "description": "Documento con plan de acción y roadmap detallado."
+      },
+      {
+        "name": "Implementación",
+        "description": "Acompañamiento en la ejecución de recomendaciones."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Plan de Acción",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Análisis completo",
+          "Informe diagnóstico",
+          "Recomendaciones",
+          "1 sesión de presentación",
+          "Todo lo anterior",
+          "Plan de marketing",
+          "2 meses seguimiento",
+          "Sesiones quincenales",
+          "Consultor dedicado",
+          "Reuniones semanales",
+          "Ajustes continuos",
+          "Soporte ilimitado"
+        ]
+      },
+      {
+        "name": "Plan Estratégico",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Análisis completo",
+          "Informe diagnóstico",
+          "Recomendaciones",
+          "1 sesión de presentación",
+          "Todo lo anterior",
+          "Plan de marketing",
+          "2 meses seguimiento",
+          "Sesiones quincenales",
+          "Consultor dedicado",
+          "Reuniones semanales",
+          "Ajustes continuos",
+          "Soporte ilimitado"
+        ]
+      },
+      {
+        "name": "Diagnóstico",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/mes",
+        "includes": [
+          "Análisis completo",
+          "Informe diagnóstico",
+          "Recomendaciones",
+          "1 sesión de presentación"
+        ]
+      },
+      {
+        "name": "Plan Completo",
+        "original_price": "S/5,830",
+        "discount": "-40%",
+        "current_price": "S/3,500",
+        "period": "/mes",
+        "includes": [
+          "Todo lo anterior",
+          "Plan de marketing",
+          "2 meses seguimiento",
+          "Sesiones quincenales"
+        ]
+      },
+      {
+        "name": "Retainer",
+        "original_price": "S/2,860",
+        "discount": "-30%",
+        "current_price": "S/2,000",
+        "period": "/mes",
+        "includes": [
+          "Consultor dedicado",
+          "Reuniones semanales",
+          "Ajustes continuos",
+          "Soporte ilimitado"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "500+",
+        "label": "Consultorías realizadas"
+      },
+      {
+        "value": "85%",
+        "label": "Implementan recomendaciones"
+      },
+      {
+        "value": "3x",
+        "label": "Mejora promedio en ROI"
+      },
+      {
+        "value": "10+",
+        "label": "Años de experiencia"
+      }
+    ]
+  },
+  "suggestion-svc-crm-automatizacion": {
+    "filename": "suggestion-svc-crm-automatizacion",
+    "title_tag": "CRM y Automatización de Marketing | Suggestion",
+    "meta_description": "Implementamos CRMs y automatizamos procesos de marketing. HubSpot, Salesforce, automatización de emails, leads y workflows.",
+    "service_label": "CRM & Automatización",
+    "h1_title": "Automatiza y escala",
+    "hero_description": "Implementamos sistemas CRM y automatizaciones que trabajan 24/7. Tu equipo se enfoca en cerrar ventas mientras el sistema genera y nutre leads.",
+    "features": [
+      {
+        "name": "Implementación de CRM",
+        "description": "HubSpot, Salesforce, Pipedrive, Zoho según tu necesidad."
+      },
+      {
+        "name": "Migración de Datos",
+        "description": "Importamos y limpiamos tu base de datos existente."
+      },
+      {
+        "name": "Email Automation",
+        "description": "Secuencias de bienvenida, nurturing, reactivación y más."
+      },
+      {
+        "name": "Lead Scoring",
+        "description": "Puntuación automática para priorizar los mejores leads."
+      },
+      {
+        "name": "Workflows",
+        "description": "Automatizaciones basadas en triggers y comportamientos."
+      },
+      {
+        "name": "Integraciones",
+        "description": "Conexión con tu web, ads, calendarios y herramientas."
+      },
+      {
+        "name": "Pipelines de Ventas",
+        "description": "Etapas personalizadas con seguimiento automático."
+      },
+      {
+        "name": "Chatbots",
+        "description": "Atención automatizada en web y WhatsApp."
+      },
+      {
+        "name": "Reportes y Dashboards",
+        "description": "Visibilidad total del funnel de ventas y marketing."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Ahorro de Tiempo",
+        "description": "Automatiza tareas repetitivas y libera a tu equipo para lo importante."
+      },
+      {
+        "name": "Leads Nutridos",
+        "description": "Secuencias de email que convierten leads fríos en oportunidades calientes."
+      },
+      {
+        "name": "Todo en un Lugar",
+        "description": "Centraliza contactos, oportunidades, tareas y métricas en un solo sistema."
+      },
+      {
+        "name": "Escalabilidad",
+        "description": "El sistema maneja 10 leads o 10,000 sin que agregues personal."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Auditoría",
+        "description": "Revisamos tus procesos actuales y herramientas."
+      },
+      {
+        "name": "Arquitectura",
+        "description": "Diseñamos el flujo de datos y automatizaciones."
+      },
+      {
+        "name": "Implementación",
+        "description": "Configuramos CRM, integraciones y workflows."
+      },
+      {
+        "name": "Capacitación",
+        "description": "Entrenamos a tu equipo y documentamos todo."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "original_price": "S/3,600",
+        "discount": "-50%",
+        "current_price": "S/1,800",
+        "period": "(pago único)",
+        "includes": [
+          "Implementación de CRM básico",
+          "Organización de base de datos",
+          "Pipeline de ventas (embudo)",
+          "Asignación de leads automática",
+          "Integración con formularios (web o Google Forms)",
+          "Automatización básica de seguimiento",
+          "Capacitación inicial"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/5,830",
+        "discount": "-40%",
+        "current_price": "S/3,500",
+        "period": "(pago único)",
+        "includes": [
+          "Todo lo del plan Starter",
+          "Automatización de tareas comerciales",
+          "Seguimiento automático por etapas",
+          "Integración con WhatsApp y email",
+          "Sistema de alertas y recordatorios",
+          "Panel de control (estado de leads)",
+          "Optimización del flujo de ventas",
+          "Capacitación + acompañamiento"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/9,290",
+        "discount": "-30%",
+        "current_price": "S/6,500",
+        "period": "(pago único)",
+        "includes": [
+          "Todo lo del plan Business",
+          "Automatizaciones avanzadas (multi-canal)",
+          "Secuencias completas de seguimiento",
+          "Lead scoring (priorización de clientes)",
+          "Integraciones con herramientas externas",
+          "Dashboards de métricas y rendimiento",
+          "Optimización continua del sistema",
+          "Consultoría estratégica"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0%",
+        "label": "Ahorro en tareas manuales"
+      },
+      {
+        "value": "0x",
+        "label": "Leads nutridos automáticamente"
+      },
+      {
+        "value": "0+",
+        "label": "Implementaciones"
+      }
+    ]
+  },
+  "suggestion-svc-produccion-audiovisual": {
+    "filename": "suggestion-svc-produccion-audiovisual",
+    "title_tag": "Producción Audiovisual | Suggestion",
+    "meta_description": "Producción audiovisual profesional. Videos corporativos, publicidad, contenido para redes sociales, fotografía comercial y más.",
+    "service_label": "Producción Audiovisual",
+    "h1_title": "Contenido visual de impacto",
+    "hero_description": "Creamos contenido audiovisual que conecta emocionalmente. Videos que informan, entretienen y convierten. Fotografía que detiene el scroll.",
+    "features": [
+      {
+        "name": "Videos Corporativos",
+        "description": "Presentación de empresa, cultura, testimonios de clientes."
+      },
+      {
+        "name": "Publicidad en Video",
+        "description": "Spots para TV, digital y redes sociales."
+      },
+      {
+        "name": "Contenido Redes Sociales",
+        "description": "Reels, TikToks, Stories y más para tu marca."
+      },
+      {
+        "name": "Videos de Producto",
+        "description": "Demostraciones, unboxings y reviews."
+      },
+      {
+        "name": "Videos de Capacitación",
+        "description": "Training interno, manuales en video."
+      },
+      {
+        "name": "Eventos",
+        "description": "Cobertura audiovisual de eventos presenciales y virtuales."
+      },
+      {
+        "name": "Fotografía Comercial",
+        "description": "Producto, lifestyle, retratos corporativos."
+      },
+      {
+        "name": "Drones",
+        "description": "Aéreos para inmobiliaria, eventos y más."
+      },
+      {
+        "name": "Postproducción",
+        "description": "Edición, color, motion graphics, efectos visuales."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Contenido que Engancha",
+        "description": "El video retiene 95% más que el texto. Tu mensaje llega de verdad."
+      },
+      {
+        "name": "Calidad Profesional",
+        "description": "Equipo, técnica y experiencia para resultados que destacan."
+      },
+      {
+        "name": "Versatilidad Total",
+        "description": "Un shooting, múltiples formatos para todos tus canales."
+      },
+      {
+        "name": "Storytelling Efectivo",
+        "description": "No solo grabamos. Creamos narrativas que conectan."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Concepto",
+        "description": "Definimos el mensaje, formato y enfoque creativo."
+      },
+      {
+        "name": "Pre-producción",
+        "description": "Guión, locaciones, casting, planificación."
+      },
+      {
+        "name": "Producción",
+        "description": "Grabación con equipo profesional y dirección."
+      },
+      {
+        "name": "Post-producción",
+        "description": "Edición, color, audio, motion graphics, entregables."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Calidad Profesional",
+        "original_price": "S/2,400",
+        "discount": "-50%",
+        "current_price": "S/1,200",
+        "period": "/mes",
+        "includes": [
+          "1 jornada de grabación al mes",
+          "8 piezas audiovisuales/mes",
+          "Edición estándar de video",
+          "Adaptación para reels y stories",
+          "Entrega de archivos optimizados",
+          "Reunión mensual de planificación",
+          "3 jornadas de grabación al mes",
+          "16 piezas audiovisuales/mes",
+          "Edición profesional de video",
+          "Reels, stories, piezas para pauta y corporativo",
+          "Cobertura de producto, servicio o marca",
+          "Motion graphics básicos",
+          "Reunión semanal de seguimiento",
+          "5 jornadas de grabación al mes",
+          "31 piezas audiovisuales/mes",
+          "Edición avanzada y narrativa estratégica basada en análisis de datos",
+          "Cobertura de campañas, eventos y lanzamientos",
+          "Motion graphics y animaciones avanzadas",
+          "Guiones y planificación creativa",
+          "Prioridad en entregas",
+          "Reunión semanal de estrategia y reportes"
+        ]
+      },
+      {
+        "name": "Videos Corporativos",
+        "original_price": "S/2,400",
+        "discount": "-50%",
+        "current_price": "S/1,200",
+        "period": "/mes",
+        "includes": [
+          "1 jornada de grabación al mes",
+          "8 piezas audiovisuales/mes",
+          "Edición estándar de video",
+          "Adaptación para reels y stories",
+          "Entrega de archivos optimizados",
+          "Reunión mensual de planificación",
+          "3 jornadas de grabación al mes",
+          "16 piezas audiovisuales/mes",
+          "Edición profesional de video",
+          "Reels, stories, piezas para pauta y corporativo",
+          "Cobertura de producto, servicio o marca",
+          "Motion graphics básicos",
+          "Reunión semanal de seguimiento",
+          "5 jornadas de grabación al mes",
+          "31 piezas audiovisuales/mes",
+          "Edición avanzada y narrativa estratégica basada en análisis de datos",
+          "Cobertura de campañas, eventos y lanzamientos",
+          "Motion graphics y animaciones avanzadas",
+          "Guiones y planificación creativa",
+          "Prioridad en entregas",
+          "Reunión semanal de estrategia y reportes"
+        ]
+      },
+      {
+        "name": "Starter",
+        "original_price": "S/2,400",
+        "discount": "-50%",
+        "current_price": "S/1,200",
+        "period": "/mes",
+        "includes": [
+          "1 jornada de grabación al mes",
+          "8 piezas audiovisuales/mes",
+          "Edición estándar de video",
+          "Adaptación para reels y stories",
+          "Entrega de archivos optimizados",
+          "Reunión mensual de planificación"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/4,170",
+        "discount": "-40%",
+        "current_price": "S/2,500",
+        "period": "/mes",
+        "includes": [
+          "3 jornadas de grabación al mes",
+          "16 piezas audiovisuales/mes",
+          "Edición profesional de video",
+          "Reels, stories, piezas para pauta y corporativo",
+          "Cobertura de producto, servicio o marca",
+          "Motion graphics básicos",
+          "Reunión semanal de seguimiento"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/6,430",
+        "discount": "-30%",
+        "current_price": "S/4,500",
+        "period": "/mes",
+        "includes": [
+          "5 jornadas de grabación al mes",
+          "31 piezas audiovisuales/mes",
+          "Edición avanzada y narrativa estratégica basada en análisis de datos",
+          "Cobertura de campañas, eventos y lanzamientos",
+          "Motion graphics y animaciones avanzadas",
+          "Guiones y planificación creativa",
+          "Prioridad en entregas",
+          "Reunión semanal de estrategia y reportes"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Videos producidos"
+      },
+      {
+        "value": "0M+",
+        "label": "Views generados"
+      },
+      {
+        "value": "0+",
+        "label": "Campañas"
+      },
+      {
+        "value": "0%",
+        "label": "Satisfacción"
+      }
+    ]
+  },
+  "suggestion-svc-investigacion-mercado": {
+    "filename": "suggestion-svc-investigacion-mercado",
+    "title_tag": "Investigación de Mercado | Suggestion",
+    "meta_description": "Investigación de mercado profesional para decisiones estratégicas. Análisis de competencia, estudios de mercado, consumer insights.",
+    "service_label": "Investigación de Mercado",
+    "h1_title": "Datos que impulsan decisiones",
+    "hero_description": "Investigamos tu mercado, competencia y consumidores para darte insights accionables. Decisiones basadas en datos, no suposiciones.",
+    "features": [
+      {
+        "name": "Análisis de Competencia",
+        "description": "Mapeo completo de competidores, estrategias y positioning."
+      },
+      {
+        "name": "Estudios de Mercado",
+        "description": "Tamaño de mercado, segmentación, tendencias y proyecciones."
+      },
+      {
+        "name": "Consumer Insights",
+        "description": "Entrevistas, focus groups, encuestas y análisis etnográfico."
+      },
+      {
+        "name": "Brand Tracking",
+        "description": "Monitoreo de percepción, awareness y salud de marca."
+      },
+      {
+        "name": "Benchmarking",
+        "description": "Comparación con mejores prácticas de la industria."
+      },
+      {
+        "name": "Customer Satisfaction",
+        "description": "NPS, CSAT, estudios de satisfacción y loyalty."
+      },
+      {
+        "name": "Product Testing",
+        "description": "Pruebas de concepto, producto y precio."
+      },
+      {
+        "name": "Trend Analysis",
+        "description": "Identificación de tendencias emergentes en tu categoría."
+      },
+      {
+        "name": "Secondary Research",
+        "description": "Análisis de datos existentes, reportes y fuentes secundarias."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Reduce Riesgos",
+        "description": "Valida hipótesis antes de invertir. Conoce el mercado antes de entrar."
+      },
+      {
+        "name": "Conoce tu Cliente",
+        "description": "Entiende qué piensan, necesitan y valoran realmente tus consumidores."
+      },
+      {
+        "name": "Supera a la Competencia",
+        "description": "Identifica sus fortalezas, debilidades y estrategias para diferenciarte."
+      },
+      {
+        "name": "Descubre Oportunidades",
+        "description": "Encuentra nichos, tendencias y espacios no atendidos en tu mercado."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Objetivos",
+        "description": "Definimos las preguntas clave que necesitas responder."
+      },
+      {
+        "name": "Recolección",
+        "description": "Ejecutamos investigación de campo y análisis de datos."
+      },
+      {
+        "name": "Insights",
+        "description": "Entregamos hallazgos con recomendaciones accionables."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "original_price": "S/3,000",
+        "discount": "-50%",
+        "current_price": "S/1,500",
+        "period": "/proyecto",
+        "includes": [
+          "Análisis general del mercado",
+          "Perfil de tu cliente ideal",
+          "Análisis básico de competencia",
+          "50 encuestas a tu público objetivo",
+          "Conclusiones claras y accionables",
+          "Reporte ejecutivo"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/5,000",
+        "discount": "-40%",
+        "current_price": "S/3,000",
+        "period": "/proyecto",
+        "includes": [
+          "Todo lo del plan Starter",
+          "Análisis profundo del cliente",
+          "Mapa de competencia (precios y oferta)",
+          "Identificación de oportunidades",
+          "150 encuestas a tu público objetivo",
+          "Recomendaciones estratégicas",
+          "Reporte + presentación"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/8,570",
+        "discount": "-30%",
+        "current_price": "S/6,000",
+        "period": "/proyecto",
+        "includes": [
+          "Todo lo del plan Business",
+          "Segmentación avanzada del mercado",
+          "Customer journey",
+          "Análisis de precios y posicionamiento",
+          "300 encuestas a tu público objetivo",
+          "10 a 15 entrevistas a clientes reales",
+          "Estrategia basada en datos",
+          "Presentación + sesión de consultoría"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Estudios realizados"
+      },
+      {
+        "value": "0+",
+        "label": "Industrias cubiertas"
+      },
+      {
+        "value": "0K+",
+        "label": "Encuestas procesadas"
+      },
+      {
+        "value": "0%",
+        "label": "Precisión metodológica"
+      }
+    ]
+  },
+  "suggestion-svc-merchandising": {
+    "filename": "suggestion-svc-merchandising",
+    "title_tag": "Merchandising Corporativo | Suggestion",
+    "meta_description": "Merchandising corporativo y productos promocionales. Artículos personalizados que refuerzan tu marca y generan recordación.",
+    "service_label": "Merchandising",
+    "h1_title": "Productos que refuerzan tu marca",
+    "hero_description": "Creamos y producimos artículos promocionales que la gente realmente quiere usar. Merchandising que genera recordación y fidelidad.",
+    "features": [
+      {
+        "name": "Ropa Corporativa",
+        "description": "Camisetas, polos, chamarras, uniformes."
+      },
+      {
+        "name": "Artículos de Oficina",
+        "description": "Agendas, bolígrafos, libretas, desk accessories."
+      },
+      {
+        "name": "Tecnología",
+        "description": "USBs, power banks, audífonos, gadgets."
+      },
+      {
+        "name": "Hogar y Estilo de Vida",
+        "description": "Termos, tazas, paraguas, bolsas."
+      },
+      {
+        "name": "Kits Corporativos",
+        "description": "Bienvenida, navideños, especiales."
+      },
+      {
+        "name": "Eco-friendly",
+        "description": "Productos sostenibles y reciclados."
+      },
+      {
+        "name": "Producción Express",
+        "description": "Entregas urgentes cuando lo necesitas."
+      },
+      {
+        "name": "Diseño de Empaque",
+        "description": "Presentación premium para cada producto."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Recordación de Marca",
+        "description": "Artículos útiles que mantienen tu marca visible día a día."
+      },
+      {
+        "name": "Fidelización",
+        "description": "Regalos que crean vínculo emocional con clientes y empleados."
+      },
+      {
+        "name": "Calidad Garantizada",
+        "description": "Productos duraderos que no terminan en la basura."
+      },
+      {
+        "name": "Personalización Total",
+        "description": "Diseño, materiales y técnicas adaptados a tu marca."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Briefing",
+        "description": "Definimos objetivos, presupuesto y productos ideales."
+      },
+      {
+        "name": "Propuesta",
+        "description": "Catálogo curado con opciones y cotización detallada."
+      },
+      {
+        "name": "Aprobación",
+        "description": "Muestras físicas y diseño final para aprobación."
+      },
+      {
+        "name": "Entrega",
+        "description": "Producción y logística hasta tu puerta."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Kits Corporativos",
+        "original_price": "",
+        "discount": "",
+        "current_price": "",
+        "period": "",
+        "includes": [
+          "CRM y Automatización",
+          "Marketing Digital",
+          "Desarrollo Web",
+          "Redes Sociales",
+          "Branding",
+          "SEO",
+          "Contacto",
+          "Portafolio",
+          "Nosotros",
+          "Blog",
+          "+51 937 770 159",
+          "hablemos@suggestion.pe",
+          "Residencial Jardin C4, Urb San jose"
+        ]
+      },
+      {
+        "name": "Premium Gifts",
+        "original_price": "",
+        "discount": "",
+        "current_price": "",
+        "period": "",
+        "includes": [
+          "CRM y Automatización",
+          "Marketing Digital",
+          "Desarrollo Web",
+          "Redes Sociales",
+          "Branding",
+          "SEO",
+          "Contacto",
+          "Portafolio",
+          "Nosotros",
+          "Blog",
+          "+51 937 770 159",
+          "hablemos@suggestion.pe",
+          "Residencial Jardin C4, Urb San jose"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Productos disponibles"
+      },
+      {
+        "value": "0+",
+        "label": "Clientes activos"
+      },
+      {
+        "value": "0K+",
+        "label": "Artículos entregados"
+      }
+    ]
+  },
+  "suggestion-svc-imprenta-corporativa": {
+    "filename": "suggestion-svc-imprenta-corporativa",
+    "title_tag": "Imprenta Corporativa | Suggestion",
+    "meta_description": "Imprenta corporativa para empresas. Tarjetas de presentación, papelería, folletos, catálogos y materiales impresos de alta calidad.",
+    "service_label": "Imprenta Corporativa",
+    "h1_title": "Material impreso de calidad",
+    "hero_description": "Producción de materiales impresos con la calidad que tu marca merece. Desde tarjetas hasta catálogos completos, con acabados que impresionan.",
+    "features": [
+      {
+        "name": "Tarjetas de Presentación",
+        "description": "Offset, digital, con acabados especiales."
+      },
+      {
+        "name": "Papelería Corporativa",
+        "description": "Hojas membretadas, sobres, carpetas."
+      },
+      {
+        "name": "Folletos y Flyers",
+        "description": "Bi-fold, tri-fold, volantes promocionales."
+      },
+      {
+        "name": "Catálogos",
+        "description": "Encuadernación profesional, alta gama."
+      },
+      {
+        "name": "Revistas",
+        "description": "Publicaciones periódicas, newsletters."
+      },
+      {
+        "name": "Libros",
+        "description": "Impresión de libros, manuales, anuarios."
+      },
+      {
+        "name": "Etiquetas y Stickers",
+        "description": "Adhesivos, etiquetas de producto."
+      },
+      {
+        "name": "Empaques",
+        "description": "Cajas, bolsas, packaging personalizado."
+      },
+      {
+        "name": "Gran Formato",
+        "description": "Posters, banners, displays."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Calidad Premium",
+        "description": "Papeles, tintas y acabados de primera calidad."
+      },
+      {
+        "name": "Asesoría Técnica",
+        "description": "Te guiamos en formatos, papeles y acabados óptimos."
+      },
+      {
+        "name": "Tiempos Competitivos",
+        "description": "Producción ágil sin sacrificar calidad."
+      },
+      {
+        "name": "Precios Justos",
+        "description": "Cotización transparente sin sorpresas."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Cotización",
+        "description": "Especificaciones técnicas y presupuesto detallado."
+      },
+      {
+        "name": "Pre-prensa",
+        "description": "Revisión de archivos, pruebas de color."
+      },
+      {
+        "name": "Impresión",
+        "description": "Producción con control de calidad."
+      },
+      {
+        "name": "Entrega",
+        "description": "Empacado y logística de envío."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Calidad Premium",
+        "original_price": "",
+        "discount": "",
+        "current_price": "",
+        "period": "",
+        "includes": [
+          "Imprenta Corporativa",
+          "",
+          "Solicitar CotizaciónVer proceso",
+          "Tarjetas de PresentaciónOffset, digital, con acabados especiales.",
+          "",
+          "Papelería CorporativaHojas membretadas, sobres, carpetas.",
+          "",
+          "Folletos y FlyersBi-fold, tri-fold, volantes promocionales.",
+          "",
+          "CatálogosEncuadernación profesional, alta gama.",
+          "",
+          "",
+          "Asesoría TécnicaTe guiamos en formatos, papeles y acabados óptimos.",
+          "Asesoría TécnicaTe guiamos en formatos, papeles y acabados óptimos.",
+          "",
+          "Tiempos CompetitivosProducción ágil sin sacrificar calidad.",
+          "Tiempos CompetitivosProducción ágil sin sacrificar calidad.",
+          "",
+          "Precios JustosCotización transparente sin sorpresas.",
+          "Precios JustosCotización transparente sin sorpresas.",
+          "",
+          "Tarjetas de PresentaciónOffset, digital, con acabados especiales.",
+          "",
+          "Papelería CorporativaHojas membretadas, sobres, carpetas.",
+          "",
+          "Folletos y FlyersBi-fold, tri-fold, volantes promocionales.",
+          "",
+          "CatálogosEncuadernación profesional, alta gama.",
+          "",
+          "RevistasPublicaciones periódicas, newsletters.",
+          "",
+          "LibrosImpresión de libros, manuales, anuarios.",
+          "",
+          "Etiquetas y StickersAdhesivos, etiquetas de producto.",
+          "",
+          "EmpaquesCajas, bolsas, packaging personalizado.",
+          "",
+          "Gran FormatoPosters, banners, displays.",
+          "",
+          "Branding",
+          "",
+          "Merchandising",
+          "",
+          "Material POP",
+          "",
+          "BTL y Activaciones",
+          ""
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Piezas impresas mensuales"
+      },
+      {
+        "value": "0+",
+        "label": "Clientes activos"
+      },
+      {
+        "value": "0+",
+        "label": "Tipos de papel"
+      }
+    ]
+  },
+  "suggestion-svc-estructuras-publicitarias": {
+    "filename": "suggestion-svc-estructuras-publicitarias",
+    "title_tag": "Estructuras Publicitarias | Suggestion",
+    "meta_description": "Estructuras publicitarias y publicidad exterior. Billboards, espectaculares, mupis, pantallas LED y más en ubicaciones estratégicas.",
+    "service_label": "Estructuras Publicitarias",
+    "h1_title": "Publicidad de gran impacto",
+    "hero_description": "Gestionamos publicidad exterior en las mejores ubicaciones. Billboards, espectaculares, mupis y pantallas LED que capturan la atención de tu audiencia.",
+    "features": [
+      {
+        "name": "Billboards / Espectaculares",
+        "description": "Grandes formatos en avenidas y autopistas."
+      },
+      {
+        "name": "Mupis",
+        "description": "Pantallas en estaciones de metro, malls y más."
+      },
+      {
+        "name": "Pantallas LED",
+        "description": "Video digital en ubicaciones premium."
+      },
+      {
+        "name": "Paredes y Mantas",
+        "description": "Cobertura total en fachadas de edificios."
+      },
+      {
+        "name": "Parabuses",
+        "description": "Publicidad en stops de transporte público."
+      },
+      {
+        "name": "Esquinas y Banderolas",
+        "description": "Formatos en intersecciones clave."
+      },
+      {
+        "name": "Torres",
+        "description": "Estructuras verticales de alta visibilidad."
+      },
+      {
+        "name": "Cines",
+        "description": "Pantallas en salas y áreas comunes."
+      },
+      {
+        "name": "Producción e Instalación",
+        "description": "Desde el diseño hasta la colocación."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Máxima Visibilidad",
+        "description": "Impacto visual garantizado en ubicaciones estratégicas."
+      },
+      {
+        "name": "Cobertura Amplia",
+        "description": "Llega a audiencias masivas en puntos de alto tráfico."
+      },
+      {
+        "name": "Recordación Alta",
+        "description": "El outdoor tiene una de las tasas más altas de recordación."
+      },
+      {
+        "name": "24/7 Activo",
+        "description": "Tu mensaje trabaja todos los días, todo el día."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Análisis",
+        "description": "Definimos ubicaciones según tu target y presupuesto."
+      },
+      {
+        "name": "Propuesta",
+        "description": "Mapa con ubicaciones, fotos, tráfico y precios."
+      },
+      {
+        "name": "Producción",
+        "description": "Diseño e impresión del material publicitario."
+      },
+      {
+        "name": "Instalación",
+        "description": "Colocación y monitoreo durante la campaña."
+      }
+    ],
+    "plans": [],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Ubicaciones disponibles"
+      },
+      {
+        "value": "0+",
+        "label": "Ciudades cubiertas"
+      },
+      {
+        "value": "0M+",
+        "label": "Impresiones diarias"
+      },
+      {
+        "value": "0+",
+        "label": "Campañas ejecutadas"
+      }
+    ]
+  },
+  "suggestion-svc-publicidad-movil": {
+    "filename": "suggestion-svc-publicidad-movil",
+    "title_tag": "Publicidad Móvil | Suggestion",
+    "meta_description": "Publicidad móvil y en movimiento. Vehículos publicitarios, wraps, pantallas LED móviles y más para llevar tu mensaje por toda la ciudad.",
+    "service_label": "Publicidad Móvil",
+    "h1_title": "Tu marca en movimiento",
+    "hero_description": "Publicidad que va donde está tu audiencia. Vehículos, pantallas LED móviles y más formatos que recorren la ciudad generando impacto.",
+    "features": [
+      {
+        "name": "Wraps Vehiculares",
+        "description": "Impresión e instalación en flotillas o vehículos propios."
+      },
+      {
+        "name": "Pantallas LED Móviles",
+        "description": "Videobillboards en camiones para campañas itinerantes."
+      },
+      {
+        "name": "Bicicletas Publicitarias",
+        "description": "Formatos eco-amigables para zonas peatonales."
+      },
+      {
+        "name": "Taxis Publicitarios",
+        "description": "Publicidad en taxis con alto tráfico urbano."
+      },
+      {
+        "name": "Moto-Billboards",
+        "description": "Trailers motociclista para zonas específicas."
+      },
+      {
+        "name": "Flotas de Reparto",
+        "description": "Branding de vehículos de delivery y logística."
+      },
+      {
+        "name": "Geo-fencing",
+        "description": "Segmentación por ubicación para impactos digitales complementarios."
+      },
+      {
+        "name": "Reporteo GPS",
+        "description": "Tracking en tiempo real de rutas y cobertura."
+      },
+      {
+        "name": "Diseño e Instalación",
+        "description": "Servicio completo de producción e instalación."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Alcance Amplio",
+        "description": "Tu mensaje recorre múltiples zonas en un solo día."
+      },
+      {
+        "name": "Alto Impacto",
+        "description": "Nadie ignora un vehículo o pantalla llamativa en movimiento."
+      },
+      {
+        "name": "Flexibilidad",
+        "description": "Rutas personalizadas según tu target y objetivos."
+      },
+      {
+        "name": "Costo-Efectivo",
+        "description": "Más impresiones por peso invertido que formatos fijos."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Estrategia",
+        "description": "Definimos zonas objetivo y rutas óptimas."
+      },
+      {
+        "name": "Producción",
+        "description": "Diseño e impresión del material publicitario."
+      },
+      {
+        "name": "Instalación",
+        "description": "Aplicación profesional en vehículos o pantallas."
+      },
+      {
+        "name": "Operación",
+        "description": "Ejecución de rutas con tracking y reportes."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "original_price": "S/140",
+        "discount": "-50%",
+        "current_price": "S/70",
+        "period": "por día",
+        "includes": [
+          "Contrato mínimo: 15 días",
+          "1 Bicivalla luminosa",
+          "Activación de 4 horas diarias",
+          "Recorrido en zonas estratégicas",
+          "Visibilidad en horario diurno y nocturno"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/200",
+        "discount": "-40%",
+        "current_price": "S/120",
+        "period": "por día",
+        "includes": [
+          "Contrato mínimo: 15 días",
+          "1 Bicivalla luminosa",
+          "1 Bicipluma",
+          "Activación de 4 horas diarias",
+          "Mayor cobertura en campo",
+          "Refuerzo de impacto visual en movimiento"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/210",
+        "discount": "-30%",
+        "current_price": "S/150",
+        "period": "por día",
+        "includes": [
+          "Contrato mínimo: 15 días",
+          "1 Bicivalla luminosa",
+          "2 Biciplumas",
+          "Activación de 4 horas diarias",
+          "Alta visibilidad en todo momento",
+          "Mayor recordación de marca"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0K+",
+        "label": "Impresiones diarias"
+      },
+      {
+        "value": "0+",
+        "label": "Vehículos activos"
+      },
+      {
+        "value": "0+",
+        "label": "Ciudades operadas"
+      },
+      {
+        "value": "0%",
+        "label": "Recuerdo de marca"
+      }
+    ]
+  },
+  "suggestion-svc-btl-activaciones": {
+    "filename": "suggestion-svc-btl-activaciones",
+    "title_tag": "BTL y Activaciones | Suggestion",
+    "meta_description": "BTL y activaciones de marca. Experiencias presenciales, eventos, sampling, roadshows y activaciones que generan conexión emocional.",
+    "service_label": "BTL y Activaciones",
+    "h1_title": "Experiencias que conectan",
+    "hero_description": "Creamos experiencias presenciales que dejan huella. Activaciones, sampling, roadshows y eventos que generan conexión emocional real con tu audiencia.",
+    "features": [
+      {
+        "name": "Activaciones de Marca",
+        "description": "Experiencias inmersivas en puntos de venta y eventos."
+      },
+      {
+        "name": "Sampling",
+        "description": "Distribución de muestras con personal capacitado."
+      },
+      {
+        "name": "Roadshows",
+        "description": "Tours itinerantes por múltiples locaciones."
+      },
+      {
+        "name": "Eventos Corporativos",
+        "description": "Lanzamientos, inauguraciones, aniversarios."
+      },
+      {
+        "name": "Pop-up Stores",
+        "description": "Tiendas temporales en ubicaciones estratégicas."
+      },
+      {
+        "name": "Exhibiciones",
+        "description": "Stands en ferias, expos y convenciones."
+      },
+      {
+        "name": "Guerrilla Marketing",
+        "description": "Acciones sorpresa de alto impacto."
+      },
+      {
+        "name": "Ambientaciones",
+        "description": "Decoración temática de espacios."
+      },
+      {
+        "name": "Staff y Logística",
+        "description": "Coordinación completa de personal y recursos."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Conexión Real",
+        "description": "Nada supera la experiencia directa con tu marca."
+      },
+      {
+        "name": "Memorable",
+        "description": "Las experiencias se recuerdan más que la publicidad."
+      },
+      {
+        "name": "Genera Contenido",
+        "description": "Cada activación es contenido orgánico para redes."
+      },
+      {
+        "name": "Datos de Primera Mano",
+        "description": "Obtén feedback directo de tu audiencia."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Concepto",
+        "description": "Idea creativa alineada a objetivos de marca."
+      },
+      {
+        "name": "Planificación",
+        "description": "Logística, permisos, recursos y cronograma."
+      },
+      {
+        "name": "Producción",
+        "description": "Montaje, staff, materiales y ejecución."
+      },
+      {
+        "name": "Informe",
+        "description": "Métricas, fotos, videos y learnings."
+      }
+    ],
+    "plans": [
+      {
+        "name": "Eventos Corporativos",
+        "original_price": "S/2,100",
+        "discount": "-50%",
+        "current_price": "S/2,100-50%S/1,050por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "1 anfitriona / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 supervisor",
+          "Captación básica de leads",
+          "Interacción directa con el público",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "3 anfitrionas / publiman",
+          "1 animador",
+          "2 volanteros",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Dinámica de interacción (juego o activación)",
+          "Captación estructurada de leads",
+          "Base de datos entregable",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "2 anfitrionas / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Experiencia de marca (dinámica completa)",
+          "Alta captación de leads",
+          "Supervisión total en campo",
+          "Base de datos lista para ventas",
+          "Reporte fotográfico"
+        ]
+      },
+      {
+        "name": "Planificación",
+        "original_price": "S/2,100",
+        "discount": "-50%",
+        "current_price": "S/2,100-50%S/1,050por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "1 anfitriona / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 supervisor",
+          "Captación básica de leads",
+          "Interacción directa con el público",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "3 anfitrionas / publiman",
+          "1 animador",
+          "2 volanteros",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Dinámica de interacción (juego o activación)",
+          "Captación estructurada de leads",
+          "Base de datos entregable",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "2 anfitrionas / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Experiencia de marca (dinámica completa)",
+          "Alta captación de leads",
+          "Supervisión total en campo",
+          "Base de datos lista para ventas",
+          "Reporte fotográfico"
+        ]
+      },
+      {
+        "name": "Starter",
+        "original_price": "S/2,100",
+        "discount": "-50%",
+        "current_price": "S/2,100-50%S/1,050por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "1 anfitriona / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 supervisor",
+          "Captación básica de leads",
+          "Interacción directa con el público",
+          "Reporte fotográfico"
+        ]
+      },
+      {
+        "name": "Business",
+        "original_price": "S/3,000",
+        "discount": "-40%",
+        "current_price": "S/3,000-40%S/1,800por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "3 anfitrionas / publiman",
+          "1 animador",
+          "2 volanteros",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Dinámica de interacción (juego o activación)",
+          "Captación estructurada de leads",
+          "Base de datos entregable",
+          "Reporte fotográfico"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "original_price": "S/3,430",
+        "discount": "-30%",
+        "current_price": "S/3,430-30%S/2,400por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "2 anfitrionas / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Experiencia de marca (dinámica completa)",
+          "Alta captación de leads",
+          "Supervisión total en campo",
+          "Base de datos lista para ventas",
+          "Reporte fotográfico"
+        ]
+      },
+      {
+        "name": "¿Cuánto tiempo antes debo planificar?",
+        "original_price": "S/2,100",
+        "discount": "-50%",
+        "current_price": "S/2,100-50%S/1,050por activación",
+        "period": "",
+        "includes": [
+          "Activación de 3 horas",
+          "1 anfitriona / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 supervisor",
+          "Captación básica de leads",
+          "Interacción directa con el público",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "3 anfitrionas / publiman",
+          "1 animador",
+          "2 volanteros",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Dinámica de interacción (juego o activación)",
+          "Captación estructurada de leads",
+          "Base de datos entregable",
+          "Reporte fotográfico",
+          "Activación de 3 horas",
+          "2 anfitrionas / publiman",
+          "1 animador",
+          "1 volantero",
+          "1 personaje (muñeco o bailarín)",
+          "1 supervisor",
+          "Experiencia de marca (dinámica completa)",
+          "Alta captación de leads",
+          "Supervisión total en campo",
+          "Base de datos lista para ventas",
+          "Reporte fotográfico"
+        ]
+      }
+    ],
+    "stats": [
+      {
+        "value": "0+",
+        "label": "Activaciones realizadas"
+      },
+      {
+        "value": "0M+",
+        "label": "Personas impactadas"
+      },
+      {
+        "value": "0%",
+        "label": "Satisfacción"
+      },
+      {
+        "value": "0+",
+        "label": "Ciudades"
+      }
+    ]
+  },
+  "suggestion-svc-material-pop": {
+    "filename": "suggestion-svc-material-pop",
+    "title_tag": "Material POP - Punto de Venta | Suggestion",
+    "meta_description": "Material POP para puntos de venta. Displays, exhibidores, cartelería, mostradores y materiales que destacan tu producto en el punto de compra.",
+    "service_label": "Material POP",
+    "h1_title": "Destaca en el punto de venta",
+    "hero_description": "Diseñamos y producimos materiales POP que capturan la atención en el momento decisivo. Displays, exhibidores y más para que tu producto sea el elegido.",
+    "features": [
+      {
+        "name": "Displays de Mostrador",
+        "description": "Exhibidores compactos para puntos de venta."
+      },
+      {
+        "name": "Displays de Piso",
+        "description": "Estructuras autoportantes de gran visibilidad."
+      },
+      {
+        "name": "Cabeceras de Góndola",
+        "description": "Espacios premium en supermercados."
+      },
+      {
+        "name": "Islas y Shop-in-Shop",
+        "description": "Espacios dedicados dentro de tiendas."
+      },
+      {
+        "name": "Cartelería",
+        "description": "Carteles, posters, wobblers y más."
+      },
+      {
+        "name": "Stoppers y Stripers",
+        "description": "Material colgante para lineales."
+      },
+      {
+        "name": "Exhibidores de Producto",
+        "description": "Mostradores con producto cargado."
+      },
+      {
+        "name": "Señalética",
+        "description": "Letreros y señalética para tiendas."
+      },
+      {
+        "name": "Mobiliario",
+        "description": "Mostradores, kioscos y mobiliario temporal."
+      }
+    ],
+    "why_choose": [
+      {
+        "name": "Impacto en el Momento Clave",
+        "description": "Tu producto brilla justo cuando el consumidor decide."
+      },
+      {
+        "name": "Aumento de Ventas",
+        "description": "El POP bien ejecutado incrementa ventas hasta un 25%."
+      },
+      {
+        "name": "Visibilidad Competitiva",
+        "description": "Destaca entre decenas de productos similares."
+      },
+      {
+        "name": "Versatilidad de Formatos",
+        "description": "Soluciones para cualquier espacio y presupuesto."
+      }
+    ],
+    "methodology": [
+      {
+        "name": "Brief",
+        "description": "Objetivos, puntos de venta, productos a exhibir."
+      },
+      {
+        "name": "Diseño",
+        "description": "Concepto, renders y aprobación visual."
+      },
+      {
+        "name": "Producción",
+        "description": "Fabricación con materiales de calidad."
+      },
+      {
+        "name": "Instalación",
+        "description": "Logística y colocación en tiendas."
+      }
+    ],
+    "plans": [],
+    "stats": [
+      {
+        "value": "0%",
+        "label": "Incremento promedio en ventas"
+      },
+      {
+        "value": "0+",
+        "label": "Displays producidos"
+      },
+      {
+        "value": "0+",
+        "label": "Cadenas atendidas"
+      },
+      {
+        "value": "0%",
+        "label": "Personalizable"
+      }
+    ]
+  }
+}
