@@ -35,27 +35,34 @@ model Plan {
   isRecommended Boolean  @default(false)
   order         Int      @default(0)
   service       Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  selections    ClientService[]
 }
 
 model Client {
-  id        String   @id @default(cuid())
-  name      String
-  activity  String   // rubro
-  startDate String   // fecha de inicio
-  location  String
-  phone     String
-  email     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  services  ClientService[]
+  id              String   @id @default(cuid())
+  name            String
+  activity        String   // rubro
+  startDate       String   // fecha de inicio
+  location        String
+  phone           String
+  email           String
+  status          String   @default("pendiente")  // "pendiente" | "aceptado"
+  anticipoPagado  Boolean  @default(false)
+  descuento       Float    @default(0)             // monto en soles
+  fechaAceptacion String?  // fecha en que se aceptó la proforma
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  services        ClientService[]
 }
 
 model ClientService {
-  id        String   @id @default(cuid())
-  clientId  String
-  serviceId String
-  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  id             String   @id @default(cuid())
+  clientId       String
+  serviceId      String
+  selectedPlanId String?  // plan elegido por el cliente
+  client         Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  service        Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  selectedPlan   Plan?    @relation(fields: [selectedPlanId], references: [id], onDelete: SetNull)
 
   @@unique([clientId, serviceId])
 }

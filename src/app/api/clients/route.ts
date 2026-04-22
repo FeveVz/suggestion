@@ -8,7 +8,14 @@ export async function GET() {
       include: {
         services: {
           include: {
-            service: true
+            service: {
+              include: {
+                plans: {
+                  orderBy: { order: 'asc' }
+                }
+              }
+            },
+            selectedPlan: true
           }
         }
       },
@@ -56,7 +63,14 @@ export async function POST(request: Request) {
       include: {
         services: {
           include: {
-            service: true
+            service: {
+              include: {
+                plans: {
+                  orderBy: { order: 'asc' }
+                }
+              }
+            },
+            selectedPlan: true
           }
         }
       }

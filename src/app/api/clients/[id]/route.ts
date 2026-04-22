@@ -15,9 +15,12 @@ export async function GET(
           include: {
             service: {
               include: {
-                plans: true
+                plans: {
+                  orderBy: { order: 'asc' }
+                }
               }
-            }
+            },
+            selectedPlan: true
           }
         }
       }
@@ -50,8 +53,76 @@ export async function PUT(
 
     const { id } = await params
     const body = await request.json()
-    const { name, activity, startDate, location, phone, email, serviceIds } = body
+    const { name, activity, startDate, location, phone, email, serviceIds,
+            // New fields for acceptance flow
+            status, anticipoPagado, descuento, fechaAceptacion,
+            // Plan selections: array of { serviceId, selectedPlanId }
+            planSelections } = body
 
+    // If this is an acceptance update (has planSelections or status change)
+    if (status === 'aceptado' && planSelections) {
+      // Update client status fields
+      const updatedClient = await db.client.update({
+        where: { id },
+        data: {
+          status: 'aceptado',
+          anticipoPagado: anticipoPagado ?? false,
+          descuento: descuento ?? 0,
+          fechaAceptacion: fechaAceptacion || new Date().toISOString().split('T')[0],
+          startDate: startDate || undefined,
+        },
+        include: {
+          services: {
+            include: {
+              service: {
+                include: {
+                  plans: {
+                    orderBy: { order: 'asc' }
+                  }
+                }
+              },
+              selectedPlan: true
+            }
+          }
+        }
+      })
+
+      // Update plan selections for each service
+      for (const selection of planSelections as Array<{ serviceId: string; selectedPlanId: string | null }>) {
+        await db.clientService.updateMany({
+          where: {
+            clientId: id,
+            serviceId: selection.serviceId,
+          },
+          data: {
+            selectedPlanId: selection.selectedPlanId,
+          }
+        })
+      }
+
+      // Refetch with updated data
+      const refreshedClient = await db.client.findUnique({
+        where: { id },
+        include: {
+          services: {
+            include: {
+              service: {
+                include: {
+                  plans: {
+                    orderBy: { order: 'asc' }
+                  }
+                }
+              },
+              selectedPlan: true
+            }
+          }
+        }
+      })
+
+      return NextResponse.json(refreshedClient)
+    }
+
+    // Standard client update (edit form)
     // Delete existing service connections and recreate
     await db.clientService.deleteMany({
       where: { clientId: id }
@@ -75,7 +146,14 @@ export async function PUT(
       include: {
         services: {
           include: {
-            service: true
+            service: {
+              include: {
+                plans: {
+                  orderBy: { order: 'asc' }
+                }
+              }
+            },
+            selectedPlan: true
           }
         }
       }

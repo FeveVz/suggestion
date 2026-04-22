@@ -19,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -58,20 +57,13 @@ import {
   LogOut,
   Package,
   Users,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Percent,
 } from 'lucide-react'
 
 // Types
-interface Service {
-  id: string
-  name: string
-  slug: string
-  description: string
-  icon: string
-  category: string
-  methodology: string | null
-  plans: Plan[]
-}
-
 interface Plan {
   id: string
   name: string
@@ -85,6 +77,25 @@ interface Plan {
   order: number
 }
 
+interface Service {
+  id: string
+  name: string
+  slug: string
+  description: string
+  icon: string
+  category: string
+  methodology: string | null
+  plans: Plan[]
+}
+
+interface ClientService {
+  id: string
+  serviceId: string
+  selectedPlanId: string | null
+  service: Service
+  selectedPlan: Plan | null
+}
+
 interface Client {
   id: string
   name: string
@@ -93,9 +104,11 @@ interface Client {
   location: string
   phone: string
   email: string
-  services: {
-    service: Service
-  }[]
+  status: string
+  anticipoPagado: boolean
+  descuento: number
+  fechaAceptacion: string | null
+  services: ClientService[]
 }
 
 // Client Form Component
@@ -117,7 +130,7 @@ function ClientForm({
   const [phone, setPhone] = useState(client?.phone || '')
   const [email, setEmail] = useState(client?.email || '')
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>(
-    client?.services.map(s => s.service.id) || []
+    client?.services.map(s => s.serviceId) || []
   )
   const [saving, setSaving] = useState(false)
 
@@ -390,19 +403,341 @@ function ServiceForm({
   )
 }
 
+// Accept Proforma Dialog Component
+function AcceptProformaDialog({
+  client,
+  open,
+  onOpenChange,
+  onSave,
+}: {
+  client: Client
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onSave: (data: Record<string, unknown>) => void
+}) {
+  const [selectedPlans, setSelectedPlans] = useState<Record<string, string | null>>({})
+  const [startDate, setStartDate] = useState(client.startDate || new Date().toISOString().split('T')[0])
+  const [anticipoPagado, setAnticipoPagado] = useState(client.anticipoPagado || false)
+  const [descuento, setDescuento] = useState(client.descuento || 0)
+  const [saving, setSaving] = useState(false)
+
+  // Initialize selected plans from existing data
+  useEffect(() => {
+    if (open) {
+      const existing: Record<string, string | null> = {}
+      client.services.forEach(cs => {
+        existing[cs.serviceId] = cs.selectedPlanId || null
+      })
+      setSelectedPlans(existing)
+      setStartDate(client.startDate || new Date().toISOString().split('T')[0])
+      setAnticipoPagado(client.anticipoPagado || false)
+      setDescuento(client.descuento || 0)
+    }
+  }, [open, client])
+
+  const selectPlan = (serviceId: string, planId: string) => {
+    setSelectedPlans(prev => ({
+      ...prev,
+      [serviceId]: prev[serviceId] === planId ? null : planId
+    }))
+  }
+
+  // Calculate totals
+  const subtotal = client.services.reduce((sum, cs) => {
+    const planId = selectedPlans[cs.serviceId]
+    if (!planId) return sum
+    const plan = cs.service.plans.find(p => p.id === planId)
+    return sum + (plan?.price || 0)
+  }, 0)
+
+  const descuentoPct = subtotal > 0 ? (descuento / subtotal) * 100 : 0
+  const total = Math.max(0, subtotal - descuento)
+
+  const allPlansSelected = client.services.every(cs => selectedPlans[cs.serviceId])
+
+  const handleSubmit = async () => {
+    setSaving(true)
+    const planSelections = client.services.map(cs => ({
+      serviceId: cs.serviceId,
+      selectedPlanId: selectedPlans[cs.serviceId] || null,
+    }))
+    await onSave({
+      status: 'aceptado',
+      startDate,
+      anticipoPagado,
+      descuento,
+      fechaAceptacion: new Date().toISOString().split('T')[0],
+      planSelections,
+    })
+    setSaving(false)
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" style={{ color: '#22c55e' }} />
+            Aceptar Proforma — {client.name}
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-6">
+          {/* Fecha de inicio */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="font-semibold">Fecha de inicio designada</Label>
+              <Input
+                type="date"
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="font-semibold">Anticipo de confirmación</Label>
+              <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                <input
+                  type="checkbox"
+                  checked={anticipoPagado}
+                  onChange={e => setAnticipoPagado(e.target.checked)}
+                  className="h-5 w-5 rounded border-gray-300"
+                  style={{ accentColor: '#22c55e' }}
+                />
+                <div>
+                  <span className="text-sm font-medium">{anticipoPagado ? '✅ Anticipo abonado' : '⬜ Anticipo no abonado'}</span>
+                  <p className="text-xs text-gray-500">Marca si el cliente ya abonó el anticipo de confirmación</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* Plan selection per service */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4">Selecciona el plan elegido por cada servicio</h3>
+            <div className="space-y-6">
+              {client.services.map(cs => {
+                const plans = cs.service.plans.sort((a, b) => a.order - b.order)
+                return (
+                  <div key={cs.serviceId} className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{cs.service.icon}</span>
+                      <h4 className="font-semibold text-gray-900">{cs.service.name}</h4>
+                      {selectedPlans[cs.serviceId] && (
+                        <Badge className="text-xs" style={{ background: '#22c55e20', color: '#16a34a', borderColor: 'transparent' }}>
+                          Plan seleccionado
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {plans.map(plan => {
+                        const isSelected = selectedPlans[cs.serviceId] === plan.id
+                        const features: string[] = typeof plan.features === 'string'
+                          ? (() => { try { return JSON.parse(plan.features) } catch { return [] } })()
+                          : []
+                        return (
+                          <div
+                            key={plan.id}
+                            onClick={() => selectPlan(cs.serviceId, plan.id)}
+                            className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
+                              isSelected
+                                ? 'border-green-500 bg-green-50 shadow-md'
+                                : 'border-gray-200 bg-white hover:border-gray-300'
+                            }`}
+                          >
+                            {/* Recommended badge */}
+                            {plan.badge && (
+                              <div
+                                className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold text-white"
+                                style={{ background: plan.isRecommended ? '#FF8D00' : '#00C0FF' }}
+                              >
+                                {plan.badge}
+                              </div>
+                            )}
+
+                            {/* Selection indicator */}
+                            <div className="absolute top-2 right-2">
+                              <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                                isSelected ? 'border-green-500 bg-green-500' : 'border-gray-300'
+                              }`}>
+                                {isSelected && <CheckCircle className="h-3 w-3 text-white" />}
+                              </div>
+                            </div>
+
+                            <div className="text-center mt-2">
+                              <p className="font-bold text-gray-900 text-sm">{plan.name}</p>
+                              <div className="mt-2">
+                                {plan.originalPrice && plan.originalPrice > plan.price && (
+                                  <span className="text-xs text-gray-400 line-through mr-1">S/{plan.originalPrice.toLocaleString()}</span>
+                                )}
+                                <span className="text-2xl font-black" style={{ color: isSelected ? '#16a34a' : '#00C0FF' }}>
+                                  S/{plan.price.toLocaleString()}
+                                </span>
+                                <span className="text-xs text-gray-500 ml-1">{plan.period}</span>
+                              </div>
+                              <p className="text-xs text-gray-500 mt-1">{plan.description}</p>
+                            </div>
+
+                            {/* Features */}
+                            {features.length > 0 && (
+                              <div className="mt-3 pt-3 border-t border-gray-100">
+                                <ul className="space-y-1">
+                                  {features.slice(0, 4).map((f, i) => (
+                                    <li key={i} className="text-[11px] text-gray-600 flex items-start gap-1">
+                                      <span className="text-green-500 mt-0.5">✓</span>
+                                      <span className="line-clamp-1">{f}</span>
+                                    </li>
+                                  ))}
+                                  {features.length > 4 && (
+                                    <li className="text-[11px] text-gray-400">+{features.length - 4} más</li>
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* Summary & Discount */}
+          <div className="bg-gray-50 rounded-xl p-5 space-y-4">
+            <h3 className="font-semibold text-gray-900">Resumen</h3>
+
+            {/* Service breakdown */}
+            <div className="space-y-2">
+              {client.services.map(cs => {
+                const planId = selectedPlans[cs.serviceId]
+                const plan = planId ? cs.service.plans.find(p => p.id === planId) : null
+                return (
+                  <div key={cs.serviceId} className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">
+                      {cs.service.icon} {cs.service.name}
+                      {plan ? ` — ${plan.name}` : ' — Sin seleccionar'}
+                    </span>
+                    <span className={`font-semibold ${plan ? 'text-gray-900' : 'text-gray-400'}`}>
+                      {plan ? `S/${plan.price.toLocaleString()}` : '—'}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+
+            <Separator />
+
+            {/* Subtotal */}
+            <div className="flex items-center justify-between font-semibold">
+              <span>Subtotal</span>
+              <span>S/{subtotal.toLocaleString()}</span>
+            </div>
+
+            {/* Discount */}
+            <div className="space-y-2">
+              <Label className="font-semibold flex items-center gap-1">
+                <DollarSign className="h-4 w-4" />
+                Descuento (opcional — monto en soles)
+              </Label>
+              <div className="flex items-center gap-3">
+                <Input
+                  type="number"
+                  min="0"
+                  max={subtotal}
+                  value={descuento || ''}
+                  onChange={e => setDescuento(Math.max(0, Math.min(Number(e.target.value) || 0, subtotal)))}
+                  placeholder="0"
+                  className="max-w-[160px]"
+                />
+                {descuento > 0 && (
+                  <div className="flex items-center gap-1 text-sm text-orange-600 font-medium">
+                    <Percent className="h-3.5 w-3.5" />
+                    {descuentoPct.toFixed(1)}% de descuento
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Total */}
+            <div className="flex items-center justify-between text-lg font-black">
+              <span>Total</span>
+              <span style={{ color: '#00C0FF' }}>S/{total.toLocaleString()}</span>
+            </div>
+
+            {/* Anticipo indicator */}
+            <div className="flex items-center gap-2 text-sm">
+              {anticipoPagado ? (
+                <span className="text-green-600 font-medium">✅ Anticipo de confirmación abonado</span>
+              ) : (
+                <span className="text-gray-500">⬜ Anticipo de confirmación pendiente</span>
+              )}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={saving || !allPlansSelected}
+              className="text-white"
+              style={{ background: allPlansSelected ? '#22c55e' : '#9ca3af' }}
+            >
+              {saving ? 'Guardando...' : 'Confirmar Aceptación'}
+            </Button>
+          </div>
+          {!allPlansSelected && (
+            <p className="text-xs text-center text-gray-500">Debes seleccionar un plan para cada servicio antes de confirmar.</p>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // Client Card Component
-function ClientCard({ client, onEdit, onDelete, onDownloadProforma }: {
+function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProforma }: {
   client: Client
   onEdit: () => void
   onDelete: () => void
   onDownloadProforma: () => void
+  onAcceptProforma: () => void
 }) {
+  const isAccepted = client.status === 'aceptado'
+  const isPending = client.status === 'pendiente'
+
+  // Calculate totals for accepted clients
+  const subtotal = client.services.reduce((sum, cs) => {
+    return sum + (cs.selectedPlan?.price || 0)
+  }, 0)
+  const total = Math.max(0, subtotal - client.descuento)
+  const descuentoPct = subtotal > 0 ? (client.descuento / subtotal) * 100 : 0
+
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className={`hover:shadow-md transition-shadow ${isAccepted ? 'border-green-200' : ''}`}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg font-bold text-gray-900 truncate">{client.name}</CardTitle>
+            <div className="flex items-center gap-2">
+              <CardTitle className="text-lg font-bold text-gray-900 truncate">{client.name}</CardTitle>
+              {isPending && (
+                <Badge className="text-[10px] px-1.5 py-0" style={{ background: '#f59e0b20', color: '#d97706', borderColor: 'transparent' }}>
+                  <Clock className="h-3 w-3 inline mr-0.5" /> Pendiente
+                </Badge>
+              )}
+              {isAccepted && (
+                <Badge className="text-[10px] px-1.5 py-0" style={{ background: '#22c55e20', color: '#16a34a', borderColor: 'transparent' }}>
+                  <CheckCircle className="h-3 w-3 inline mr-0.5" /> Aceptado
+                </Badge>
+              )}
+            </div>
             <p className="text-sm text-gray-500 mt-0.5">{client.activity}</p>
           </div>
           <DropdownMenu>
@@ -424,38 +759,94 @@ function ClientCard({ client, onEdit, onDelete, onDownloadProforma }: {
       </CardHeader>
       <CardContent className="pt-0">
         <div className="space-y-3">
+          {/* Services badges */}
           {client.services.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
-              {client.services.map(s => (
+              {client.services.map(cs => (
                 <Badge
-                  key={s.service.id}
+                  key={cs.serviceId}
                   variant="secondary"
                   className="text-xs"
                   style={{
-                    background: s.service.category === 'principal' ? '#00C0FF15' : '#FF8D0015',
-                    color: s.service.category === 'principal' ? '#00C0FF' : '#FF8D00',
+                    background: cs.service.category === 'principal' ? '#00C0FF15' : '#FF8D0015',
+                    color: cs.service.category === 'principal' ? '#00C0FF' : '#FF8D00',
                     borderColor: 'transparent'
                   }}
                 >
-                  {s.service.icon} {s.service.name}
+                  {cs.service.icon} {cs.service.name}
                 </Badge>
               ))}
             </div>
           )}
 
+          {/* Date & location */}
           <div className="flex items-center gap-4 text-xs text-gray-500">
             {client.startDate && <span>📅 {client.startDate}</span>}
             {client.location && <span>📍 {client.location}</span>}
           </div>
 
+          {/* Accepted client info */}
+          {isAccepted && (
+            <div className="bg-green-50 rounded-lg p-3 space-y-1.5 text-xs border border-green-100">
+              {/* Selected plans */}
+              {client.services.map(cs => (
+                <div key={cs.serviceId} className="flex items-center justify-between">
+                  <span className="text-gray-600">{cs.service.icon} {cs.selectedPlan?.name || '—'}</span>
+                  <span className="font-semibold text-gray-900">
+                    {cs.selectedPlan ? `S/${cs.selectedPlan.price.toLocaleString()}` : '—'}
+                  </span>
+                </div>
+              ))}
+              {client.descuento > 0 && (
+                <div className="flex items-center justify-between text-orange-600">
+                  <span>Descuento ({descuentoPct.toFixed(1)}%)</span>
+                  <span>-S/{client.descuento.toLocaleString()}</span>
+                </div>
+              )}
+              <Separator />
+              <div className="flex items-center justify-between font-bold text-sm">
+                <span>Total</span>
+                <span style={{ color: '#00C0FF' }}>S/{total.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                {client.anticipoPagado ? (
+                  <span className="text-green-600">✅ Anticipo abonado</span>
+                ) : (
+                  <span className="text-gray-500">⬜ Anticipo pendiente</span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Action buttons */}
           <div className="flex items-center gap-2 pt-2">
+            {isPending && (
+              <Button
+                onClick={onAcceptProforma}
+                size="sm"
+                className="flex-1 text-white text-xs h-9"
+                style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)' }}
+              >
+                <CheckCircle className="h-3.5 w-3.5 mr-1" /> Aceptar Proforma
+              </Button>
+            )}
+            {isAccepted && (
+              <Button
+                onClick={onAcceptProforma}
+                size="sm"
+                variant="outline"
+                className="flex-1 text-xs h-9 border-green-300 text-green-700 hover:bg-green-50"
+              >
+                <Pencil className="h-3.5 w-3.5 mr-1" /> Editar Selección
+              </Button>
+            )}
             <Button
               onClick={onDownloadProforma}
               size="sm"
-              className="flex-1 text-white text-xs h-9"
+              className="text-white text-xs h-9"
               style={{ background: 'linear-gradient(135deg, #00C0FF, #0098cc)' }}
             >
-              <Download className="h-3.5 w-3.5 mr-1" /> Descargar Proforma
+              <Download className="h-3.5 w-3.5 mr-1" /> Proforma
             </Button>
             <Button
               onClick={() => window.open(`/api/proforma/${client.id}/pdf`, '_blank')}
@@ -490,6 +881,10 @@ export function Dashboard() {
   const [deletingClient, setDeletingClient] = useState<Client | null>(null)
   const [deleteServiceOpen, setDeleteServiceOpen] = useState(false)
   const [deletingService, setDeletingService] = useState<Service | null>(null)
+
+  // Accept proforma dialog
+  const [acceptDialogOpen, setAcceptDialogOpen] = useState(false)
+  const [acceptingClient, setAcceptingClient] = useState<Client | null>(null)
 
   const fetchData = async () => {
     try {
@@ -585,6 +980,22 @@ export function Dashboard() {
 
   const handleDownloadProforma = (client: Client) => {
     window.open(`/api/proforma/${client.id}?download=true`, '_blank')
+  }
+
+  const handleAcceptProforma = async (data: Record<string, unknown>) => {
+    if (!acceptingClient) return
+    try {
+      await fetch(`/api/clients/${acceptingClient.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      setAcceptDialogOpen(false)
+      setAcceptingClient(null)
+      await fetchData()
+    } catch (error) {
+      console.error('Error accepting proforma:', error)
+    }
   }
 
   const handleLogout = async () => {
@@ -758,6 +1169,7 @@ export function Dashboard() {
                     onEdit={() => { setEditingClient(client); setClientDialogOpen(true) }}
                     onDelete={() => { setDeletingClient(client); setDeleteClientOpen(true) }}
                     onDownloadProforma={() => handleDownloadProforma(client)}
+                    onAcceptProforma={() => { setAcceptingClient(client); setAcceptDialogOpen(true) }}
                   />
                 ))}
               </div>
@@ -846,6 +1258,19 @@ export function Dashboard() {
           </div>
         )}
       </main>
+
+      {/* Accept Proforma Dialog */}
+      {acceptingClient && (
+        <AcceptProformaDialog
+          client={acceptingClient}
+          open={acceptDialogOpen}
+          onOpenChange={(open) => {
+            setAcceptDialogOpen(open)
+            if (!open) setAcceptingClient(null)
+          }}
+          onSave={handleAcceptProforma}
+        />
+      )}
 
       {/* Delete Client Alert */}
       <AlertDialog open={deleteClientOpen} onOpenChange={setDeleteClientOpen}>
