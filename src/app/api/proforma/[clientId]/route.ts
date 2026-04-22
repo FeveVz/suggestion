@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { supabase } from '@/lib/supabase'
 import { generateProformaHtml } from '@/lib/proforma-template'
 
 export async function GET(
@@ -9,28 +9,29 @@ export async function GET(
   try {
     const { clientId } = await params
 
-    const client = await db.client.findUnique({
-      where: { id: clientId },
-      include: {
-        services: {
-          include: {
-            service: {
-              include: {
-                plans: {
-                  orderBy: { order: 'asc' }
-                }
-              }
-            }
-          }
-        }
-      }
-    })
+    // Fetch client
+    const { data: client, error: clientError } = await supabase
+      .from('Client')
+      .select('*')
+      .eq('id', clientId)
+      .single()
 
-    if (!client) {
+    if (clientError || !client) {
       return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
     }
 
-    if (client.services.length === 0) {
+    // Fetch client services with service and plan details
+    const { data: clientServices, error: csError } = await supabase
+      .from('ClientService')
+      .select('*, Service(*, Plan(*))')
+      .eq('clientId', clientId)
+
+    if (csError) {
+      console.error('Error fetching client services:', csError)
+      return NextResponse.json({ error: 'Error fetching client services' }, { status: 500 })
+    }
+
+    if (!clientServices || clientServices.length === 0) {
       return NextResponse.json({ error: 'El cliente no tiene servicios asignados' }, { status: 400 })
     }
 
@@ -43,25 +44,31 @@ export async function GET(
       email: client.email
     }
 
-    const servicesData = client.services.map(cs => ({
-      name: cs.service.name,
-      slug: cs.service.slug,
-      description: cs.service.description,
-      icon: cs.service.icon,
-      category: cs.service.category,
-      methodology: cs.service.methodology,
-      plans: cs.service.plans.map(p => ({
-        name: p.name,
-        price: p.price,
-        originalPrice: p.originalPrice,
-        period: p.period,
-        description: p.description,
-        features: p.features,
-        badge: p.badge,
-        isRecommended: p.isRecommended,
-        order: p.order
-      }))
-    }))
+    const servicesData = clientServices.map((cs: Record<string, unknown>) => {
+      const service = cs.Service as Record<string, unknown>
+      const plans = ((service?.Plan as Record<string, unknown>[]) || []).sort(
+        (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
+      )
+      return {
+        name: service?.name,
+        slug: service?.slug,
+        description: service?.description,
+        icon: service?.icon,
+        category: service?.category,
+        methodology: service?.methodology,
+        plans: plans.map((p: Record<string, unknown>) => ({
+          name: p.name,
+          price: p.price,
+          originalPrice: p.originalPrice,
+          period: p.period,
+          description: p.description,
+          features: p.features,
+          badge: p.badge,
+          isRecommended: p.isRecommended,
+          order: p.order
+        }))
+      }
+    })
 
     const html = generateProformaHtml(clientData, servicesData)
 

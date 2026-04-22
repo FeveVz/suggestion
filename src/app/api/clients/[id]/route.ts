@@ -1,6 +1,31 @@
 import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { supabase } from '@/lib/supabase'
 import { isValidSession } from '@/lib/auth'
+
+async function getClientWithServices(clientId: string) {
+  const { data: client, error: clientError } = await supabase
+    .from('Client')
+    .select('*')
+    .eq('id', clientId)
+    .single()
+
+  if (clientError || !client) return null
+
+  const { data: clientServices } = await supabase
+    .from('ClientService')
+    .select('*, Service(*, Plan(*)), SelectedPlan:Plan!selectedPlanId(*)')
+    .eq('clientId', clientId)
+
+  client.services = (clientServices || []).map((cs: Record<string, unknown>) => ({
+    ...cs,
+    service: cs.Service,
+    selectedPlan: cs.SelectedPlan,
+    Service: undefined,
+    SelectedPlan: undefined,
+  }))
+
+  return client
+}
 
 export async function GET(
   _request: Request,
@@ -8,23 +33,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const client = await db.client.findUnique({
-      where: { id },
-      include: {
-        services: {
-          include: {
-            service: {
-              include: {
-                plans: {
-                  orderBy: { order: 'asc' }
-                }
-              }
-            },
-            selectedPlan: true
-          }
-        }
-      }
-    })
+    const client = await getClientWithServices(id)
 
     if (!client) {
       return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
@@ -62,112 +71,102 @@ export async function PUT(
             planSelections } = body
 
     // Verify client exists
-    const existingClient = await db.client.findUnique({ where: { id } })
-    if (!existingClient) {
+    const { data: existingClient, error: fetchError } = await supabase
+      .from('Client')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (fetchError || !existingClient) {
       return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
     }
 
     // If this is an acceptance update (has planSelections or status change)
     if (status === 'aceptado' && planSelections && Array.isArray(planSelections)) {
       // Update client status fields
-      await db.client.update({
-        where: { id },
-        data: {
+      const { error: updateError } = await supabase
+        .from('Client')
+        .update({
           status: 'aceptado',
           anticipoPagado: anticipoPagado ?? false,
           descuento: descuento ?? 0,
           fechaAceptacion: fechaAceptacion || new Date().toISOString().split('T')[0],
           startDate: startDate || undefined,
-        },
-      })
+          updatedAt: new Date().toISOString(),
+        })
+        .eq('id', id)
 
-      // Update plan selections for each service - one by one with error handling
+      if (updateError) {
+        console.error('Error updating client status:', updateError)
+      }
+
+      // Update plan selections for each service
       for (const selection of planSelections as Array<{ serviceId: string; selectedPlanId: string | null }>) {
         try {
-          // Verify the ClientService record exists
-          const clientService = await db.clientService.findFirst({
-            where: {
-              clientId: id,
-              serviceId: selection.serviceId,
-            }
-          })
+          // Find the ClientService record
+          const { data: cs } = await supabase
+            .from('ClientService')
+            .select('id')
+            .eq('clientId', id)
+            .eq('serviceId', selection.serviceId)
+            .maybeSingle()
 
-          if (clientService) {
-            await db.clientService.update({
-              where: { id: clientService.id },
-              data: {
-                selectedPlanId: selection.selectedPlanId || null,
-              }
-            })
+          if (cs) {
+            await supabase
+              .from('ClientService')
+              .update({ selectedPlanId: selection.selectedPlanId || null })
+              .eq('id', cs.id)
           } else {
             console.warn(`ClientService not found for clientId=${id}, serviceId=${selection.serviceId}`)
           }
         } catch (planError) {
           console.error(`Error updating plan selection for service ${selection.serviceId}:`, planError)
-          // Continue with other selections instead of crashing
         }
       }
 
       // Refetch with updated data
-      const refreshedClient = await db.client.findUnique({
-        where: { id },
-        include: {
-          services: {
-            include: {
-              service: {
-                include: {
-                  plans: {
-                    orderBy: { order: 'asc' }
-                  }
-                }
-              },
-              selectedPlan: true
-            }
-          }
-        }
-      })
-
+      const refreshedClient = await getClientWithServices(id)
       return NextResponse.json(refreshedClient)
     }
 
     // Standard client update (edit form)
-    // Delete existing service connections and recreate
-    await db.clientService.deleteMany({
-      where: { clientId: id }
-    })
+    // Delete existing service connections
+    await supabase.from('ClientService').delete().eq('clientId', id)
 
-    const client = await db.client.update({
-      where: { id },
-      data: {
+    // Update the client
+    const { data: client, error: updateError } = await supabase
+      .from('Client')
+      .update({
         name: name || existingClient.name,
         activity: activity || existingClient.activity,
         startDate: startDate !== undefined ? startDate : existingClient.startDate,
         location: location !== undefined ? location : existingClient.location,
         phone: phone !== undefined ? phone : existingClient.phone,
         email: email !== undefined ? email : existingClient.email,
-        services: serviceIds && serviceIds.length > 0 ? {
-          create: serviceIds.map((serviceId: string) => ({
-            serviceId
-          }))
-        } : undefined
-      },
-      include: {
-        services: {
-          include: {
-            service: {
-              include: {
-                plans: {
-                  orderBy: { order: 'asc' }
-                }
-              }
-            },
-            selectedPlan: true
-          }
-        }
-      }
-    })
+        updatedAt: new Date().toISOString(),
+      })
+      .eq('id', id)
+      .select()
+      .single()
 
-    return NextResponse.json(client)
+    if (updateError || !client) {
+      console.error('Error updating client:', updateError)
+      return NextResponse.json({ error: 'Error updating client', details: updateError?.message }, { status: 500 })
+    }
+
+    // Create new service connections
+    if (serviceIds && serviceIds.length > 0) {
+      const csRecords = serviceIds.map((serviceId: string) => ({
+        clientId: id,
+        serviceId,
+      }))
+
+      await supabase.from('ClientService').insert(csRecords)
+    }
+
+    // Fetch the complete updated client
+    const fullClient = await getClientWithServices(id)
+    return NextResponse.json(fullClient)
   } catch (error) {
     console.error('Error updating client:', error)
     return NextResponse.json({ error: 'Error updating client', details: String(error) }, { status: 500 })
@@ -191,13 +190,16 @@ export async function DELETE(
 
     const { id } = await params
 
-    await db.clientService.deleteMany({
-      where: { clientId: id }
-    })
+    // Delete client services first
+    await supabase.from('ClientService').delete().eq('clientId', id)
 
-    await db.client.delete({
-      where: { id }
-    })
+    // Delete the client
+    const { error } = await supabase.from('Client').delete().eq('id', id)
+
+    if (error) {
+      console.error('Error deleting client:', error)
+      return NextResponse.json({ error: 'Error deleting client' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

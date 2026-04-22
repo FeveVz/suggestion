@@ -1,13 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
-}
-
-export const db =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
-  })
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
+// This file is kept for backwards compatibility but is no longer used.
+// The application now uses Supabase JS client via @/lib/supabase
+// All database operations are performed through the Supabase REST API.
+export { supabase as db } from '@/lib/supabase'

@@ -1,28 +1,60 @@
 import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { supabase } from '@/lib/supabase'
 import { isValidSession } from '@/lib/auth'
 
 export async function GET() {
   try {
-    const clients = await db.client.findMany({
-      include: {
-        services: {
-          include: {
-            service: {
-              include: {
-                plans: {
-                  orderBy: { order: 'asc' }
-                }
-              }
-            },
-            selectedPlan: true
-          }
-        }
-      },
-      orderBy: { createdAt: 'desc' }
-    })
-    return NextResponse.json(clients)
-  } catch {
+    // Fetch clients
+    const { data: clients, error: clientsError } = await supabase
+      .from('Client')
+      .select('*')
+      .order('createdAt', { ascending: false })
+
+    if (clientsError) {
+      console.error('Error fetching clients:', clientsError)
+      return NextResponse.json({ error: 'Error fetching clients' }, { status: 500 })
+    }
+
+    if (!clients || clients.length === 0) {
+      return NextResponse.json([])
+    }
+
+    // Fetch all ClientService records with Service and Plan data
+    const clientIds = clients.map((c: Record<string, unknown>) => c.id)
+
+    const { data: clientServices, error: csError } = await supabase
+      .from('ClientService')
+      .select('*, Service(*, Plan(*)), SelectedPlan:Plan!selectedPlanId(*)')
+      .in('clientId', clientIds)
+
+    if (csError) {
+      console.error('Error fetching client services:', csError)
+    }
+
+    // Merge data
+    const csMap = new Map<string, unknown[]>()
+    if (clientServices) {
+      for (const cs of clientServices) {
+        const cid = cs.clientId as string
+        if (!csMap.has(cid)) csMap.set(cid, [])
+        csMap.get(cid)!.push(cs)
+      }
+    }
+
+    const result = clients.map((client: Record<string, unknown>) => ({
+      ...client,
+      services: (csMap.get(client.id as string) || []).map((cs: Record<string, unknown>) => ({
+        ...cs,
+        service: cs.Service,
+        selectedPlan: cs.SelectedPlan,
+        Service: undefined,
+        SelectedPlan: undefined,
+      })),
+    }))
+
+    return NextResponse.json(result)
+  } catch (error) {
+    console.error('Error fetching clients:', error)
     return NextResponse.json({ error: 'Error fetching clients' }, { status: 500 })
   }
 }
@@ -46,35 +78,54 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Nombre y actividad son requeridos' }, { status: 400 })
     }
 
-    const client = await db.client.create({
-      data: {
+    // Create the client
+    const { data: client, error: clientError } = await supabase
+      .from('Client')
+      .insert({
         name,
         activity,
         startDate: startDate || '',
         location: location || '',
         phone: phone || '',
         email: email || '',
-        services: serviceIds && serviceIds.length > 0 ? {
-          create: serviceIds.map((serviceId: string) => ({
-            serviceId
-          }))
-        } : undefined
-      },
-      include: {
-        services: {
-          include: {
-            service: {
-              include: {
-                plans: {
-                  orderBy: { order: 'asc' }
-                }
-              }
-            },
-            selectedPlan: true
-          }
-        }
+      })
+      .select()
+      .single()
+
+    if (clientError || !client) {
+      console.error('Error creating client:', clientError)
+      return NextResponse.json({ error: 'Error creating client', details: clientError?.message }, { status: 500 })
+    }
+
+    // Create ClientService connections if serviceIds provided
+    if (serviceIds && serviceIds.length > 0) {
+      const csRecords = serviceIds.map((serviceId: string) => ({
+        clientId: client.id,
+        serviceId,
+      }))
+
+      const { error: csError } = await supabase
+        .from('ClientService')
+        .insert(csRecords)
+
+      if (csError) {
+        console.error('Error creating client services:', csError)
       }
-    })
+    }
+
+    // Fetch the complete client with services
+    const { data: clientServices } = await supabase
+      .from('ClientService')
+      .select('*, Service(*, Plan(*)), SelectedPlan:Plan!selectedPlanId(*)')
+      .eq('clientId', client.id)
+
+    client.services = (clientServices || []).map((cs: Record<string, unknown>) => ({
+      ...cs,
+      service: cs.Service,
+      selectedPlan: cs.SelectedPlan,
+      Service: undefined,
+      SelectedPlan: undefined,
+    }))
 
     return NextResponse.json(client, { status: 201 })
   } catch (error) {
