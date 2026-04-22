@@ -894,10 +894,12 @@ export function Dashboard() {
       ])
       const clientsData = await clientsRes.json()
       const servicesData = await servicesRes.json()
-      setClients(clientsData)
-      setServices(servicesData)
+      setClients(Array.isArray(clientsData) ? clientsData : [])
+      setServices(Array.isArray(servicesData) ? servicesData : [])
     } catch (error) {
       console.error('Error fetching data:', error)
+      setClients([])
+      setServices([])
     } finally {
       setLoading(false)
     }
@@ -910,24 +912,29 @@ export function Dashboard() {
 
   const handleSaveClient = async (data: Record<string, unknown>) => {
     try {
-      if (editingClient) {
-        await fetch(`/api/clients/${editingClient.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
-      } else {
-        await fetch('/api/clients', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
+      const res = editingClient
+        ? await fetch(`/api/clients/${editingClient.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          })
+        : await fetch('/api/clients', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          })
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        alert(`Error al guardar cliente: ${errData.error || 'Error desconocido'}`)
+        return
       }
       setClientDialogOpen(false)
       setEditingClient(null)
       await fetchData()
     } catch (error) {
       console.error('Error saving client:', error)
+      alert('Error de conexión al guardar cliente. Verifica tu conexión e intenta de nuevo.')
     }
   }
 
@@ -945,24 +952,29 @@ export function Dashboard() {
 
   const handleSaveService = async (data: Record<string, unknown>) => {
     try {
-      if (editingService) {
-        await fetch(`/api/services/${editingService.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
-      } else {
-        await fetch('/api/services', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
+      const res = editingService
+        ? await fetch(`/api/services/${editingService.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          })
+        : await fetch('/api/services', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          })
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        alert(`Error al guardar servicio: ${errData.error || 'Error desconocido'}`)
+        return
       }
       setServiceDialogOpen(false)
       setEditingService(null)
       await fetchData()
     } catch (error) {
       console.error('Error saving service:', error)
+      alert('Error de conexión al guardar servicio. Verifica tu conexión e intenta de nuevo.')
     }
   }
 
@@ -985,16 +997,23 @@ export function Dashboard() {
   const handleAcceptProforma = async (data: Record<string, unknown>) => {
     if (!acceptingClient) return
     try {
-      await fetch(`/api/clients/${acceptingClient.id}`, {
+      const res = await fetch(`/api/clients/${acceptingClient.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        alert(`Error al aceptar proforma: ${errData.error || 'Error desconocido'}`)
+        return
+      }
       setAcceptDialogOpen(false)
       setAcceptingClient(null)
       await fetchData()
     } catch (error) {
       console.error('Error accepting proforma:', error)
+      alert('Error de conexión al aceptar proforma. Verifica tu conexión e intenta de nuevo.')
     }
   }
 

@@ -31,7 +31,8 @@ export async function GET(
     }
 
     return NextResponse.json(client)
-  } catch {
+  } catch (error) {
+    console.error('Error fetching client:', error)
     return NextResponse.json({ error: 'Error fetching client' }, { status: 500 })
   }
 }
@@ -41,6 +42,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Auth check
     const cookieHeader = request.headers.get('cookie') || ''
     const sessionCookie = cookieHeader
       .split(';')
@@ -59,10 +61,16 @@ export async function PUT(
             // Plan selections: array of { serviceId, selectedPlanId }
             planSelections } = body
 
+    // Verify client exists
+    const existingClient = await db.client.findUnique({ where: { id } })
+    if (!existingClient) {
+      return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
+    }
+
     // If this is an acceptance update (has planSelections or status change)
-    if (status === 'aceptado' && planSelections) {
+    if (status === 'aceptado' && planSelections && Array.isArray(planSelections)) {
       // Update client status fields
-      const updatedClient = await db.client.update({
+      await db.client.update({
         where: { id },
         data: {
           status: 'aceptado',
@@ -71,33 +79,33 @@ export async function PUT(
           fechaAceptacion: fechaAceptacion || new Date().toISOString().split('T')[0],
           startDate: startDate || undefined,
         },
-        include: {
-          services: {
-            include: {
-              service: {
-                include: {
-                  plans: {
-                    orderBy: { order: 'asc' }
-                  }
-                }
-              },
-              selectedPlan: true
-            }
-          }
-        }
       })
 
-      // Update plan selections for each service
+      // Update plan selections for each service - one by one with error handling
       for (const selection of planSelections as Array<{ serviceId: string; selectedPlanId: string | null }>) {
-        await db.clientService.updateMany({
-          where: {
-            clientId: id,
-            serviceId: selection.serviceId,
-          },
-          data: {
-            selectedPlanId: selection.selectedPlanId,
+        try {
+          // Verify the ClientService record exists
+          const clientService = await db.clientService.findFirst({
+            where: {
+              clientId: id,
+              serviceId: selection.serviceId,
+            }
+          })
+
+          if (clientService) {
+            await db.clientService.update({
+              where: { id: clientService.id },
+              data: {
+                selectedPlanId: selection.selectedPlanId || null,
+              }
+            })
+          } else {
+            console.warn(`ClientService not found for clientId=${id}, serviceId=${selection.serviceId}`)
           }
-        })
+        } catch (planError) {
+          console.error(`Error updating plan selection for service ${selection.serviceId}:`, planError)
+          // Continue with other selections instead of crashing
+        }
       }
 
       // Refetch with updated data
@@ -131,12 +139,12 @@ export async function PUT(
     const client = await db.client.update({
       where: { id },
       data: {
-        name,
-        activity,
-        startDate: startDate || '',
-        location: location || '',
-        phone: phone || '',
-        email: email || '',
+        name: name || existingClient.name,
+        activity: activity || existingClient.activity,
+        startDate: startDate !== undefined ? startDate : existingClient.startDate,
+        location: location !== undefined ? location : existingClient.location,
+        phone: phone !== undefined ? phone : existingClient.phone,
+        email: email !== undefined ? email : existingClient.email,
         services: serviceIds && serviceIds.length > 0 ? {
           create: serviceIds.map((serviceId: string) => ({
             serviceId
@@ -162,7 +170,7 @@ export async function PUT(
     return NextResponse.json(client)
   } catch (error) {
     console.error('Error updating client:', error)
-    return NextResponse.json({ error: 'Error updating client' }, { status: 500 })
+    return NextResponse.json({ error: 'Error updating client', details: String(error) }, { status: 500 })
   }
 }
 
