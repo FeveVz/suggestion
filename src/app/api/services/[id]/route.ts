@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { normalizeService } from '@/lib/normalize'
 
 export async function GET(
   _request: Request,
@@ -17,12 +18,7 @@ export async function GET(
       return NextResponse.json({ error: 'Servicio no encontrado' }, { status: 404 })
     }
 
-    // Sort plans by order
-    service.plans = ((service.Plan as Record<string, unknown>[]) || []).sort(
-      (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
-    )
-
-    return NextResponse.json(service)
+    return NextResponse.json(normalizeService(service as Record<string, unknown>))
   } catch {
     return NextResponse.json({ error: 'Error fetching service' }, { status: 500 })
   }
@@ -48,14 +44,7 @@ export async function PUT(
     const { name, slug, description, icon, category, methodology, plans } = body
 
     // Delete existing plans
-    const { error: deletePlansError } = await supabase
-      .from('Plan')
-      .delete()
-      .eq('serviceId', id)
-
-    if (deletePlansError) {
-      console.error('Error deleting existing plans:', deletePlansError)
-    }
+    await supabase.from('Plan').delete().eq('serviceId', id)
 
     // Update the service
     const { data: service, error: updateError } = await supabase
@@ -79,8 +68,8 @@ export async function PUT(
     }
 
     // Create new plans
+    let createdPlans: Record<string, unknown>[] = []
     if (plans && plans.length > 0) {
-      // Get next plan number for ID generation
       const { data: lastPlan } = await supabase
         .from('Plan')
         .select('id')
@@ -107,7 +96,7 @@ export async function PUT(
         order: i,
       }))
 
-      const { data: createdPlans, error: plansError } = await supabase
+      const { data: insertedPlans, error: plansError } = await supabase
         .from('Plan')
         .insert(planRecords)
         .select()
@@ -116,14 +105,11 @@ export async function PUT(
         console.error('Error creating plans:', plansError)
       }
 
-      service.plans = (createdPlans || []).sort(
-        (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
-      )
-    } else {
-      service.plans = []
+      createdPlans = (insertedPlans || []) as Record<string, unknown>[]
     }
 
-    return NextResponse.json(service)
+    const result = normalizeService({ ...service, Plan: createdPlans })
+    return NextResponse.json(result)
   } catch (error) {
     console.error('Error updating service:', error)
     return NextResponse.json({ error: 'Error updating service' }, { status: 500 })
@@ -147,13 +133,9 @@ export async function DELETE(
 
     const { id } = await params
 
-    // Delete plans for this service
     await supabase.from('Plan').delete().eq('serviceId', id)
-
-    // Delete client service connections
     await supabase.from('ClientService').delete().eq('serviceId', id)
 
-    // Delete the service
     const { error } = await supabase.from('Service').delete().eq('id', id)
 
     if (error) {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { normalizeService } from '@/lib/normalize'
 import { generateProformaHtml } from '@/lib/proforma-template'
 
 export async function GET(
@@ -9,7 +10,6 @@ export async function GET(
   try {
     const { clientId } = await params
 
-    // Fetch client
     const { data: client, error: clientError } = await supabase
       .from('Client')
       .select('*')
@@ -20,7 +20,6 @@ export async function GET(
       return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
     }
 
-    // Fetch client services with service and plan details
     const { data: clientServices, error: csError } = await supabase
       .from('ClientService')
       .select('*, Service(*, Plan(*))')
@@ -45,34 +44,20 @@ export async function GET(
     }
 
     const servicesData = clientServices.map((cs: Record<string, unknown>) => {
-      const service = cs.Service as Record<string, unknown>
-      const plans = ((service?.Plan as Record<string, unknown>[]) || []).sort(
-        (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
-      )
+      const service = normalizeService((cs.Service || {}) as Record<string, unknown>)
       return {
-        name: service?.name,
-        slug: service?.slug,
-        description: service?.description,
-        icon: service?.icon,
-        category: service?.category,
-        methodology: service?.methodology,
-        plans: plans.map((p: Record<string, unknown>) => ({
-          name: p.name,
-          price: p.price,
-          originalPrice: p.originalPrice,
-          period: p.period,
-          description: p.description,
-          features: p.features,
-          badge: p.badge,
-          isRecommended: p.isRecommended,
-          order: p.order
-        }))
+        name: service.name,
+        slug: service.slug,
+        description: service.description,
+        icon: service.icon,
+        category: service.category,
+        methodology: service.methodology,
+        plans: service.plans
       }
     })
 
     const html = generateProformaHtml(clientData, servicesData)
 
-    // Return HTML that triggers print dialog for PDF saving
     const printHtml = html.replace('</body>', `
 <script>
   window.onload = function() {

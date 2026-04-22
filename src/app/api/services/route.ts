@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { normalizeService } from '@/lib/normalize'
 
 export async function GET() {
   try {
@@ -13,11 +14,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Error fetching services', details: error.message }, { status: 500 })
     }
 
-    // Sort plans by order within each service
-    const formatted = services.map((s: Record<string, unknown>) => ({
-      ...s,
-      plans: ((s.Plan as Record<string, unknown>[]) || []).sort((a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number))
-    }))
+    // Normalize: convert Plan -> plans with proper structure
+    const formatted = (services || []).map((s: Record<string, unknown>) => normalizeService(s))
 
     return NextResponse.json(formatted)
   } catch (error) {
@@ -52,7 +50,7 @@ export async function POST(request: Request) {
       .order('id', { ascending: false })
       .limit(1)
 
-    let nextNum = 17 // Default if no existing services
+    let nextNum = 17
     if (lastService && lastService.length > 0) {
       const match = lastService[0].id.match(/svc(\d+)/)
       if (match) nextNum = parseInt(match[1]) + 1
@@ -82,6 +80,7 @@ export async function POST(request: Request) {
     }
 
     // Create plans if provided
+    let createdPlans: Record<string, unknown>[] = []
     if (plans && plans.length > 0) {
       // Generate plan IDs
       const { data: lastPlan } = await supabase
@@ -90,7 +89,7 @@ export async function POST(request: Request) {
         .order('id', { ascending: false })
         .limit(1)
 
-      let planNum = 17 // Default
+      let planNum = 17
       if (lastPlan && lastPlan.length > 0) {
         const match = lastPlan[0].id.match(/p(\d+)/)
         if (match) planNum = parseInt(match[1].substring(0, 2)) + 1
@@ -110,7 +109,7 @@ export async function POST(request: Request) {
         order: i,
       }))
 
-      const { data: createdPlans, error: plansError } = await supabase
+      const { data: insertedPlans, error: plansError } = await supabase
         .from('Plan')
         .insert(planRecords)
         .select()
@@ -119,14 +118,12 @@ export async function POST(request: Request) {
         console.error('Error creating plans:', plansError)
       }
 
-      service.plans = (createdPlans || []).sort(
-        (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
-      )
-    } else {
-      service.plans = []
+      createdPlans = (insertedPlans || []) as Record<string, unknown>[]
     }
 
-    return NextResponse.json(service, { status: 201 })
+    // Return normalized service with plans
+    const result = normalizeService({ ...service, Plan: createdPlans })
+    return NextResponse.json(result, { status: 201 })
   } catch (error) {
     console.error('Error creating service:', error)
     return NextResponse.json({ error: 'Error creating service' }, { status: 500 })

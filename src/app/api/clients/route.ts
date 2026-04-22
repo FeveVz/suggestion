@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { isValidSession } from '@/lib/auth'
+import { normalizeClientService } from '@/lib/normalize'
 import { v4 as uuidv4 } from 'uuid'
 
 export async function GET() {
   try {
-    // Fetch clients
     const { data: clients, error: clientsError } = await supabase
       .from('Client')
       .select('*')
@@ -20,7 +20,6 @@ export async function GET() {
       return NextResponse.json([])
     }
 
-    // Fetch all ClientService records with Service and Plan data
     const clientIds = clients.map((c: Record<string, unknown>) => c.id)
 
     const { data: clientServices, error: csError } = await supabase
@@ -32,7 +31,6 @@ export async function GET() {
       console.error('Error fetching client services:', csError)
     }
 
-    // Merge data
     const csMap = new Map<string, unknown[]>()
     if (clientServices) {
       for (const cs of clientServices) {
@@ -44,13 +42,8 @@ export async function GET() {
 
     const result = clients.map((client: Record<string, unknown>) => ({
       ...client,
-      services: (csMap.get(client.id as string) || []).map((cs: Record<string, unknown>) => ({
-        ...cs,
-        service: cs.Service,
-        selectedPlan: cs.SelectedPlan,
-        Service: undefined,
-        SelectedPlan: undefined,
-      })),
+      services: (csMap.get(client.id as string) || [])
+        .map((cs: Record<string, unknown>) => normalizeClientService(cs)),
     }))
 
     return NextResponse.json(result)
@@ -79,10 +72,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Nombre y actividad son requeridos' }, { status: 400 })
     }
 
-    // Generate client ID (UUID)
     const clientId = uuidv4()
 
-    // Create the client
     const { data: client, error: clientError } = await supabase
       .from('Client')
       .insert({
@@ -107,7 +98,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Error creating client', details: clientError?.message }, { status: 500 })
     }
 
-    // Create ClientService connections if serviceIds provided
     if (serviceIds && serviceIds.length > 0) {
       const csRecords = serviceIds.map((serviceId: string) => ({
         id: uuidv4(),
@@ -115,28 +105,17 @@ export async function POST(request: Request) {
         serviceId,
       }))
 
-      const { error: csError } = await supabase
-        .from('ClientService')
-        .insert(csRecords)
-
-      if (csError) {
-        console.error('Error creating client services:', csError)
-      }
+      await supabase.from('ClientService').insert(csRecords)
     }
 
-    // Fetch the complete client with services
+    // Fetch the complete client with services (normalized)
     const { data: clientServices } = await supabase
       .from('ClientService')
       .select('*, Service(*, Plan(*)), SelectedPlan:Plan!selectedPlanId(*)')
       .eq('clientId', client.id)
 
-    client.services = (clientServices || []).map((cs: Record<string, unknown>) => ({
-      ...cs,
-      service: cs.Service,
-      selectedPlan: cs.SelectedPlan,
-      Service: undefined,
-      SelectedPlan: undefined,
-    }))
+    client.services = (clientServices || [])
+      .map((cs: Record<string, unknown>) => normalizeClientService(cs))
 
     return NextResponse.json(client, { status: 201 })
   } catch (error) {
