@@ -31,7 +31,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
+.env*.local
 
 # vercel
 .vercel
@@ -50,5 +52,38 @@ test
 prompt
 
 server.log
+
+# Supabase
+/prisma/dev.db
+/db/
+
+# Scripts and temp files
+server.js
+watchdog.sh
+start-server.sh
+seed_supabase.py
+quick_seed.py
+clean_seed.json
+extract_*.py
+*.json.bak
+
 # Skills directory
 /skills/
+
+# Agent context
+/agent-ctx/
+/zscripts/
+
+# Download directory
+/download/
+
+# Upload directory
+/upload/
+
+# Misc scraped data
+srv-*.json
+suggestion-*.json
+mini-services/
+
+# Worklog
+worklog.md
