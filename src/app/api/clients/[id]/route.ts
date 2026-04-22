@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { isValidSession } from '@/lib/auth'
+import { v4 as uuidv4 } from 'uuid'
 
 async function getClientWithServices(clientId: string) {
   const { data: client, error: clientError } = await supabase
@@ -157,6 +158,7 @@ export async function PUT(
     // Create new service connections
     if (serviceIds && serviceIds.length > 0) {
       const csRecords = serviceIds.map((serviceId: string) => ({
+        id: uuidv4(),
         clientId: id,
         serviceId,
       }))

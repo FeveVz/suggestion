@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { isValidSession } from '@/lib/auth'
+import { v4 as uuidv4 } from 'uuid'
 
 export async function GET() {
   try {
@@ -78,10 +79,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Nombre y actividad son requeridos' }, { status: 400 })
     }
 
+    // Generate client ID (UUID)
+    const clientId = uuidv4()
+
     // Create the client
     const { data: client, error: clientError } = await supabase
       .from('Client')
       .insert({
+        id: clientId,
         name,
         activity,
         startDate: startDate || '',
@@ -100,6 +105,7 @@ export async function POST(request: Request) {
     // Create ClientService connections if serviceIds provided
     if (serviceIds && serviceIds.length > 0) {
       const csRecords = serviceIds.map((serviceId: string) => ({
+        id: uuidv4(),
         clientId: client.id,
         serviceId,
       }))

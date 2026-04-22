@@ -80,7 +80,21 @@ export async function PUT(
 
     // Create new plans
     if (plans && plans.length > 0) {
+      // Get next plan number for ID generation
+      const { data: lastPlan } = await supabase
+        .from('Plan')
+        .select('id')
+        .order('id', { ascending: false })
+        .limit(1)
+
+      let planNum = 17
+      if (lastPlan && lastPlan.length > 0) {
+        const match = lastPlan[0].id.match(/p(\d+)/)
+        if (match) planNum = parseInt(match[1].substring(0, 2)) + 1
+      }
+
       const planRecords = plans.map((p: Record<string, unknown>, i: number) => ({
+        id: `p${String(planNum).padStart(2, '0')}${String(i + 1).padStart(2, '0')}`,
         serviceId: id,
         name: p.name as string,
         price: p.price as number,

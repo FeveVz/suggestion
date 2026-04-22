@@ -45,10 +45,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Nombre y slug son requeridos' }, { status: 400 })
     }
 
+    // Generate next service ID
+    const { data: lastService } = await supabase
+      .from('Service')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1)
+
+    let nextNum = 17 // Default if no existing services
+    if (lastService && lastService.length > 0) {
+      const match = lastService[0].id.match(/svc(\d+)/)
+      if (match) nextNum = parseInt(match[1]) + 1
+    }
+    const serviceId = `svc${String(nextNum).padStart(2, '0')}`
+
     // Create the service
     const { data: service, error: serviceError } = await supabase
       .from('Service')
       .insert({
+        id: serviceId,
         name,
         slug,
         description: description || '',
@@ -66,7 +81,21 @@ export async function POST(request: Request) {
 
     // Create plans if provided
     if (plans && plans.length > 0) {
+      // Generate plan IDs
+      const { data: lastPlan } = await supabase
+        .from('Plan')
+        .select('id')
+        .order('id', { ascending: false })
+        .limit(1)
+
+      let planNum = 17 // Default
+      if (lastPlan && lastPlan.length > 0) {
+        const match = lastPlan[0].id.match(/p(\d+)/)
+        if (match) planNum = parseInt(match[1].substring(0, 2)) + 1
+      }
+
       const planRecords = plans.map((p: Record<string, unknown>, i: number) => ({
+        id: `p${String(planNum).padStart(2, '0')}${String(i + 1).padStart(2, '0')}`,
         serviceId: service.id,
         name: p.name as string,
         price: p.price as number,
@@ -88,7 +117,9 @@ export async function POST(request: Request) {
         console.error('Error creating plans:', plansError)
       }
 
-      service.plans = createdPlans || []
+      service.plans = (createdPlans || []).sort(
+        (a: Record<string, unknown>, b: Record<string, unknown>) => (a.order as number) - (b.order as number)
+      )
     } else {
       service.plans = []
     }
