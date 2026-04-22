@@ -70,6 +70,8 @@ export async function POST(request: Request) {
         icon: icon || '',
         category: category || 'principal',
         methodology: methodology || null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       })
       .select()
       .single()

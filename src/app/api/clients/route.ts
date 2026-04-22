@@ -93,6 +93,11 @@ export async function POST(request: Request) {
         location: location || '',
         phone: phone || '',
         email: email || '',
+        status: 'pendiente',
+        anticipoPagado: false,
+        descuento: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       })
       .select()
       .single()
