@@ -12,8 +12,9 @@ export async function GET() {
       orderBy: { createdAt: 'asc' }
     })
     return NextResponse.json(services)
-  } catch {
-    return NextResponse.json({ error: 'Error fetching services' }, { status: 500 })
+  } catch (error) {
+    console.error('Error fetching services:', error)
+    return NextResponse.json({ error: 'Error fetching services', details: String(error) }, { status: 500 })
   }
 }
 
