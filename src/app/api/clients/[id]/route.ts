@@ -24,6 +24,126 @@ async function getClientWithServices(clientId: string) {
   return client
 }
 
+/**
+ * Auto-generate tasks from templates when a proforma is accepted.
+ * For each service in the planSelections, find TaskTemplates,
+ * then create Task records assigning talents by role match.
+ */
+async function generateTasksFromTemplates(
+  clientId: string,
+  planSelections: Array<{ serviceId: string; selectedPlanId: string | null }>,
+  fechaAceptacion?: string
+) {
+  const acceptanceDate = fechaAceptacion || new Date().toISOString().split('T')[0]
+
+  // Get the current max task ID to increment from
+  const { data: lastTask } = await supabase
+    .from('Task')
+    .select('id')
+    .order('id', { ascending: false })
+    .limit(1)
+
+  let taskNum = 1
+  if (lastTask && lastTask.length > 0) {
+    const match = lastTask[0].id.match(/tsk(\d+)/)
+    if (match) taskNum = parseInt(match[1]) + 1
+  }
+
+  // Get all active talents for role matching
+  const { data: allTalents } = await supabase
+    .from('Talent')
+    .select('id, role')
+    .eq('active', true)
+
+  const talentsByRole = new Map<string, string>()
+  if (allTalents) {
+    for (const t of allTalents) {
+      // Map first talent found per role
+      if (t.role && !talentsByRole.has(t.role)) {
+        talentsByRole.set(t.role, t.id)
+      }
+    }
+  }
+
+  const tasksToCreate: Array<Record<string, unknown>> = []
+
+  for (const selection of planSelections) {
+    const { serviceId } = selection
+
+    // Find the ClientService record for this service
+    const { data: csRecord } = await supabase
+      .from('ClientService')
+      .select('id')
+      .eq('clientId', clientId)
+      .eq('serviceId', serviceId)
+      .maybeSingle()
+
+    // Get task templates for this service
+    const { data: templates } = await supabase
+      .from('TaskTemplate')
+      .select('*')
+      .eq('serviceId', serviceId)
+      .order('order', { ascending: true })
+
+    if (!templates || templates.length === 0) continue
+
+    for (const template of templates) {
+      // Calculate deadline based on acceptance date + deadlineDays
+      const deadlineDate = new Date(acceptanceDate)
+      deadlineDate.setDate(deadlineDate.getDate() + (template.deadlineDays || 7))
+      const deadlineStr = deadlineDate.toISOString().split('T')[0]
+
+      // Find a matching talent by role
+      const matchedTalentId = template.role ? (talentsByRole.get(template.role) || null) : null
+
+      const taskId = `tsk${String(taskNum).padStart(3, '0')}`
+      taskNum++
+
+      // Get service info for description enrichment
+      const { data: serviceInfo } = await supabase
+        .from('Service')
+        .select('name, icon')
+        .eq('id', serviceId)
+        .single()
+
+      const enrichedDescription = template.description 
+        ? `${template.description}` 
+        : ''
+
+      const additionalInfo = serviceInfo 
+        ? `Servicio: ${serviceInfo.icon || ''} ${serviceInfo.name}` 
+        : ''
+
+      tasksToCreate.push({
+        id: taskId,
+        title: template.title,
+        description: enrichedDescription,
+        status: 'pendiente',
+        priority: template.priority || 'media',
+        deadline: deadlineStr,
+        talentId: matchedTalentId,
+        clientServiceId: csRecord?.id || null,
+        serviceId,
+        clientId,
+        additionalInfo,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+    }
+  }
+
+  // Batch insert all tasks
+  if (tasksToCreate.length > 0) {
+    const { error: insertError } = await supabase
+      .from('Task')
+      .insert(tasksToCreate)
+
+    if (insertError) {
+      console.error('Error batch inserting tasks:', insertError)
+    }
+  }
+}
+
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -105,6 +225,17 @@ export async function PUT(
           }
         } catch (planError) {
           console.error(`Error updating plan selection for service ${selection.serviceId}:`, planError)
+        }
+      }
+
+      // === AUTO-GENERATE TASKS FROM TEMPLATES ===
+      // Only generate if this is a new acceptance (client was not already accepted)
+      if (existingClient.status !== 'aceptado') {
+        try {
+          await generateTasksFromTemplates(id, planSelections as Array<{ serviceId: string; selectedPlanId: string | null }>, fechaAceptacion)
+        } catch (taskError) {
+          console.error('Error auto-generating tasks:', taskError)
+          // Don't fail the acceptance if task generation fails
         }
       }
 

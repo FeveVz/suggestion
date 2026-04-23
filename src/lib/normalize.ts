@@ -104,3 +104,135 @@ export function normalizeClientService(raw: Record<string, unknown>): ClientServ
     selectedPlan,
   }
 }
+
+// Talent interface
+export interface Talent {
+  id: string
+  name: string
+  email: string
+  role: string
+  phone: string
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+// Task interface
+export interface Task {
+  id: string
+  title: string
+  description: string
+  status: string
+  priority: string
+  deadline: string | null
+  talentId: string | null
+  clientServiceId: string | null
+  serviceId: string
+  clientId: string
+  additionalInfo: string
+  createdAt: string
+  updatedAt: string
+  // Joined relations (optional, when fetched with includes)
+  talent?: Talent
+  service?: Service
+  client?: { id: string; name: string }
+}
+
+// TaskTemplate interface
+export interface TaskTemplate {
+  id: string
+  serviceId: string
+  title: string
+  description: string
+  priority: string
+  deadlineDays: number
+  role: string
+  order: number
+  createdAt: string
+  updatedAt: string
+  // Joined relation
+  service?: Service
+}
+
+/**
+ * Normalize a Talent object from Supabase format
+ * Removes password for safety
+ */
+export function normalizeTalent(raw: Record<string, unknown>): Talent {
+  return {
+    id: raw.id as string,
+    name: raw.name as string,
+    email: raw.email as string,
+    role: raw.role as string,
+    phone: (raw.phone as string) || '',
+    active: raw.active as boolean,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+}
+
+/**
+ * Normalize a Task object from Supabase format
+ * Converts Task.Talent -> task.talent, Task.Service -> task.service, Task.Client -> task.client
+ */
+export function normalizeTask(raw: Record<string, unknown>): Task {
+  const task: Task = {
+    id: raw.id as string,
+    title: raw.title as string,
+    description: (raw.description as string) || '',
+    status: (raw.status as string) || 'pendiente',
+    priority: (raw.priority as string) || 'media',
+    deadline: (raw.deadline as string) || null,
+    talentId: (raw.talentId as string) || null,
+    clientServiceId: (raw.clientServiceId as string) || null,
+    serviceId: raw.serviceId as string,
+    clientId: raw.clientId as string,
+    additionalInfo: (raw.additionalInfo as string) || '',
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+
+  // Normalize joined relations
+  const rawTalent = raw.Talent || raw.talent
+  if (rawTalent && typeof rawTalent === 'object' && Object.keys(rawTalent as object).length > 0) {
+    task.talent = normalizeTalent(rawTalent as Record<string, unknown>)
+  }
+
+  const rawService = raw.Service || raw.service
+  if (rawService && typeof rawService === 'object' && Object.keys(rawService as object).length > 0) {
+    task.service = normalizeService(rawService as Record<string, unknown>)
+  }
+
+  const rawClient = raw.Client || raw.client
+  if (rawClient && typeof rawClient === 'object' && Object.keys(rawClient as object).length > 0) {
+    const c = rawClient as Record<string, unknown>
+    task.client = { id: c.id as string, name: c.name as string }
+  }
+
+  return task
+}
+
+/**
+ * Normalize a TaskTemplate object from Supabase format
+ */
+export function normalizeTaskTemplate(raw: Record<string, unknown>): TaskTemplate {
+  const template: TaskTemplate = {
+    id: raw.id as string,
+    serviceId: raw.serviceId as string,
+    title: raw.title as string,
+    description: (raw.description as string) || '',
+    priority: (raw.priority as string) || 'media',
+    deadlineDays: (raw.deadlineDays as number) ?? 7,
+    role: (raw.role as string) || '',
+    order: (raw.order as number) ?? 0,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+
+  const rawService = raw.Service || raw.service
+  if (rawService && typeof rawService === 'object' && Object.keys(rawService as object).length > 0) {
+    template.service = normalizeService(rawService as Record<string, unknown>)
+  }
+
+  return template
+}
