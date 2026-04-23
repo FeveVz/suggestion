@@ -153,7 +153,8 @@ function TalentDashboard({ talent }: { talent: TalentInfo }) {
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch('/api/tasks')
+      // ?mine=true ensures we only get THIS talent's tasks, even if admin cookie is also present
+      const res = await fetch('/api/tasks?mine=true')
       if (res.ok) {
         const data = await res.json()
         setTasks(Array.isArray(data) ? data : [])

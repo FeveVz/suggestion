@@ -29,17 +29,21 @@ export async function GET(request: Request) {
     const serviceId = searchParams.get('serviceId')
     const clientId = searchParams.get('clientId')
     const priority = searchParams.get('priority')
+    const onlyMine = searchParams.get('mine') // Talent portal sends ?mine=true
 
     let query = supabase
       .from('Task')
       .select('*, Talent(*), Service(*), Client(id, name)')
       .order('createdAt', { ascending: false })
 
-    // If talent, only show their tasks
-    if (talentId && !isAdmin) {
+    // If request comes from talent portal (?mine=true), always filter by talent cookie
+    if (onlyMine === 'true' && talentId) {
       query = query.eq('talentId', talentId)
-    } else if (talentId) {
-      // Admin viewing a specific talent's tasks
+    } else if (talentId && !isAdmin) {
+      // Talent without admin session - show only their tasks
+      query = query.eq('talentId', talentId)
+    } else {
+      // Admin - optionally filter by talentId param
       const talentFilter = searchParams.get('talentId')
       if (talentFilter) query = query.eq('talentId', talentFilter)
     }
