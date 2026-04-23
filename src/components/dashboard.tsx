@@ -308,6 +308,28 @@ function ServiceForm({ service, onSave, onCancel }: {
   )
 }
 
+// ===================== TALENT ROLES =====================
+// Roles predefinidos que coinciden con los usados en las plantillas de tareas (TaskTemplate)
+// para garantizar la auto-asignación correcta de tareas cuando se acepta una proforma.
+const TALENT_ROLES = [
+  'Community Manager',
+  'Diseñador Gráfico',
+  'Desarrollador Web',
+  'Diseñador UI/UX',
+  'Productor Audiovisual',
+  'Editor de Video',
+  'Especialista SEO',
+  'Media Planner',
+  'Branding Strategist',
+  'Consultor Digital',
+  'Analista de Datos',
+  'Email Marketing Specialist',
+  'Copywriter',
+  'Content Strategist',
+  'Influencer Manager',
+  'Fotógrafo',
+]
+
 // ===================== TALENT FORM =====================
 function TalentForm({ talent, onSave, onCancel }: {
   talent?: Talent | null
@@ -332,6 +354,11 @@ function TalentForm({ talent, onSave, onCancel }: {
     setSaving(false)
   }
 
+  // Si el talento tiene un rol que no está en la lista predefinida, lo agregamos temporalmente
+  const availableRoles = talent?.role && !TALENT_ROLES.includes(talent.role)
+    ? [talent.role, ...TALENT_ROLES]
+    : TALENT_ROLES
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -343,7 +370,16 @@ function TalentForm({ talent, onSave, onCancel }: {
         </div>
         <div className="space-y-2">
           <Label>Especialidad / Rol *</Label>
-          <Input value={role} onChange={e => setRole(e.target.value)} placeholder="Ej: Diseñador Gráfico, Community Manager" required />
+          <Select value={role} onValueChange={setRole}>
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar especialidad" />
+            </SelectTrigger>
+            <SelectContent>
+              {availableRoles.map(r => (
+                <SelectItem key={r} value={r}>{r}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="space-y-2"><Label>Teléfono</Label><Input value={phone} onChange={e => setPhone(e.target.value)} /></div>
         <div className="space-y-2 flex items-end">
@@ -402,7 +438,14 @@ function TaskTemplateForm({ template, services, onSave, onCancel }: {
         <div className="space-y-2"><Label>Título de la tarea *</Label><Input value={title} onChange={e => setTitle(e.target.value)} required /></div>
         <div className="space-y-2"><Label>Prioridad</Label><Select value={priority} onValueChange={setPriority}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="alta">Alta</SelectItem><SelectItem value="media">Media</SelectItem><SelectItem value="baja">Baja</SelectItem></SelectContent></Select></div>
         <div className="space-y-2"><Label>Días para deadline</Label><Input type="number" min={1} value={deadlineDays} onChange={e => setDeadlineDays(Number(e.target.value))} /></div>
-        <div className="space-y-2"><Label>Rol/Especialidad requerida</Label><Input value={role} onChange={e => setRole(e.target.value)} placeholder="Ej: Diseñador Gráfico" /></div>
+        <div className="space-y-2"><Label>Rol/Especialidad requerida</Label>
+          <Select value={role} onValueChange={setRole}>
+            <SelectTrigger><SelectValue placeholder="Seleccionar rol" /></SelectTrigger>
+            <SelectContent>
+              {TALENT_ROLES.map(r => (<SelectItem key={r} value={r}>{r}</SelectItem>))}
+            </SelectContent>
+          </Select>
+        </div>
         <div className="space-y-2"><Label>Orden</Label><Input type="number" min={0} value={order} onChange={e => setOrder(Number(e.target.value))} /></div>
       </div>
       <div className="space-y-2"><Label>Descripción</Label><textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm" rows={3} /></div>
