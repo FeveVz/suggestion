@@ -236,3 +236,204 @@ export function normalizeTaskTemplate(raw: Record<string, unknown>): TaskTemplat
 
   return template
 }
+
+// ─── New Spanish-named entities (Phase 2) ────────────────────────────────────
+
+// Proyecto
+
+export interface Proyecto {
+  id: string
+  clienteId: string
+  clientServiceId: string | null
+  nombre: string
+  tipo: 'retainer' | 'proyecto' | 'consultoria'
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  estado: 'propuesta' | 'activo' | 'pausado' | 'cerrado' | 'perdido'
+  responsableInterno: string | null
+  fechaInicio: string
+  fechaFin: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+  // Joined relations (optional, when fetched with includes)
+  cliente?: { id: string; name: string }
+}
+
+/**
+ * Normalize a Proyecto object from Supabase format.
+ * Converts numeric strings to numbers for subtotal/igv/total.
+ */
+export function normalizeProyecto(raw: Record<string, unknown>): Proyecto {
+  const proyecto: Proyecto = {
+    id: raw.id as string,
+    clienteId: raw.clienteId as string,
+    clientServiceId: (raw.clientServiceId as string) || null,
+    nombre: raw.nombre as string,
+    tipo: raw.tipo as Proyecto['tipo'],
+    subtotal: Number(raw.subtotal),
+    igv: Number(raw.igv),
+    total: Number(raw.total),
+    moneda: (raw.moneda as 'PEN' | 'USD') || 'PEN',
+    estado: raw.estado as Proyecto['estado'],
+    responsableInterno: (raw.responsableInterno as string) || null,
+    fechaInicio: raw.fechaInicio as string,
+    fechaFin: (raw.fechaFin as string) || null,
+    notas: (raw.notas as string) || null,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+
+  const rawCliente = raw.Client || raw.cliente
+  if (rawCliente && typeof rawCliente === 'object' && Object.keys(rawCliente as object).length > 0) {
+    const c = rawCliente as Record<string, unknown>
+    proyecto.cliente = { id: c.id as string, name: c.name as string }
+  }
+
+  return proyecto
+}
+
+// Entregable
+
+export interface Entregable {
+  id: string
+  proyectoId: string
+  nombre: string
+  descripcion: string | null
+  fechaCompromiso: string
+  fechaEntrega: string | null
+  estado: 'pendiente' | 'en_proceso' | 'entregado' | 'aprobado' | 'rechazado'
+  responsable: string | null
+  evidenciaUrl: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Normalize an Entregable object from Supabase format.
+ */
+export function normalizeEntregable(raw: Record<string, unknown>): Entregable {
+  return {
+    id: raw.id as string,
+    proyectoId: raw.proyectoId as string,
+    nombre: raw.nombre as string,
+    descripcion: (raw.descripcion as string) || null,
+    fechaCompromiso: raw.fechaCompromiso as string,
+    fechaEntrega: (raw.fechaEntrega as string) || null,
+    estado: raw.estado as Entregable['estado'],
+    responsable: (raw.responsable as string) || null,
+    evidenciaUrl: (raw.evidenciaUrl as string) || null,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+}
+
+// Cobro
+
+export interface Cobro {
+  id: string
+  proyectoId: string
+  concepto: string
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  tipoDocumento: 'factura' | 'boleta' | 'recibo' | null
+  numeroDocumento: string | null
+  fechaEmision: string
+  diasCredito: number
+  fechaVencimiento: string
+  estado: 'pendiente' | 'parcial' | 'pagado' | 'vencido' | 'anulado'
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Normalize a Cobro object from Supabase format.
+ * Converts numeric strings to numbers.
+ */
+export function normalizeCobro(raw: Record<string, unknown>): Cobro {
+  return {
+    id: raw.id as string,
+    proyectoId: raw.proyectoId as string,
+    concepto: raw.concepto as string,
+    subtotal: Number(raw.subtotal),
+    igv: Number(raw.igv),
+    total: Number(raw.total),
+    moneda: (raw.moneda as 'PEN' | 'USD') || 'PEN',
+    tipoDocumento: (raw.tipoDocumento as Cobro['tipoDocumento']) || null,
+    numeroDocumento: (raw.numeroDocumento as string) || null,
+    fechaEmision: raw.fechaEmision as string,
+    diasCredito: Number(raw.diasCredito ?? 0),
+    fechaVencimiento: raw.fechaVencimiento as string,
+    estado: raw.estado as Cobro['estado'],
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+}
+
+// Pago
+
+export interface Pago {
+  id: string
+  cobroId: string
+  monto: number
+  fecha: string
+  metodo: 'yape' | 'plin' | 'transferencia' | 'efectivo' | 'deposito'
+  referencia: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Normalize a Pago object from Supabase format.
+ */
+export function normalizePago(raw: Record<string, unknown>): Pago {
+  return {
+    id: raw.id as string,
+    cobroId: raw.cobroId as string,
+    monto: Number(raw.monto),
+    fecha: raw.fecha as string,
+    metodo: raw.metodo as Pago['metodo'],
+    referencia: (raw.referencia as string) || null,
+    notas: (raw.notas as string) || null,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+}
+
+// Gasto
+
+export interface Gasto {
+  id: string
+  proyectoId: string | null
+  concepto: string
+  monto: number
+  moneda: 'PEN' | 'USD'
+  fecha: string
+  categoria: string | null
+  comprobante: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Normalize a Gasto object from Supabase format.
+ */
+export function normalizeGasto(raw: Record<string, unknown>): Gasto {
+  return {
+    id: raw.id as string,
+    proyectoId: (raw.proyectoId as string) || null,
+    concepto: raw.concepto as string,
+    monto: Number(raw.monto),
+    moneda: (raw.moneda as 'PEN' | 'USD') || 'PEN',
+    fecha: raw.fecha as string,
+    categoria: (raw.categoria as string) || null,
+    comprobante: (raw.comprobante as string) || null,
+    createdAt: raw.createdAt as string,
+    updatedAt: raw.updatedAt as string,
+  }
+}
