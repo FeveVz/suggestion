@@ -271,6 +271,17 @@ function ClientForm({ client, services, onSave, onCancel }: {
   const [phone, setPhone] = useState(client?.phone || '')
   const [email, setEmail] = useState(client?.email || '')
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>(client?.services.map(s => s.serviceId) || [])
+  // New fields (migration 001)
+  const [tipoDocumento, setTipoDocumento] = useState(client?.tipoDocumento || '')
+  const [numeroDocumento, setNumeroDocumento] = useState(client?.numeroDocumento || '')
+  const [razonSocial, setRazonSocial] = useState(client?.razonSocial || '')
+  const [sector, setSector] = useState(client?.sector || '')
+  const [contactoNombre, setContactoNombre] = useState(client?.contactoNombre || '')
+  const [contactoTelefono, setContactoTelefono] = useState(client?.contactoTelefono || '')
+  const [contactoEmail, setContactoEmail] = useState(client?.contactoEmail || '')
+  // Collapsible optional sections
+  const [showFiscal, setShowFiscal] = useState(!!(client?.tipoDocumento || client?.numeroDocumento || client?.razonSocial || client?.sector))
+  const [showContacto, setShowContacto] = useState(!!(client?.contactoNombre || client?.contactoTelefono || client?.contactoEmail))
   const [saving, setSaving] = useState(false)
 
   const toggleService = (serviceId: string) => {
@@ -280,7 +291,17 @@ function ClientForm({ client, services, onSave, onCancel }: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
-    await onSave({ name, activity, startDate, location, phone, email, serviceIds: selectedServiceIds })
+    await onSave({
+      name, activity, startDate, location, phone, email,
+      serviceIds: selectedServiceIds,
+      tipoDocumento: tipoDocumento || null,
+      numeroDocumento: numeroDocumento || null,
+      razonSocial: razonSocial || null,
+      sector: sector || null,
+      contactoNombre: contactoNombre || null,
+      contactoTelefono: contactoTelefono || null,
+      contactoEmail: contactoEmail || null,
+    })
     setSaving(false)
   }
 
@@ -297,6 +318,56 @@ function ClientForm({ client, services, onSave, onCancel }: {
         <div className="space-y-2"><Label>Teléfono</Label><Input value={phone} onChange={e => setPhone(e.target.value)} /></div>
         <div className="space-y-2"><Label>Email</Label><Input type="email" value={email} onChange={e => setEmail(e.target.value)} /></div>
       </div>
+
+      {/* ── Sección plegable: Datos fiscales ── */}
+      <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowFiscal(v => !v)}
+          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        >
+          <span className="text-sm font-semibold text-gray-700">Datos fiscales <span className="font-normal text-gray-400">(opcional)</span></span>
+          <span className="text-gray-400 text-xs">{showFiscal ? '▲' : '▼'}</span>
+        </button>
+        {showFiscal && (
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Tipo de documento</Label>
+              <Select value={tipoDocumento} onValueChange={setTipoDocumento}>
+                <SelectTrigger><SelectValue placeholder="Sin especificar" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Sin especificar</SelectItem>
+                  <SelectItem value="RUC">RUC</SelectItem>
+                  <SelectItem value="DNI">DNI</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2"><Label>Número de documento</Label><Input value={numeroDocumento} onChange={e => setNumeroDocumento(e.target.value)} placeholder="20123456789" /></div>
+            <div className="space-y-2"><Label>Razón social</Label><Input value={razonSocial} onChange={e => setRazonSocial(e.target.value)} placeholder="Empresa S.A.C." /></div>
+            <div className="space-y-2"><Label>Sector</Label><Input value={sector} onChange={e => setSector(e.target.value)} placeholder="Tecnología, Retail, etc." /></div>
+          </div>
+        )}
+      </div>
+
+      {/* ── Sección plegable: Contacto de referencia ── */}
+      <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowContacto(v => !v)}
+          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        >
+          <span className="text-sm font-semibold text-gray-700">Contacto de referencia <span className="font-normal text-gray-400">(opcional)</span></span>
+          <span className="text-gray-400 text-xs">{showContacto ? '▲' : '▼'}</span>
+        </button>
+        {showContacto && (
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2 sm:col-span-2"><Label>Nombre del contacto</Label><Input value={contactoNombre} onChange={e => setContactoNombre(e.target.value)} placeholder="María García" /></div>
+            <div className="space-y-2"><Label>Teléfono del contacto</Label><Input value={contactoTelefono} onChange={e => setContactoTelefono(e.target.value)} placeholder="+51 999 999 999" /></div>
+            <div className="space-y-2"><Label>Email del contacto</Label><Input type="email" value={contactoEmail} onChange={e => setContactoEmail(e.target.value)} placeholder="contacto@empresa.com" /></div>
+          </div>
+        )}
+      </div>
+
       <div className="space-y-2">
         <Label>Servicios requeridos</Label>
         <div className="border rounded-lg p-4 max-h-64 overflow-y-auto space-y-4">
