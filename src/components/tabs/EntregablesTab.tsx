@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
+  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -274,7 +274,7 @@ export function EntregablesTab({ proyectos, isActive, initialFilters }: Entregab
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editingEntregable ? 'Editar Entregable' : 'Nuevo Entregable'}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editingEntregable ? 'Editar Entregable' : 'Nuevo Entregable'}</DialogTitle><DialogDescription>Completá los datos del entregable.</DialogDescription></DialogHeader>
             <EntregableForm entregable={editingEntregable} proyectos={proyectos} onSave={handleSave} onCancel={() => { setDialogOpen(false); setEditingEntregable(null) }} />
           </DialogContent>
         </Dialog>

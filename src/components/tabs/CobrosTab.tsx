@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle,
+  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -750,7 +750,7 @@ export function CobrosTab({ proyectos, isActive, initialFilters }: CobrosTabProp
       {/* Cobro Dialog */}
       <Dialog open={cobroDialogOpen} onOpenChange={(open) => { setCobroDialogOpen(open); if (!open) setEditingCobro(null) }}>
         <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>{editingCobro ? 'Editar Cobro' : 'Nuevo Cobro'}</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{editingCobro ? 'Editar Cobro' : 'Nuevo Cobro'}</DialogTitle><DialogDescription>Completá los datos del cobro.</DialogDescription></DialogHeader>
           <CobroForm cobro={editingCobro} proyectos={proyectos} onSave={handleSaveCobro} onCancel={() => { setCobroDialogOpen(false); setEditingCobro(null) }} />
         </DialogContent>
       </Dialog>
@@ -759,7 +759,7 @@ export function CobrosTab({ proyectos, isActive, initialFilters }: CobrosTabProp
       {activeCobroForPago && (
         <Dialog open={pagoDialogOpen} onOpenChange={(open) => { setPagoDialogOpen(open); if (!open) setActiveCobroForPago(null) }}>
           <DialogContent className="max-w-md">
-            <DialogHeader><DialogTitle>Registrar Pago</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>Registrar Pago</DialogTitle><DialogDescription>Registrá un pago parcial o total para este cobro.</DialogDescription></DialogHeader>
             <PagoForm
               cobro={activeCobroForPago}
               saldoPendiente={Math.max(0, activeCobroForPago.total - (pagosByCobro[activeCobroForPago.id] ?? []).reduce((s, p) => s + p.monto, 0))}

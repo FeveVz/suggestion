@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -667,7 +668,7 @@ function AcceptProformaDialog({ client, open, onOpenChange, onSave }: {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
-        <DialogHeader><DialogTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" style={{ color: '#22c55e' }} />Aceptar Proforma — {client.name}</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" style={{ color: '#22c55e' }} />Aceptar Proforma — {client.name}</DialogTitle><DialogDescription>Completá los datos para activar el proyecto y registrar los cobros asociados.</DialogDescription></DialogHeader>
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2"><Label className="font-semibold">Fecha de inicio designada</Label><Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} /></div>
@@ -1124,7 +1125,7 @@ export function Dashboard() {
           {activeTab === 'clientes' && (
             <Dialog open={clientDialogOpen} onOpenChange={(open) => { setClientDialogOpen(open); if (!open) setEditingClient(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#00C0FF' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo cliente</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}</DialogTitle></DialogHeader><ClientForm client={editingClient} services={services} onSave={handleSaveClient} onCancel={() => { setClientDialogOpen(false); setEditingClient(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}</DialogTitle><DialogDescription>Completá los datos del cliente.</DialogDescription></DialogHeader><ClientForm client={editingClient} services={services} onSave={handleSaveClient} onCancel={() => { setClientDialogOpen(false); setEditingClient(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -1132,7 +1133,7 @@ export function Dashboard() {
           {activeTab === 'servicios' && (
             <Dialog open={serviceDialogOpen} onOpenChange={(open) => { setServiceDialogOpen(open); if (!open) setEditingService(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#FF8D00' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo servicio</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingService ? 'Editar Servicio' : 'Nuevo Servicio'}</DialogTitle></DialogHeader><ServiceForm service={editingService} onSave={handleSaveService} onCancel={() => { setServiceDialogOpen(false); setEditingService(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingService ? 'Editar Servicio' : 'Nuevo Servicio'}</DialogTitle><DialogDescription>Completá los datos del servicio.</DialogDescription></DialogHeader><ServiceForm service={editingService} onSave={handleSaveService} onCancel={() => { setServiceDialogOpen(false); setEditingService(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -1140,7 +1141,7 @@ export function Dashboard() {
           {activeTab === 'talentos' && (
             <Dialog open={talentDialogOpen} onOpenChange={(open) => { setTalentDialogOpen(open); if (!open) setEditingTalent(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#8B5CF6' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo talento</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTalent ? 'Editar Talento' : 'Nuevo Talento'}</DialogTitle></DialogHeader><TalentForm talent={editingTalent} onSave={handleSaveTalent} onCancel={() => { setTalentDialogOpen(false); setEditingTalent(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTalent ? 'Editar Talento' : 'Nuevo Talento'}</DialogTitle><DialogDescription>Completá los datos del talento.</DialogDescription></DialogHeader><TalentForm talent={editingTalent} onSave={handleSaveTalent} onCancel={() => { setTalentDialogOpen(false); setEditingTalent(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -1148,7 +1149,7 @@ export function Dashboard() {
           {activeTab === 'plantillas' && (
             <Dialog open={templateDialogOpen} onOpenChange={(open) => { setTemplateDialogOpen(open); if (!open) setEditingTemplate(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#EC4899' }}><Plus className="h-4 w-4 mr-1.5" />Crear plantilla</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTemplate ? 'Editar Plantilla' : 'Nueva Plantilla de Tarea'}</DialogTitle></DialogHeader><TaskTemplateForm template={editingTemplate} services={services} onSave={handleSaveTemplate} onCancel={() => { setTemplateDialogOpen(false); setEditingTemplate(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTemplate ? 'Editar Plantilla' : 'Nueva Plantilla de Tarea'}</DialogTitle><DialogDescription>Completá los datos de la plantilla.</DialogDescription></DialogHeader><TaskTemplateForm template={editingTemplate} services={services} onSave={handleSaveTemplate} onCancel={() => { setTemplateDialogOpen(false); setEditingTemplate(null) }} /></DialogContent>
             </Dialog>
           )}
         </div>

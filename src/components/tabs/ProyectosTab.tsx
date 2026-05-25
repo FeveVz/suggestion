@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
+  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -330,7 +330,7 @@ export function ProyectosTab({
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editingProyecto ? 'Editar Proyecto' : 'Nuevo Proyecto'}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editingProyecto ? 'Editar Proyecto' : 'Nuevo Proyecto'}</DialogTitle><DialogDescription>Completá los datos del proyecto.</DialogDescription></DialogHeader>
             <ProyectoForm proyecto={editingProyecto} clients={clients} onSave={handleSave} onCancel={() => { setDialogOpen(false); setEditingProyecto(null) }} />
           </DialogContent>
         </Dialog>

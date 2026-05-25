@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
+  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -268,7 +268,7 @@ export function GastosTab({ proyectos, isActive }: GastosTabProps) {
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editingGasto ? 'Editar Gasto' : 'Registrar Gasto'}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editingGasto ? 'Editar Gasto' : 'Registrar Gasto'}</DialogTitle><DialogDescription>Registrá los datos del gasto.</DialogDescription></DialogHeader>
             <GastoForm gasto={editingGasto} proyectos={proyectos} onSave={handleSave} onCancel={() => { setDialogOpen(false); setEditingGasto(null) }} />
           </DialogContent>
         </Dialog>
