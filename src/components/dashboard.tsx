@@ -71,6 +71,9 @@ import {
 } from 'lucide-react'
 
 // ===================== TYPES =====================
+
+// ── Legacy entities (English-named tables) ──────────────────────────────────
+
 interface Plan {
   id: string
   name: string
@@ -116,6 +119,14 @@ interface Client {
   descuento: number
   fechaAceptacion: string | null
   services: ClientService[]
+  // New columns added in migration 001
+  tipoDocumento?: string | null
+  numeroDocumento?: string | null
+  razonSocial?: string | null
+  contactoNombre?: string | null
+  contactoTelefono?: string | null
+  contactoEmail?: string | null
+  sector?: string | null
 }
 
 interface Talent {
@@ -160,6 +171,85 @@ interface TaskTemplate {
   createdAt: string
   updatedAt: string
   service?: Service
+}
+
+// ── New entities (Spanish-named tables, Phase 2) ─────────────────────────────
+
+export interface Proyecto {
+  id: string
+  clienteId: string
+  clientServiceId: string | null
+  nombre: string
+  tipo: 'retainer' | 'proyecto' | 'consultoria'
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  estado: 'propuesta' | 'activo' | 'pausado' | 'cerrado' | 'perdido'
+  responsableInterno: string | null
+  fechaInicio: string
+  fechaFin: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+  cliente?: { id: string; name: string }
+}
+
+export interface Entregable {
+  id: string
+  proyectoId: string
+  nombre: string
+  descripcion: string | null
+  fechaCompromiso: string
+  fechaEntrega: string | null
+  estado: 'pendiente' | 'en_proceso' | 'entregado' | 'aprobado' | 'rechazado'
+  responsable: string | null
+  evidenciaUrl: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Cobro {
+  id: string
+  proyectoId: string
+  concepto: string
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  tipoDocumento: 'factura' | 'boleta' | 'recibo' | null
+  numeroDocumento: string | null
+  fechaEmision: string
+  diasCredito: number
+  fechaVencimiento: string
+  estado: 'pendiente' | 'parcial' | 'pagado' | 'vencido' | 'anulado'
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Pago {
+  id: string
+  cobroId: string
+  monto: number
+  fecha: string
+  metodo: 'yape' | 'plin' | 'transferencia' | 'efectivo' | 'deposito'
+  referencia: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Gasto {
+  id: string
+  proyectoId: string | null
+  concepto: string
+  monto: number
+  moneda: 'PEN' | 'USD'
+  fecha: string
+  categoria: string | null
+  comprobante: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 // ===================== CLIENT FORM =====================
@@ -652,9 +742,14 @@ export function Dashboard() {
   const [talents, setTalents] = useState<Talent[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
   const [taskTemplates, setTaskTemplates] = useState<TaskTemplate[]>([])
+  // proyectos loads with the initial fetchData (used as reference data by CobrosTab,
+  // EntregablesTab, and GastosTab for their Select dropdowns)
+  const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('clientes')
   const [searchQuery, setSearchQuery] = useState('')
+  // tabFilters: cross-tab navigation filters, reset when user manually changes tab
+  const [tabFilters, setTabFilters] = useState<Record<string, unknown>>({})
 
   // Dialog states
   const [clientDialogOpen, setClientDialogOpen] = useState(false)
@@ -683,23 +778,28 @@ export function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const [clientsRes, servicesRes, talentsRes, tasksRes, templatesRes] = await Promise.all([
+      // Initial parallel fetch: legacy entities + proyectos (reference data for lazy tabs)
+      // cobros, entregables, gastos are loaded lazily by their respective tab components
+      const [clientsRes, servicesRes, talentsRes, tasksRes, templatesRes, proyectosRes] = await Promise.all([
         fetch('/api/clients'),
         fetch('/api/services'),
         fetch('/api/talents').catch(() => new Response('[]', { status: 200 })),
         fetch('/api/tasks').catch(() => new Response('[]', { status: 200 })),
         fetch('/api/task-templates').catch(() => new Response('[]', { status: 200 })),
+        fetch('/api/proyectos').catch(() => new Response('[]', { status: 200 })),
       ])
       const clientsData = await clientsRes.json()
       const servicesData = await servicesRes.json()
       const talentsData = await talentsRes.json()
       const tasksData = await tasksRes.json()
       const templatesData = await templatesRes.json()
+      const proyectosData = await proyectosRes.json()
       setClients(Array.isArray(clientsData) ? clientsData : [])
       setServices(Array.isArray(servicesData) ? servicesData : [])
       setTalents(Array.isArray(talentsData) ? talentsData : [])
       setTasks(Array.isArray(tasksData) ? tasksData : [])
       setTaskTemplates(Array.isArray(templatesData) ? templatesData : [])
+      setProyectos(Array.isArray(proyectosData) ? proyectosData : [])
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -708,6 +808,13 @@ export function Dashboard() {
   }
 
   useEffect(() => { fetchData() }, [])
+
+  // Cross-tab navigation: navigate to a tab with optional pre-applied filters
+  const navigateTo = (tab: string, filters?: Record<string, unknown>) => {
+    setActiveTab(tab)
+    setTabFilters(filters ?? {})
+    setSearchQuery('')
+  }
 
   // ============ HANDLERS ============
   const handleSaveClient = async (data: Record<string, unknown>) => {
