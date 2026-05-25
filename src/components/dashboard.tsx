@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { LOGO_NEGRO_BASE64 } from '@/lib/logo-negro'
+import { GastosTab } from '@/components/tabs/GastosTab'
+import { EntregablesTab } from '@/components/tabs/EntregablesTab'
+import { ProyectosTab } from '@/components/tabs/ProyectosTab'
+import { CobrosTab } from '@/components/tabs/CobrosTab'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -68,9 +73,17 @@ import {
   AlertCircle,
   Calendar,
   ArrowRight,
+  // New icons for Phase 3 tabs
+  FolderOpen,
+  CreditCard,
+  PackageCheck,
+  Receipt,
 } from 'lucide-react'
 
 // ===================== TYPES =====================
+
+// ── Legacy entities (English-named tables) ──────────────────────────────────
+
 interface Plan {
   id: string
   name: string
@@ -116,6 +129,14 @@ interface Client {
   descuento: number
   fechaAceptacion: string | null
   services: ClientService[]
+  // New columns added in migration 001
+  tipoDocumento?: string | null
+  numeroDocumento?: string | null
+  razonSocial?: string | null
+  contactoNombre?: string | null
+  contactoTelefono?: string | null
+  contactoEmail?: string | null
+  sector?: string | null
 }
 
 interface Talent {
@@ -162,6 +183,85 @@ interface TaskTemplate {
   service?: Service
 }
 
+// ── New entities (Spanish-named tables, Phase 2) ─────────────────────────────
+
+export interface Proyecto {
+  id: string
+  clienteId: string
+  clientServiceId: string | null
+  nombre: string
+  tipo: 'retainer' | 'proyecto' | 'consultoria'
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  estado: 'propuesta' | 'activo' | 'pausado' | 'cerrado' | 'perdido'
+  responsableInterno: string | null
+  fechaInicio: string
+  fechaFin: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+  cliente?: { id: string; name: string }
+}
+
+export interface Entregable {
+  id: string
+  proyectoId: string
+  nombre: string
+  descripcion: string | null
+  fechaCompromiso: string
+  fechaEntrega: string | null
+  estado: 'pendiente' | 'en_proceso' | 'entregado' | 'aprobado' | 'rechazado'
+  responsable: string | null
+  evidenciaUrl: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Cobro {
+  id: string
+  proyectoId: string
+  concepto: string
+  subtotal: number
+  igv: number
+  total: number
+  moneda: 'PEN' | 'USD'
+  tipoDocumento: 'factura' | 'boleta' | 'recibo' | null
+  numeroDocumento: string | null
+  fechaEmision: string
+  diasCredito: number
+  fechaVencimiento: string
+  estado: 'pendiente' | 'parcial' | 'pagado' | 'vencido' | 'anulado'
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Pago {
+  id: string
+  cobroId: string
+  monto: number
+  fecha: string
+  metodo: 'yape' | 'plin' | 'transferencia' | 'efectivo' | 'deposito'
+  referencia: string | null
+  notas: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Gasto {
+  id: string
+  proyectoId: string | null
+  concepto: string
+  monto: number
+  moneda: 'PEN' | 'USD'
+  fecha: string
+  categoria: string | null
+  comprobante: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 // ===================== CLIENT FORM =====================
 function ClientForm({ client, services, onSave, onCancel }: {
   client?: Client | null
@@ -176,6 +276,17 @@ function ClientForm({ client, services, onSave, onCancel }: {
   const [phone, setPhone] = useState(client?.phone || '')
   const [email, setEmail] = useState(client?.email || '')
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>(client?.services.map(s => s.serviceId) || [])
+  // New fields (migration 001)
+  const [tipoDocumento, setTipoDocumento] = useState(client?.tipoDocumento || 'none')
+  const [numeroDocumento, setNumeroDocumento] = useState(client?.numeroDocumento || '')
+  const [razonSocial, setRazonSocial] = useState(client?.razonSocial || '')
+  const [sector, setSector] = useState(client?.sector || '')
+  const [contactoNombre, setContactoNombre] = useState(client?.contactoNombre || '')
+  const [contactoTelefono, setContactoTelefono] = useState(client?.contactoTelefono || '')
+  const [contactoEmail, setContactoEmail] = useState(client?.contactoEmail || '')
+  // Collapsible optional sections
+  const [showFiscal, setShowFiscal] = useState(!!(client?.tipoDocumento || client?.numeroDocumento || client?.razonSocial || client?.sector))
+  const [showContacto, setShowContacto] = useState(!!(client?.contactoNombre || client?.contactoTelefono || client?.contactoEmail))
   const [saving, setSaving] = useState(false)
 
   const toggleService = (serviceId: string) => {
@@ -185,7 +296,17 @@ function ClientForm({ client, services, onSave, onCancel }: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
-    await onSave({ name, activity, startDate, location, phone, email, serviceIds: selectedServiceIds })
+    await onSave({
+      name, activity, startDate, location, phone, email,
+      serviceIds: selectedServiceIds,
+      tipoDocumento: tipoDocumento === 'none' ? null : tipoDocumento,
+      numeroDocumento: numeroDocumento || null,
+      razonSocial: razonSocial || null,
+      sector: sector || null,
+      contactoNombre: contactoNombre || null,
+      contactoTelefono: contactoTelefono || null,
+      contactoEmail: contactoEmail || null,
+    })
     setSaving(false)
   }
 
@@ -202,6 +323,56 @@ function ClientForm({ client, services, onSave, onCancel }: {
         <div className="space-y-2"><Label>Teléfono</Label><Input value={phone} onChange={e => setPhone(e.target.value)} /></div>
         <div className="space-y-2"><Label>Email</Label><Input type="email" value={email} onChange={e => setEmail(e.target.value)} /></div>
       </div>
+
+      {/* ── Sección plegable: Datos fiscales ── */}
+      <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowFiscal(v => !v)}
+          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        >
+          <span className="text-sm font-semibold text-gray-700">Datos fiscales <span className="font-normal text-gray-400">(opcional)</span></span>
+          <span className="text-gray-400 text-xs">{showFiscal ? '▲' : '▼'}</span>
+        </button>
+        {showFiscal && (
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Tipo de documento</Label>
+              <Select value={tipoDocumento} onValueChange={setTipoDocumento}>
+                <SelectTrigger><SelectValue placeholder="Sin especificar" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Sin especificar</SelectItem>
+                  <SelectItem value="RUC">RUC</SelectItem>
+                  <SelectItem value="DNI">DNI</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2"><Label>Número de documento</Label><Input value={numeroDocumento} onChange={e => setNumeroDocumento(e.target.value)} placeholder="20123456789" /></div>
+            <div className="space-y-2"><Label>Razón social</Label><Input value={razonSocial} onChange={e => setRazonSocial(e.target.value)} placeholder="Empresa S.A.C." /></div>
+            <div className="space-y-2"><Label>Sector</Label><Input value={sector} onChange={e => setSector(e.target.value)} placeholder="Tecnología, Retail, etc." /></div>
+          </div>
+        )}
+      </div>
+
+      {/* ── Sección plegable: Contacto de referencia ── */}
+      <div className="border rounded-lg overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setShowContacto(v => !v)}
+          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        >
+          <span className="text-sm font-semibold text-gray-700">Contacto de referencia <span className="font-normal text-gray-400">(opcional)</span></span>
+          <span className="text-gray-400 text-xs">{showContacto ? '▲' : '▼'}</span>
+        </button>
+        {showContacto && (
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2 sm:col-span-2"><Label>Nombre del contacto</Label><Input value={contactoNombre} onChange={e => setContactoNombre(e.target.value)} placeholder="María García" /></div>
+            <div className="space-y-2"><Label>Teléfono del contacto</Label><Input value={contactoTelefono} onChange={e => setContactoTelefono(e.target.value)} placeholder="+51 999 999 999" /></div>
+            <div className="space-y-2"><Label>Email del contacto</Label><Input type="email" value={contactoEmail} onChange={e => setContactoEmail(e.target.value)} placeholder="contacto@empresa.com" /></div>
+          </div>
+        )}
+      </div>
+
       <div className="space-y-2">
         <Label>Servicios requeridos</Label>
         <div className="border rounded-lg p-4 max-h-64 overflow-y-auto space-y-4">
@@ -497,7 +668,7 @@ function AcceptProformaDialog({ client, open, onOpenChange, onSave }: {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
-        <DialogHeader><DialogTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" style={{ color: '#22c55e' }} />Aceptar Proforma — {client.name}</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" style={{ color: '#22c55e' }} />Aceptar Proforma — {client.name}</DialogTitle><DialogDescription>Completá los datos para activar el proyecto y registrar los cobros asociados.</DialogDescription></DialogHeader>
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2"><Label className="font-semibold">Fecha de inicio designada</Label><Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} /></div>
@@ -566,8 +737,14 @@ function AcceptProformaDialog({ client, open, onOpenChange, onSave }: {
 }
 
 // ===================== CLIENT CARD =====================
-function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProforma }: {
-  client: Client; onEdit: () => void; onDelete: () => void; onDownloadProforma: () => void; onAcceptProforma: () => void
+function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProforma, onVerProyectos, proyectosActivos }: {
+  client: Client
+  onEdit: () => void
+  onDelete: () => void
+  onDownloadProforma: () => void
+  onAcceptProforma: () => void
+  onVerProyectos: () => void
+  proyectosActivos: number | null  // null = proyectos not yet loaded
 }) {
   const isAccepted = client.status === 'aceptado'
   const isPending = client.status === 'pendiente'
@@ -612,12 +789,27 @@ function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProf
               <div className="flex items-center gap-2 mt-1">{client.anticipoPagado ? <span className="text-green-600">✅ Anticipo abonado</span> : <span className="text-gray-500">⬜ Anticipo pendiente</span>}</div>
             </div>
           )}
-          <div className="flex items-center gap-2 pt-2">
+          <div className="flex items-center gap-2 pt-2 flex-wrap">
             {isPending && <Button onClick={onAcceptProforma} size="sm" className="flex-1 text-white text-xs h-9" style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)' }}><CheckCircle className="h-3.5 w-3.5 mr-1" />Aceptar Proforma</Button>}
             {isAccepted && <Button onClick={onAcceptProforma} size="sm" variant="outline" className="flex-1 text-xs h-9 border-green-300 text-green-700 hover:bg-green-50"><Pencil className="h-3.5 w-3.5 mr-1" />Editar Selección</Button>}
             <Button onClick={onDownloadProforma} size="sm" className="text-white text-xs h-9" style={{ background: 'linear-gradient(135deg, #00C0FF, #0098cc)' }}><Download className="h-3.5 w-3.5 mr-1" />Proforma</Button>
             <Button onClick={() => window.open(`/api/proforma/${client.id}/pdf`, '_blank')} size="sm" variant="outline" className="text-xs h-9" title="Ver PDF"><FileText className="h-3.5 w-3.5" /></Button>
           </div>
+          <button
+            onClick={onVerProyectos}
+            className="w-full flex items-center justify-between px-3 py-2 mt-1 rounded-lg text-xs font-medium text-blue-600 hover:bg-blue-50 transition-colors border border-blue-100"
+          >
+            <span className="flex items-center gap-1.5">
+              <FolderOpen className="h-3.5 w-3.5" />
+              Ver Proyectos
+              {proyectosActivos !== null && proyectosActivos > 0 && (
+                <Badge className="text-[10px] px-1.5 py-0 ml-1" style={{ background: '#3B82F620', color: '#3B82F6', borderColor: 'transparent' }}>
+                  {proyectosActivos} activo{proyectosActivos !== 1 ? 's' : ''}
+                </Badge>
+              )}
+            </span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
         </div>
       </CardContent>
     </Card>
@@ -652,9 +844,14 @@ export function Dashboard() {
   const [talents, setTalents] = useState<Talent[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
   const [taskTemplates, setTaskTemplates] = useState<TaskTemplate[]>([])
+  // proyectos loads with the initial fetchData (used as reference data by CobrosTab,
+  // EntregablesTab, and GastosTab for their Select dropdowns)
+  const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('clientes')
   const [searchQuery, setSearchQuery] = useState('')
+  // tabFilters: cross-tab navigation filters, reset when user manually changes tab
+  const [tabFilters, setTabFilters] = useState<Record<string, unknown>>({})
 
   // Dialog states
   const [clientDialogOpen, setClientDialogOpen] = useState(false)
@@ -683,23 +880,28 @@ export function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const [clientsRes, servicesRes, talentsRes, tasksRes, templatesRes] = await Promise.all([
+      // Initial parallel fetch: legacy entities + proyectos (reference data for lazy tabs)
+      // cobros, entregables, gastos are loaded lazily by their respective tab components
+      const [clientsRes, servicesRes, talentsRes, tasksRes, templatesRes, proyectosRes] = await Promise.all([
         fetch('/api/clients'),
         fetch('/api/services'),
         fetch('/api/talents').catch(() => new Response('[]', { status: 200 })),
         fetch('/api/tasks').catch(() => new Response('[]', { status: 200 })),
         fetch('/api/task-templates').catch(() => new Response('[]', { status: 200 })),
+        fetch('/api/proyectos').catch(() => new Response('[]', { status: 200 })),
       ])
       const clientsData = await clientsRes.json()
       const servicesData = await servicesRes.json()
       const talentsData = await talentsRes.json()
       const tasksData = await tasksRes.json()
       const templatesData = await templatesRes.json()
+      const proyectosData = await proyectosRes.json()
       setClients(Array.isArray(clientsData) ? clientsData : [])
       setServices(Array.isArray(servicesData) ? servicesData : [])
       setTalents(Array.isArray(talentsData) ? talentsData : [])
       setTasks(Array.isArray(tasksData) ? tasksData : [])
       setTaskTemplates(Array.isArray(templatesData) ? templatesData : [])
+      setProyectos(Array.isArray(proyectosData) ? proyectosData : [])
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -708,6 +910,13 @@ export function Dashboard() {
   }
 
   useEffect(() => { fetchData() }, [])
+
+  // Cross-tab navigation: navigate to a tab with optional pre-applied filters
+  const navigateTo = (tab: string, filters?: Record<string, unknown>) => {
+    setActiveTab(tab)
+    setTabFilters(filters ?? {})
+    setSearchQuery('')
+  }
 
   // ============ HANDLERS ============
   const handleSaveClient = async (data: Record<string, unknown>) => {
@@ -805,14 +1014,30 @@ export function Dashboard() {
     return true
   })
 
-  // ============ TAB CONFIG ============
-  const tabs = [
-    { key: 'clientes', label: 'Clientes', icon: Users, color: '#00C0FF' },
-    { key: 'servicios', label: 'Servicios', icon: Package, color: '#FF8D00' },
-    { key: 'talentos', label: 'Talentos', icon: UserCog, color: '#8B5CF6' },
-    { key: 'tareas', label: 'Tareas', icon: ListTodo, color: '#22c55e' },
-    { key: 'plantillas', label: 'Plantillas', icon: ClipboardList, color: '#EC4899' },
+  // ============ TAB CONFIG — 2 visual groups ============
+  const tabGroups = [
+    {
+      label: 'Operaciones',
+      tabs: [
+        { key: 'clientes',    label: 'Clientes',      icon: Users,       color: '#00C0FF' },
+        { key: 'proyectos',   label: 'Proyectos',     icon: FolderOpen,  color: '#3B82F6' },
+        { key: 'cobros',      label: 'Cobros & Pagos',icon: CreditCard,  color: '#10B981' },
+        { key: 'entregables', label: 'Entregables',   icon: PackageCheck,color: '#F59E0B' },
+      ],
+    },
+    {
+      label: 'Configuración',
+      tabs: [
+        { key: 'servicios',  label: 'Servicios',  icon: Package,      color: '#FF8D00' },
+        { key: 'talentos',   label: 'Talentos',   icon: UserCog,      color: '#8B5CF6' },
+        { key: 'tareas',     label: 'Tareas',     icon: ListTodo,     color: '#22c55e' },
+        { key: 'plantillas', label: 'Plantillas', icon: ClipboardList,color: '#EC4899' },
+        { key: 'gastos',     label: 'Gastos',     icon: Receipt,      color: '#EF4444' },
+      ],
+    },
   ]
+  // Flat list for search placeholder and mobile rendering
+  const tabs = tabGroups.flatMap(g => g.tabs)
 
   // ============ TASK STATS ============
   const taskStats = {
@@ -842,10 +1067,21 @@ export function Dashboard() {
             <div className="flex items-center gap-8">
               <img src={LOGO_NEGRO_BASE64} alt="SUGGESTION" className="h-8 w-auto" />
               <nav className="hidden lg:flex items-center gap-1">
-                {tabs.map(tab => (
-                  <button key={tab.key} onClick={() => { setActiveTab(tab.key); setSearchQuery('') }} className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`} style={activeTab === tab.key ? { background: tab.color } : {}}>
-                    <tab.icon className="h-4 w-4 inline mr-1.5" />{tab.label}
-                  </button>
+                {tabGroups.map((group, gi) => (
+                  <div key={group.label} className="flex items-center gap-1">
+                    {gi > 0 && <div className="w-px h-5 bg-gray-200 mx-1" />}
+                    {group.tabs.map(tab => (
+                      <button
+                        key={tab.key}
+                        onClick={() => { setActiveTab(tab.key); setSearchQuery(''); setTabFilters({}) }}
+                        title={gi === 1 ? `${group.label}: ${tab.label}` : tab.label}
+                        className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
+                        style={activeTab === tab.key ? { background: tab.color } : {}}
+                      >
+                        <tab.icon className="h-4 w-4 inline mr-1.5" />{tab.label}
+                      </button>
+                    ))}
+                  </div>
                 ))}
               </nav>
             </div>
@@ -855,12 +1091,22 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Mobile tabs */}
+          {/* Mobile tabs — scroll horizontal, groups separated by a gap */}
           <div className="lg:hidden flex items-center gap-1 pb-2 overflow-x-auto">
-            {tabs.map(tab => (
-              <button key={tab.key} onClick={() => { setActiveTab(tab.key); setSearchQuery('') }} className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 bg-gray-100'}`} style={activeTab === tab.key ? { background: tab.color } : {}}>
-                <tab.icon className="h-3 w-3 inline mr-1" />{tab.label}
-              </button>
+            {tabGroups.map((group, gi) => (
+              <div key={group.label} className="flex items-center gap-1 flex-shrink-0">
+                {gi > 0 && <div className="w-px h-4 bg-gray-300 mx-0.5 flex-shrink-0" />}
+                {group.tabs.map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => { setActiveTab(tab.key); setSearchQuery(''); setTabFilters({}) }}
+                    className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 bg-gray-100'}`}
+                    style={activeTab === tab.key ? { background: tab.color } : {}}
+                  >
+                    <tab.icon className="h-3 w-3 inline mr-1" />{tab.label}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -879,7 +1125,7 @@ export function Dashboard() {
           {activeTab === 'clientes' && (
             <Dialog open={clientDialogOpen} onOpenChange={(open) => { setClientDialogOpen(open); if (!open) setEditingClient(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#00C0FF' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo cliente</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}</DialogTitle></DialogHeader><ClientForm client={editingClient} services={services} onSave={handleSaveClient} onCancel={() => { setClientDialogOpen(false); setEditingClient(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}</DialogTitle><DialogDescription>Completá los datos del cliente.</DialogDescription></DialogHeader><ClientForm client={editingClient} services={services} onSave={handleSaveClient} onCancel={() => { setClientDialogOpen(false); setEditingClient(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -887,7 +1133,7 @@ export function Dashboard() {
           {activeTab === 'servicios' && (
             <Dialog open={serviceDialogOpen} onOpenChange={(open) => { setServiceDialogOpen(open); if (!open) setEditingService(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#FF8D00' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo servicio</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingService ? 'Editar Servicio' : 'Nuevo Servicio'}</DialogTitle></DialogHeader><ServiceForm service={editingService} onSave={handleSaveService} onCancel={() => { setServiceDialogOpen(false); setEditingService(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingService ? 'Editar Servicio' : 'Nuevo Servicio'}</DialogTitle><DialogDescription>Completá los datos del servicio.</DialogDescription></DialogHeader><ServiceForm service={editingService} onSave={handleSaveService} onCancel={() => { setServiceDialogOpen(false); setEditingService(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -895,7 +1141,7 @@ export function Dashboard() {
           {activeTab === 'talentos' && (
             <Dialog open={talentDialogOpen} onOpenChange={(open) => { setTalentDialogOpen(open); if (!open) setEditingTalent(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#8B5CF6' }}><Plus className="h-4 w-4 mr-1.5" />Crear nuevo talento</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTalent ? 'Editar Talento' : 'Nuevo Talento'}</DialogTitle></DialogHeader><TalentForm talent={editingTalent} onSave={handleSaveTalent} onCancel={() => { setTalentDialogOpen(false); setEditingTalent(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTalent ? 'Editar Talento' : 'Nuevo Talento'}</DialogTitle><DialogDescription>Completá los datos del talento.</DialogDescription></DialogHeader><TalentForm talent={editingTalent} onSave={handleSaveTalent} onCancel={() => { setTalentDialogOpen(false); setEditingTalent(null) }} /></DialogContent>
             </Dialog>
           )}
 
@@ -903,7 +1149,7 @@ export function Dashboard() {
           {activeTab === 'plantillas' && (
             <Dialog open={templateDialogOpen} onOpenChange={(open) => { setTemplateDialogOpen(open); if (!open) setEditingTemplate(null) }}>
               <DialogTrigger asChild><Button className="text-white" style={{ background: '#EC4899' }}><Plus className="h-4 w-4 mr-1.5" />Crear plantilla</Button></DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTemplate ? 'Editar Plantilla' : 'Nueva Plantilla de Tarea'}</DialogTitle></DialogHeader><TaskTemplateForm template={editingTemplate} services={services} onSave={handleSaveTemplate} onCancel={() => { setTemplateDialogOpen(false); setEditingTemplate(null) }} /></DialogContent>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingTemplate ? 'Editar Plantilla' : 'Nueva Plantilla de Tarea'}</DialogTitle><DialogDescription>Completá los datos de la plantilla.</DialogDescription></DialogHeader><TaskTemplateForm template={editingTemplate} services={services} onSave={handleSaveTemplate} onCancel={() => { setTemplateDialogOpen(false); setEditingTemplate(null) }} /></DialogContent>
             </Dialog>
           )}
         </div>
@@ -915,7 +1161,23 @@ export function Dashboard() {
               <div className="text-center py-16 bg-white rounded-xl border"><Users className="h-12 w-12 text-gray-300 mx-auto mb-4" /><h3 className="text-lg font-semibold text-gray-900">No hay clientes</h3><p className="text-sm text-gray-500 mt-1">Crea tu primer cliente para empezar.</p></div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredClients.map(client => <ClientCard key={client.id} client={client} onEdit={() => { setEditingClient(client); setClientDialogOpen(true) }} onDelete={() => { setDeletingClient(client); setDeleteClientOpen(true) }} onDownloadProforma={() => handleDownloadProforma(client)} onAcceptProforma={() => { setAcceptingClient(client); setAcceptDialogOpen(true) }} />)}
+                {filteredClients.map(client => {
+                  const proyActivos = proyectos.length > 0
+                    ? proyectos.filter(p => p.clienteId === client.id && p.estado === 'activo').length
+                    : null
+                  return (
+                    <ClientCard
+                      key={client.id}
+                      client={client}
+                      onEdit={() => { setEditingClient(client); setClientDialogOpen(true) }}
+                      onDelete={() => { setDeletingClient(client); setDeleteClientOpen(true) }}
+                      onDownloadProforma={() => handleDownloadProforma(client)}
+                      onAcceptProforma={() => { setAcceptingClient(client); setAcceptDialogOpen(true) }}
+                      onVerProyectos={() => navigateTo('proyectos', { clienteId: client.id })}
+                      proyectosActivos={proyActivos}
+                    />
+                  )
+                })}
               </div>
             )}
           </div>
@@ -1092,6 +1354,41 @@ export function Dashboard() {
               </div>
             )}
           </div>
+        )}
+
+        {/* ====== PROYECTOS TAB ====== */}
+        {activeTab === 'proyectos' && (
+          <ProyectosTab
+            proyectos={proyectos}
+            loadingProyectos={loading}
+            clients={clients}
+            onRefresh={fetchData}
+            onNavigateTo={navigateTo}
+            initialFilters={tabFilters as { clienteId?: string }}
+          />
+        )}
+
+        {/* ====== COBROS TAB ====== */}
+        {activeTab === 'cobros' && (
+          <CobrosTab
+            proyectos={proyectos}
+            isActive={activeTab === 'cobros'}
+            initialFilters={tabFilters as { proyectoId?: string }}
+          />
+        )}
+
+        {/* ====== ENTREGABLES TAB ====== */}
+        {activeTab === 'entregables' && (
+          <EntregablesTab
+            proyectos={proyectos}
+            isActive={activeTab === 'entregables'}
+            initialFilters={tabFilters as { proyectoId?: string }}
+          />
+        )}
+
+        {/* ====== GASTOS TAB ====== */}
+        {activeTab === 'gastos' && (
+          <GastosTab proyectos={proyectos} isActive={activeTab === 'gastos'} />
         )}
       </main>
 
