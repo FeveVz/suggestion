@@ -38,8 +38,8 @@ function GastoForm({ gasto, proyectos, onSave, onCancel }: {
   const [monto, setMonto] = useState(gasto?.monto?.toString() || '')
   const [moneda, setMoneda] = useState(gasto?.moneda || 'PEN')
   const [fecha, setFecha] = useState(gasto?.fecha || new Date().toISOString().split('T')[0])
-  const [proyectoId, setProyectoId] = useState(gasto?.proyectoId || '')
-  const [categoria, setCategoria] = useState(gasto?.categoria || '')
+  const [proyectoId, setProyectoId] = useState(gasto?.proyectoId || 'none')
+  const [categoria, setCategoria] = useState(gasto?.categoria || 'none')
   const [comprobante, setComprobante] = useState(gasto?.comprobante || '')
   const [saving, setSaving] = useState(false)
 
@@ -51,8 +51,8 @@ function GastoForm({ gasto, proyectos, onSave, onCancel }: {
       monto: Number(monto),
       moneda,
       fecha,
-      proyectoId: proyectoId || null,
-      categoria: categoria || null,
+      proyectoId: proyectoId === 'none' ? null : proyectoId,
+      categoria: categoria === 'none' ? null : categoria,
       comprobante: comprobante || null,
     })
     setSaving(false)
@@ -88,7 +88,7 @@ function GastoForm({ gasto, proyectos, onSave, onCancel }: {
           <Select value={categoria} onValueChange={setCategoria}>
             <SelectTrigger><SelectValue placeholder="Sin categoría" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Sin categoría</SelectItem>
+              <SelectItem value="none">Sin categoría</SelectItem>
               {CATEGORIAS_GASTO.map(c => (
                 <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
               ))}
@@ -100,7 +100,7 @@ function GastoForm({ gasto, proyectos, onSave, onCancel }: {
           <Select value={proyectoId} onValueChange={setProyectoId}>
             <SelectTrigger><SelectValue placeholder="Gasto general (sin proyecto)" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Gasto general (sin proyecto)</SelectItem>
+              <SelectItem value="none">Gasto general (sin proyecto)</SelectItem>
               {proyectos.map(p => (
                 <SelectItem key={p.id} value={p.id}>
                   {p.nombre} {p.cliente ? `— ${p.cliente.name}` : ''}

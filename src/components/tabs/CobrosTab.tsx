@@ -73,7 +73,7 @@ function CobroForm({ cobro, proyectos, onSave, onCancel }: {
   const [subtotal, setSubtotal] = useState(cobro?.subtotal?.toString() || '')
   const [igv, setIgv] = useState(cobro?.igv?.toString() || '0')
   const [moneda, setMoneda] = useState<'PEN' | 'USD'>(cobro?.moneda || 'PEN')
-  const [tipoDocumento, setTipoDocumento] = useState(cobro?.tipoDocumento || '')
+  const [tipoDocumento, setTipoDocumento] = useState(cobro?.tipoDocumento || 'none')
   const [numeroDocumento, setNumeroDocumento] = useState(cobro?.numeroDocumento || '')
   const [fechaEmision, setFechaEmision] = useState(cobro?.fechaEmision || new Date().toISOString().split('T')[0])
   const [diasCredito, setDiasCredito] = useState(cobro?.diasCredito?.toString() || '0')
@@ -100,7 +100,7 @@ function CobroForm({ cobro, proyectos, onSave, onCancel }: {
       subtotal: subtotalNum,
       igv: igvNum,
       moneda,
-      tipoDocumento: tipoDocumento || null,
+      tipoDocumento: tipoDocumento === 'none' ? null : tipoDocumento,
       numeroDocumento: numeroDocumento || null,
       fechaEmision,
       diasCredito: Number(diasCredito),
@@ -157,14 +157,14 @@ function CobroForm({ cobro, proyectos, onSave, onCancel }: {
           <Select value={tipoDocumento} onValueChange={setTipoDocumento}>
             <SelectTrigger><SelectValue placeholder="Sin documento" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Sin documento</SelectItem>
+              <SelectItem value="none">Sin documento</SelectItem>
               <SelectItem value="factura">Factura</SelectItem>
               <SelectItem value="boleta">Boleta</SelectItem>
               <SelectItem value="recibo">Recibo</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        {tipoDocumento && (
+        {tipoDocumento !== 'none' && (
           <div className="space-y-2 sm:col-span-2">
             <Label>Número de documento</Label>
             <Input value={numeroDocumento} onChange={e => setNumeroDocumento(e.target.value)} placeholder="F001-00001" />

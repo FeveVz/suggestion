@@ -276,7 +276,7 @@ function ClientForm({ client, services, onSave, onCancel }: {
   const [email, setEmail] = useState(client?.email || '')
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>(client?.services.map(s => s.serviceId) || [])
   // New fields (migration 001)
-  const [tipoDocumento, setTipoDocumento] = useState(client?.tipoDocumento || '')
+  const [tipoDocumento, setTipoDocumento] = useState(client?.tipoDocumento || 'none')
   const [numeroDocumento, setNumeroDocumento] = useState(client?.numeroDocumento || '')
   const [razonSocial, setRazonSocial] = useState(client?.razonSocial || '')
   const [sector, setSector] = useState(client?.sector || '')
@@ -298,7 +298,7 @@ function ClientForm({ client, services, onSave, onCancel }: {
     await onSave({
       name, activity, startDate, location, phone, email,
       serviceIds: selectedServiceIds,
-      tipoDocumento: tipoDocumento || null,
+      tipoDocumento: tipoDocumento === 'none' ? null : tipoDocumento,
       numeroDocumento: numeroDocumento || null,
       razonSocial: razonSocial || null,
       sector: sector || null,
@@ -340,7 +340,7 @@ function ClientForm({ client, services, onSave, onCancel }: {
               <Select value={tipoDocumento} onValueChange={setTipoDocumento}>
                 <SelectTrigger><SelectValue placeholder="Sin especificar" /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Sin especificar</SelectItem>
+                  <SelectItem value="none">Sin especificar</SelectItem>
                   <SelectItem value="RUC">RUC</SelectItem>
                   <SelectItem value="DNI">DNI</SelectItem>
                 </SelectContent>
