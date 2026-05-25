@@ -68,6 +68,11 @@ import {
   AlertCircle,
   Calendar,
   ArrowRight,
+  // New icons for Phase 3 tabs
+  FolderOpen,
+  CreditCard,
+  PackageCheck,
+  Receipt,
 } from 'lucide-react'
 
 // ===================== TYPES =====================
@@ -912,14 +917,30 @@ export function Dashboard() {
     return true
   })
 
-  // ============ TAB CONFIG ============
-  const tabs = [
-    { key: 'clientes', label: 'Clientes', icon: Users, color: '#00C0FF' },
-    { key: 'servicios', label: 'Servicios', icon: Package, color: '#FF8D00' },
-    { key: 'talentos', label: 'Talentos', icon: UserCog, color: '#8B5CF6' },
-    { key: 'tareas', label: 'Tareas', icon: ListTodo, color: '#22c55e' },
-    { key: 'plantillas', label: 'Plantillas', icon: ClipboardList, color: '#EC4899' },
+  // ============ TAB CONFIG — 2 visual groups ============
+  const tabGroups = [
+    {
+      label: 'Operaciones',
+      tabs: [
+        { key: 'clientes',    label: 'Clientes',      icon: Users,       color: '#00C0FF' },
+        { key: 'proyectos',   label: 'Proyectos',     icon: FolderOpen,  color: '#3B82F6' },
+        { key: 'cobros',      label: 'Cobros & Pagos',icon: CreditCard,  color: '#10B981' },
+        { key: 'entregables', label: 'Entregables',   icon: PackageCheck,color: '#F59E0B' },
+      ],
+    },
+    {
+      label: 'Configuración',
+      tabs: [
+        { key: 'servicios',  label: 'Servicios',  icon: Package,      color: '#FF8D00' },
+        { key: 'talentos',   label: 'Talentos',   icon: UserCog,      color: '#8B5CF6' },
+        { key: 'tareas',     label: 'Tareas',     icon: ListTodo,     color: '#22c55e' },
+        { key: 'plantillas', label: 'Plantillas', icon: ClipboardList,color: '#EC4899' },
+        { key: 'gastos',     label: 'Gastos',     icon: Receipt,      color: '#EF4444' },
+      ],
+    },
   ]
+  // Flat list for search placeholder and mobile rendering
+  const tabs = tabGroups.flatMap(g => g.tabs)
 
   // ============ TASK STATS ============
   const taskStats = {
@@ -949,10 +970,21 @@ export function Dashboard() {
             <div className="flex items-center gap-8">
               <img src={LOGO_NEGRO_BASE64} alt="SUGGESTION" className="h-8 w-auto" />
               <nav className="hidden lg:flex items-center gap-1">
-                {tabs.map(tab => (
-                  <button key={tab.key} onClick={() => { setActiveTab(tab.key); setSearchQuery('') }} className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`} style={activeTab === tab.key ? { background: tab.color } : {}}>
-                    <tab.icon className="h-4 w-4 inline mr-1.5" />{tab.label}
-                  </button>
+                {tabGroups.map((group, gi) => (
+                  <div key={group.label} className="flex items-center gap-1">
+                    {gi > 0 && <div className="w-px h-5 bg-gray-200 mx-1" />}
+                    {group.tabs.map(tab => (
+                      <button
+                        key={tab.key}
+                        onClick={() => { setActiveTab(tab.key); setSearchQuery(''); setTabFilters({}) }}
+                        title={gi === 1 ? `${group.label}: ${tab.label}` : tab.label}
+                        className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
+                        style={activeTab === tab.key ? { background: tab.color } : {}}
+                      >
+                        <tab.icon className="h-4 w-4 inline mr-1.5" />{tab.label}
+                      </button>
+                    ))}
+                  </div>
                 ))}
               </nav>
             </div>
@@ -962,12 +994,22 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Mobile tabs */}
+          {/* Mobile tabs — scroll horizontal, groups separated by a gap */}
           <div className="lg:hidden flex items-center gap-1 pb-2 overflow-x-auto">
-            {tabs.map(tab => (
-              <button key={tab.key} onClick={() => { setActiveTab(tab.key); setSearchQuery('') }} className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 bg-gray-100'}`} style={activeTab === tab.key ? { background: tab.color } : {}}>
-                <tab.icon className="h-3 w-3 inline mr-1" />{tab.label}
-              </button>
+            {tabGroups.map((group, gi) => (
+              <div key={group.label} className="flex items-center gap-1 flex-shrink-0">
+                {gi > 0 && <div className="w-px h-4 bg-gray-300 mx-0.5 flex-shrink-0" />}
+                {group.tabs.map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => { setActiveTab(tab.key); setSearchQuery(''); setTabFilters({}) }}
+                    className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === tab.key ? 'text-white' : 'text-gray-600 bg-gray-100'}`}
+                    style={activeTab === tab.key ? { background: tab.color } : {}}
+                  >
+                    <tab.icon className="h-3 w-3 inline mr-1" />{tab.label}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -1198,6 +1240,42 @@ export function Dashboard() {
                 </Table>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ====== PROYECTOS TAB — placeholder until ProyectosTab component ====== */}
+        {activeTab === 'proyectos' && (
+          <div className="text-center py-16 bg-white rounded-xl border">
+            <FolderOpen className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900">Proyectos</h3>
+            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
+          </div>
+        )}
+
+        {/* ====== COBROS TAB — placeholder until CobrosTab component ====== */}
+        {activeTab === 'cobros' && (
+          <div className="text-center py-16 bg-white rounded-xl border">
+            <CreditCard className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900">Cobros & Pagos</h3>
+            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
+          </div>
+        )}
+
+        {/* ====== ENTREGABLES TAB — placeholder until EntregablesTab component ====== */}
+        {activeTab === 'entregables' && (
+          <div className="text-center py-16 bg-white rounded-xl border">
+            <PackageCheck className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900">Entregables</h3>
+            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
+          </div>
+        )}
+
+        {/* ====== GASTOS TAB — placeholder until GastosTab component ====== */}
+        {activeTab === 'gastos' && (
+          <div className="text-center py-16 bg-white rounded-xl border">
+            <Receipt className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900">Gastos</h3>
+            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
           </div>
         )}
       </main>
