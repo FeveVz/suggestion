@@ -14,18 +14,21 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const proyectoId = searchParams.get('proyectoId')
 
-  if (!proyectoId) {
-    return NextResponse.json(
-      { error: 'El parámetro proyectoId es requerido' },
-      { status: 400 }
-    )
-  }
-
-  const { data, error } = await supabase
+  // proyectoId es opcional:
+  //   - Con ?proyectoId=x  → filtrar por proyecto (comportamiento original)
+  //   - Sin ?proyectoId    → devolver todos, limitado a 100 para rendimiento
+  let query = supabase
     .from('Entregable')
     .select('*')
-    .eq('proyectoId', proyectoId)
     .order('fechaCompromiso', { ascending: true })
+
+  if (proyectoId) {
+    query = query.eq('proyectoId', proyectoId)
+  } else {
+    query = query.limit(100)
+  }
+
+  const { data, error } = await query
 
   if (error) {
     console.error('GET /api/entregables error:', error)
