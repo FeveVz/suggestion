@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { LOGO_NEGRO_BASE64 } from '@/lib/logo-negro'
 import { GastosTab } from '@/components/tabs/GastosTab'
 import { EntregablesTab } from '@/components/tabs/EntregablesTab'
+import { ProyectosTab } from '@/components/tabs/ProyectosTab'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -1353,13 +1354,16 @@ export function Dashboard() {
           </div>
         )}
 
-        {/* ====== PROYECTOS TAB — placeholder until ProyectosTab component ====== */}
+        {/* ====== PROYECTOS TAB ====== */}
         {activeTab === 'proyectos' && (
-          <div className="text-center py-16 bg-white rounded-xl border">
-            <FolderOpen className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900">Proyectos</h3>
-            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
-          </div>
+          <ProyectosTab
+            proyectos={proyectos}
+            loadingProyectos={loading}
+            clients={clients}
+            onRefresh={fetchData}
+            onNavigateTo={navigateTo}
+            initialFilters={tabFilters as { clienteId?: string }}
+          />
         )}
 
         {/* ====== COBROS TAB — placeholder until CobrosTab component ====== */}
