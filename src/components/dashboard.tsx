@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { LOGO_NEGRO_BASE64 } from '@/lib/logo-negro'
+import { GastosTab } from '@/components/tabs/GastosTab'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -1378,13 +1379,9 @@ export function Dashboard() {
           </div>
         )}
 
-        {/* ====== GASTOS TAB — placeholder until GastosTab component ====== */}
+        {/* ====== GASTOS TAB ====== */}
         {activeTab === 'gastos' && (
-          <div className="text-center py-16 bg-white rounded-xl border">
-            <Receipt className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900">Gastos</h3>
-            <p className="text-sm text-gray-500 mt-1">Cargando componente...</p>
-          </div>
+          <GastosTab proyectos={proyectos} isActive={activeTab === 'gastos'} />
         )}
       </main>
 
