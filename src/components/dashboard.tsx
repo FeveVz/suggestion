@@ -732,8 +732,14 @@ function AcceptProformaDialog({ client, open, onOpenChange, onSave }: {
 }
 
 // ===================== CLIENT CARD =====================
-function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProforma }: {
-  client: Client; onEdit: () => void; onDelete: () => void; onDownloadProforma: () => void; onAcceptProforma: () => void
+function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProforma, onVerProyectos, proyectosActivos }: {
+  client: Client
+  onEdit: () => void
+  onDelete: () => void
+  onDownloadProforma: () => void
+  onAcceptProforma: () => void
+  onVerProyectos: () => void
+  proyectosActivos: number | null  // null = proyectos not yet loaded
 }) {
   const isAccepted = client.status === 'aceptado'
   const isPending = client.status === 'pendiente'
@@ -778,12 +784,27 @@ function ClientCard({ client, onEdit, onDelete, onDownloadProforma, onAcceptProf
               <div className="flex items-center gap-2 mt-1">{client.anticipoPagado ? <span className="text-green-600">✅ Anticipo abonado</span> : <span className="text-gray-500">⬜ Anticipo pendiente</span>}</div>
             </div>
           )}
-          <div className="flex items-center gap-2 pt-2">
+          <div className="flex items-center gap-2 pt-2 flex-wrap">
             {isPending && <Button onClick={onAcceptProforma} size="sm" className="flex-1 text-white text-xs h-9" style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)' }}><CheckCircle className="h-3.5 w-3.5 mr-1" />Aceptar Proforma</Button>}
             {isAccepted && <Button onClick={onAcceptProforma} size="sm" variant="outline" className="flex-1 text-xs h-9 border-green-300 text-green-700 hover:bg-green-50"><Pencil className="h-3.5 w-3.5 mr-1" />Editar Selección</Button>}
             <Button onClick={onDownloadProforma} size="sm" className="text-white text-xs h-9" style={{ background: 'linear-gradient(135deg, #00C0FF, #0098cc)' }}><Download className="h-3.5 w-3.5 mr-1" />Proforma</Button>
             <Button onClick={() => window.open(`/api/proforma/${client.id}/pdf`, '_blank')} size="sm" variant="outline" className="text-xs h-9" title="Ver PDF"><FileText className="h-3.5 w-3.5" /></Button>
           </div>
+          <button
+            onClick={onVerProyectos}
+            className="w-full flex items-center justify-between px-3 py-2 mt-1 rounded-lg text-xs font-medium text-blue-600 hover:bg-blue-50 transition-colors border border-blue-100"
+          >
+            <span className="flex items-center gap-1.5">
+              <FolderOpen className="h-3.5 w-3.5" />
+              Ver Proyectos
+              {proyectosActivos !== null && proyectosActivos > 0 && (
+                <Badge className="text-[10px] px-1.5 py-0 ml-1" style={{ background: '#3B82F620', color: '#3B82F6', borderColor: 'transparent' }}>
+                  {proyectosActivos} activo{proyectosActivos !== 1 ? 's' : ''}
+                </Badge>
+              )}
+            </span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
         </div>
       </CardContent>
     </Card>
@@ -1135,7 +1156,23 @@ export function Dashboard() {
               <div className="text-center py-16 bg-white rounded-xl border"><Users className="h-12 w-12 text-gray-300 mx-auto mb-4" /><h3 className="text-lg font-semibold text-gray-900">No hay clientes</h3><p className="text-sm text-gray-500 mt-1">Crea tu primer cliente para empezar.</p></div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredClients.map(client => <ClientCard key={client.id} client={client} onEdit={() => { setEditingClient(client); setClientDialogOpen(true) }} onDelete={() => { setDeletingClient(client); setDeleteClientOpen(true) }} onDownloadProforma={() => handleDownloadProforma(client)} onAcceptProforma={() => { setAcceptingClient(client); setAcceptDialogOpen(true) }} />)}
+                {filteredClients.map(client => {
+                  const proyActivos = proyectos.length > 0
+                    ? proyectos.filter(p => p.clienteId === client.id && p.estado === 'activo').length
+                    : null
+                  return (
+                    <ClientCard
+                      key={client.id}
+                      client={client}
+                      onEdit={() => { setEditingClient(client); setClientDialogOpen(true) }}
+                      onDelete={() => { setDeletingClient(client); setDeleteClientOpen(true) }}
+                      onDownloadProforma={() => handleDownloadProforma(client)}
+                      onAcceptProforma={() => { setAcceptingClient(client); setAcceptDialogOpen(true) }}
+                      onVerProyectos={() => navigateTo('proyectos', { clienteId: client.id })}
+                      proyectosActivos={proyActivos}
+                    />
+                  )
+                })}
               </div>
             )}
           </div>
